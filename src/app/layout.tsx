@@ -1,5 +1,9 @@
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
+import { ThemeProvider } from "@mui/material/styles";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
+
+import { theme } from "@/theme";
 
 import "./globals.css";
 
@@ -15,8 +19,10 @@ interface Props {
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en">
     <body>
-      {children}
-      <Analytics />
+      <AppRouterCacheProvider>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <Analytics />
+      </AppRouterCacheProvider>
     </body>
   </html>
 );

@@ -3,7 +3,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 
-import { theme } from "@/theme";
+import { ralewayVariable } from "@/shared/fonts";
+import { theme } from "@/shared/theme";
 
 import "./globals.css";
 
@@ -18,7 +19,7 @@ interface Props {
 
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en">
-    <body>
+    <body className={ralewayVariable.className}>
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
         <Analytics />

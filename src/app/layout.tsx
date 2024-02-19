@@ -1,10 +1,7 @@
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
-import { ThemeProvider } from "@mui/material/styles";
-import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 
 import { ralewayVariable } from "@/shared/fonts";
-import { theme } from "@/shared/theme";
+import { Provider } from "./Provider";
 
 import "./globals.css";
 
@@ -20,10 +17,7 @@ interface Props {
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en">
     <body className={ralewayVariable.className}>
-      <AppRouterCacheProvider>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        <Analytics />
-      </AppRouterCacheProvider>
+      <Provider>{children}</Provider>
     </body>
   </html>
 );

@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 
-import { ralewayVariable } from "@/shared/fonts";
-import { Provider } from "./Provider";
-
-import "./globals.css";
-
 const metadata: Metadata = {
   description: "Business management system",
-  title: "Bizprofy",
+  title: "Bizprofy - Login",
 };
 
 interface Props {
@@ -16,9 +11,7 @@ interface Props {
 
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en">
-    <body className={ralewayVariable.className}>
-      <Provider>{children}</Provider>
-    </body>
+    <body>{children}</body>
   </html>
 );
 

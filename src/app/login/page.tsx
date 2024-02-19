@@ -3,10 +3,11 @@
 import { faMicrosoft } from "@fortawesome/free-brands-svg-icons/faMicrosoft";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons/faGoogle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { setUserSession } from "@/redux/states/userSession";
-import { Button, Card } from "@mui/material";
 import { useDispatch } from "react-redux";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
 
+import { setUserSession } from "@/redux/states/userSession";
 import { Logo } from "../components/Logo";
 
 import styles from "./page.module.css";
@@ -17,38 +18,42 @@ const Login = () => {
   const handleLogin = () => dispatch(setUserSession({ token: "test-token" }));
 
   return (
-    <main
-      className={`min-h-screen flex flex-col items-center justify-center gap-20 ${styles.main}`}>
-      <Logo className="fixed top-5 left-5 md:top-7 md:left-7 z-0 rounded-2xl" href="/" />
+    <>
+      <header className="fixed top-5 left-5 md:top-7 md:left-7 z-0">
+        <Logo href="/" className="rounded-2xl" />
+      </header>
 
-      <Card className="flex flex-col gap-10 p-10 z-10 !rounded-2xl">
-        <div className="flex flex-col gap-3">
-          <h4 className="text-2xl text-center">Sign in to Bizprofy</h4>
+      <main
+        className={`min-h-screen flex flex-col items-center justify-center gap-20 ${styles.main}`}>
+        <Card className="flex flex-col gap-10 p-10 z-10 !rounded-2xl">
+          <div className="flex flex-col gap-3">
+            <h4 className="text-2xl text-center">Sign in to Bizprofy</h4>
 
-          <p>You can use the following social accounts</p>
-        </div>
+            <p>You can use the following social accounts</p>
+          </div>
 
-        <div className="flex flex-col gap-3">
-          <Button
-            className="flex flex-row gap-3 !bg-red-500 !rounded-lg"
-            onClick={handleLogin}
-            variant="contained"
-            size="large">
-            <FontAwesomeIcon icon={faGoogle} />
-            Google
-          </Button>
+          <div className="flex flex-col gap-3">
+            <Button
+              className="flex flex-row gap-3 !bg-red-500 !rounded-lg !normal-case"
+              onClick={handleLogin}
+              variant="contained"
+              size="large">
+              <FontAwesomeIcon icon={faGoogle} />
+              Google
+            </Button>
 
-          <Button
-            className="flex flex-row gap-3 !rounded-lg"
-            onClick={handleLogin}
-            variant="contained"
-            size="large">
-            <FontAwesomeIcon icon={faMicrosoft} />
-            Microsoft
-          </Button>
-        </div>
-      </Card>
-    </main>
+            <Button
+              className="flex flex-row gap-3 !rounded-lg !normal-case"
+              onClick={handleLogin}
+              variant="contained"
+              size="large">
+              <FontAwesomeIcon icon={faMicrosoft} />
+              Microsoft
+            </Button>
+          </div>
+        </Card>
+      </main>
+    </>
   );
 };
 

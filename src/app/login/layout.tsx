@@ -11,7 +11,7 @@ interface Props {
 
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en">
-    <body>{children}</body>
+    <body id="root">{children}</body>
   </html>
 );
 

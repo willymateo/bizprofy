@@ -1,4 +1,5 @@
-import { Button, Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 import { Logo } from "./components/Logo";
 import Image from "next/image";

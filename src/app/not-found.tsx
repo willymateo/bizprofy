@@ -26,7 +26,7 @@ const NotFound = () => (
           width={350}
         />
 
-        <Button href="/" size="large" variant="contained" className="!normal-case">
+        <Button href="/" size="large" variant="contained" className="!normal-case !rounded-lg">
           Go to Home
         </Button>
       </div>

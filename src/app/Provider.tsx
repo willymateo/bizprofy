@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { CssBaseline } from "@mui/material";
 
 import { reduxStore } from "@/redux/store";
-import { theme } from "@/shared/theme";
+import { theme } from "@/theme";
 
 interface Props {
   children: React.ReactNode;

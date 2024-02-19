@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ralewayVariable } from "@/shared/fonts";
+import { ralewayVariable } from "@/fonts";
 import { Provider } from "./Provider";
 
 import "./globals.css";

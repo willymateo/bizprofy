@@ -20,10 +20,10 @@ const NotFound = () => (
         </Typography>
 
         <Image
-          className="object-cover object-center"
+          className="object-contain object-center h-auto"
           src="/images/404.svg"
           alt="404 error page"
-          height={350}
+          height={150}
           width={350}
         />
 

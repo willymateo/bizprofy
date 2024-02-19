@@ -16,7 +16,7 @@ interface Props {
 
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en">
-    <body id="root" className={ralewayVariable.className}>
+    <body className={ralewayVariable.className}>
       <Provider>{children}</Provider>
     </body>
   </html>

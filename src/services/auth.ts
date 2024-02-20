@@ -10,7 +10,7 @@ const login = async (credentials: LoginPayload) => {
   const resBody: LoginResponse | ErrorResponse = await res.json();
 
   if (!res.ok) {
-    throw new Error(resBody?.error?.message || "Failed to login");
+    throw new Error(resBody.error?.message || "Failed to login");
   }
 
   return resBody;

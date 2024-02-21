@@ -1,3 +1,5 @@
+"use server";
+
 import { LoginPayload } from "./interfaces";
 
 const login = async ({ emailOrUsername, password }: LoginPayload) => {

@@ -54,12 +54,12 @@ const CredentialsForm = () => {
   return (
     <form className="flex flex-col gap-5 justify-center">
       <TextField
+        helperText={formError?.emailOrUsername?.message}
         error={Boolean(formError?.emailOrUsername)}
         {...register("emailOrUsername", {
           required: "This field is required",
         })}
-        label="Email address"
-        helperText={formError?.emailOrUsername?.message}
+        label="Email or username"
       />
 
       <TextField
@@ -77,11 +77,11 @@ const CredentialsForm = () => {
           ),
         }}
         type={isPasswordVisible ? "text" : "password"}
-        {...register("password", {
-          required: "This field is required",
-        })}
         helperText={formError?.password?.message}
         error={Boolean(formError?.password)}
+        {...register("password", {
+          required: "Password is required",
+        })}
         label="Password"
       />
 

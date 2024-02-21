@@ -13,9 +13,15 @@ const Hero = async () => {
       {session ? (
         <LogOutButton />
       ) : (
-        <Link href="/auth/login">
-          <Button variant="contained">Login</Button>
-        </Link>
+        <div className="flex flex-row gap-5">
+          <Link href="/auth/login">
+            <Button variant="contained">Login</Button>
+          </Link>
+
+          <Link href="/auth/signUp">
+            <Button variant="contained">Sign Up</Button>
+          </Link>
+        </div>
       )}
     </div>
   );

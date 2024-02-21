@@ -10,6 +10,14 @@ export interface LoginPayload {
   password: string;
 }
 
+export interface CreateUserPayload {
+  firstNames: string;
+  lastNames: string;
+  password: string;
+  username: string;
+  email: string;
+}
+
 export interface LoginResponse {
   firstNames: string;
   lastNames: string;

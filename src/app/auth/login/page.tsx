@@ -1,5 +1,6 @@
 import Divider from "@mui/material/Divider";
 import Card from "@mui/material/Card";
+import { Metadata } from "next";
 import Link from "next/link";
 
 import { CredentialsForm } from "./components/CredentialsForm";
@@ -7,6 +8,11 @@ import { Logo } from "@/app/components/Logo";
 import { OAuth } from "./components/OAuth";
 
 import styles from "./page.module.css";
+
+const metadata: Metadata = {
+  description: "Login to Bizprofy, the best platform for business professionals.",
+  title: "Login | Bizprofy",
+};
 
 const Login = () => (
   <>
@@ -35,3 +41,4 @@ const Login = () => (
 );
 
 export default Login;
+export { metadata };

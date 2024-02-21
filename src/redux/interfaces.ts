@@ -1,3 +1,7 @@
+export interface Store {
+  userSession: UserSession;
+}
+
 export interface UserSession {
   token: string | null;
   id: string | null;

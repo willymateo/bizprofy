@@ -1,9 +1,16 @@
-import { Hero } from "./Sections/Hero";
+import { Navigation } from "./components/Navigation";
+import { Header } from "./components/Header";
 
 const Home = () => (
-  <main className="min-h-screen flex flex-col gap-20">
-    <Hero />
-  </main>
+  <>
+    <Header />
+
+    <div className="flex flex-row">
+      <Navigation />
+
+      <main className="min-h-screen flex flex-col gap-20"></main>
+    </div>
+  </>
 );
 
 export default Home;

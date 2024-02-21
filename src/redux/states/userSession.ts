@@ -23,7 +23,9 @@ const UserSessionSlice = createSlice({
   },
 });
 
-const { setUserSession, resetUserSession } = UserSessionSlice.actions;
-const UserSessionReducer = UserSessionSlice.reducer;
+const {
+  actions: { setUserSession, resetUserSession },
+  reducer: UserSessionReducer,
+} = UserSessionSlice;
 
 export { UserSessionReducer, setUserSession, resetUserSession };

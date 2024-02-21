@@ -7,7 +7,7 @@ import "./globals.css";
 
 const metadata: Metadata = {
   description: "Business management system",
-  title: "Bizprofy",
+  title: "Dashboard | Bizprofy",
 };
 
 interface Props {

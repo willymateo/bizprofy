@@ -1,5 +1,5 @@
-import { UserSession } from "@/interfaces/redux/userSession";
 import { createSlice } from "@reduxjs/toolkit";
+import { UserSession } from "../interfaces";
 
 const emptyState: UserSession = {
   token: null,

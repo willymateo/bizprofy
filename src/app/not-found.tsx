@@ -1,8 +1,14 @@
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { Metadata } from "next";
 
 import { Logo } from "./components/Logo";
 import Image from "next/image";
+
+const metadata: Metadata = {
+  description: "Page not found on Bizprofy.",
+  title: "Page Not Found | Bizprofy",
+};
 
 const NotFound = () => (
   <>
@@ -36,3 +42,4 @@ const NotFound = () => (
 );
 
 export default NotFound;
+export { metadata };

@@ -1,12 +1,13 @@
 "use client";
 
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
+import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import { Provider as ReduxProvider } from "react-redux";
-import { ThemeProvider } from "@mui/material/styles";
 import { Analytics } from "@vercel/analytics/react";
+import { CssBaseline } from "@mui/material";
 
 import { reduxStore } from "@/redux/store";
-import { theme } from "@/shared/theme";
+import { theme } from "@/theme";
 
 interface Props {
   children: React.ReactNode;
@@ -14,9 +15,12 @@ interface Props {
 
 const Provider = ({ children }: Props) => (
   <AppRouterCacheProvider>
-    <ThemeProvider theme={theme}>
-      <ReduxProvider store={reduxStore}>{children}</ReduxProvider>
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ReduxProvider store={reduxStore}>{children}</ReduxProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
     <Analytics />
   </AppRouterCacheProvider>
 );

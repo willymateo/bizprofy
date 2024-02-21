@@ -1,4 +1,5 @@
-import { Button, Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 import { Logo } from "./components/Logo";
 import Image from "next/image";
@@ -19,10 +20,10 @@ const NotFound = () => (
         </Typography>
 
         <Image
-          className="object-cover object-center"
+          className="object-contain object-center h-auto"
           src="/images/404.svg"
           alt="404 error page"
-          height={350}
+          height={150}
           width={350}
         />
 

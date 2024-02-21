@@ -6,7 +6,7 @@ export interface ErrorResponse {
 }
 
 export interface LoginPayload {
-  username: string;
+  emailOrUsername: string;
   password: string;
 }
 

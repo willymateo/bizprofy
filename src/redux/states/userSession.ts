@@ -1,4 +1,4 @@
-import { UserSession } from "@/shared/interfaces/redux/userSession";
+import { UserSession } from "@/interfaces/redux/userSession";
 import { createSlice } from "@reduxjs/toolkit";
 
 const emptyState: UserSession = {

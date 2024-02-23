@@ -67,7 +67,7 @@ const AccountPopover = () => {
         id={id}
       >
         {(session?.user?.name || session?.user?.email) && (
-          <div className="flex flex-col px-[16px] my-4">
+          <div className="flex flex-col px-4 my-4">
             {session?.user?.name && (
               <Typography variant="subtitle2" noWrap>
                 {session?.user?.name ?? ""}
@@ -85,12 +85,12 @@ const AccountPopover = () => {
         <Divider className="border-dashed" />
 
         <MenuItem>
-          <Link href="/me" className="no-underline w-full">
+          <Link href="/me" className="no-underline w-full text-slate-800">
             Profile
           </Link>
         </MenuItem>
         <MenuItem>
-          <Link href="/settings" className="no-underline w-full">
+          <Link href="/settings" className="no-underline w-full text-slate-800">
             Settings
           </Link>
         </MenuItem>

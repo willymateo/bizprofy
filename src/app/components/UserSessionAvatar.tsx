@@ -8,7 +8,7 @@ const UserSessionAvatar = () => {
     <Avatar
       sx={{ border: theme => `solid 2px ${theme.palette.background.default}` }}
       src={String(session?.user?.image)}
-      className="w-[32px] h-[32px]"
+      className="w-9 h-9"
     />
   );
 };

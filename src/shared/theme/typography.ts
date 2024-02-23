@@ -7,7 +7,7 @@ const remToPx = (value: string) => Math.round(parseFloat(value) * 16);
 
 const pxToRem = (value: number) => `${value / 16}rem`;
 
-const responsiveFontSizes = ({ sm, md, lg }: Record<Breakpoint, number>) => ({
+const responsiveFontSizes = ({ sm = 0, md = 0, lg = 0 }: Partial<Record<Breakpoint, number>>) => ({
   "@media (min-width:600px)": {
     fontSize: pxToRem(sm),
   },

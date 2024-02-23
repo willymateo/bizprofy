@@ -1,7 +1,5 @@
 "use client";
 
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
@@ -11,6 +9,7 @@ import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import Alert from "@mui/material/Alert";
+import { Icon } from "@iconify/react";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -68,9 +67,9 @@ const CredentialsForm = () => {
             <InputAdornment position="end">
               <IconButton edge="end" onClick={() => togglePasswordVisibility()}>
                 {isPasswordVisible ? (
-                  <FontAwesomeIcon icon={faEyeSlash} />
+                  <Icon icon="solar:eye-closed-line-duotone" />
                 ) : (
-                  <FontAwesomeIcon icon={faEye} />
+                  <Icon icon="solar:eye-bold-duotone" />
                 )}
               </IconButton>
             </InputAdornment>
@@ -82,6 +81,7 @@ const CredentialsForm = () => {
         {...register("password", {
           required: "Password is required",
         })}
+        placeholder="●●●●●●●●"
         label="Password"
       />
 

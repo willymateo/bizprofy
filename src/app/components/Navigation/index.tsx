@@ -13,17 +13,13 @@ const Navigation = () => {
 
   const handleCloseDrawer = () => dispatch(closeDrawer());
 
-  console.log({ isDrawerOpen });
-
   return (
     <>
       <Drawer onClose={handleCloseDrawer} open={isDrawerOpen}>
         <Content />
       </Drawer>
 
-      <div>
-        <Content />
-      </div>
+      <Content className="hidden xl:flex border-y-0 border-r border-l-0 border-dashed border-grey-200" />
     </>
   );
 };

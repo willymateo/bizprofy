@@ -187,7 +187,8 @@ const CredentialsForm = () => {
           className="!rounded-lg !normal-case"
           onClick={handleSignUp}
           disabled={isLoading}
-          variant="contained">
+          variant="contained"
+        >
           Create account
         </Button>
 

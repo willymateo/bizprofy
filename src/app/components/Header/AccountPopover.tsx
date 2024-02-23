@@ -8,10 +8,10 @@ import { MouseEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import Popover from "@mui/material/Popover";
 import Divider from "@mui/material/Divider";
-import Avatar from "@mui/material/Avatar";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 
+import { UserSessionAvatar } from "../UserSessionAvatar";
 import { useActive } from "@/hooks/useActive";
 
 const AccountPopover = () => {
@@ -45,13 +45,7 @@ const AccountPopover = () => {
   return (
     <>
       <IconButton onClick={handleOpen}>
-        <Avatar
-          sx={{ border: theme => `solid 2px ${theme.palette.background.default}` }}
-          src={String(session?.user?.image)}
-          alt={String(session?.user?.name)}
-          className="w-[32px] h-[32px]">
-          {session?.user?.name?.charAt(0).toUpperCase() ?? ""}
-        </Avatar>
+        <UserSessionAvatar />
       </IconButton>
 
       <Popover
@@ -70,16 +64,23 @@ const AccountPopover = () => {
           },
         }}
         open={isOpen}
-        id={id}>
-        <div className="flex flex-col px-[16px] my-4">
-          <Typography variant="subtitle2" noWrap>
-            {session?.user?.name ?? "Willy Mateo"}
-          </Typography>
+        id={id}
+      >
+        {(session?.user?.name || session?.user?.email) && (
+          <div className="flex flex-col px-[16px] my-4">
+            {session?.user?.name && (
+              <Typography variant="subtitle2" noWrap>
+                {session?.user?.name ?? ""}
+              </Typography>
+            )}
 
-          <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
-            {session?.user?.email ?? ""}
-          </Typography>
-        </div>
+            {session?.user?.email && (
+              <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
+                {session?.user?.email ?? ""}
+              </Typography>
+            )}
+          </div>
+        )}
 
         <Divider className="border-dashed" />
 
@@ -102,7 +103,8 @@ const AccountPopover = () => {
           onClick={handleSignOut}
           className="py-4 gap-5"
           disableTouchRipple
-          disableRipple>
+          disableRipple
+        >
           Logout
           {isSigningOut && <CircularProgress />}
         </MenuItem>

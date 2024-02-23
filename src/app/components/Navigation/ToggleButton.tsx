@@ -7,13 +7,17 @@ import { useDispatch } from "react-redux";
 
 import { openDrawer } from "@/redux/states/navigation";
 
-const ToggleButton = () => {
+interface Props {
+  className?: string;
+}
+
+const ToggleButton = ({ className = "" }: Props) => {
   const dispatch = useDispatch();
 
   const handleOpenDrawer = () => dispatch(openDrawer());
 
   return (
-    <IconButton onClick={handleOpenDrawer}>
+    <IconButton onClick={handleOpenDrawer} className={className}>
       <FontAwesomeIcon icon={faBars} />
     </IconButton>
   );

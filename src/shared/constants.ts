@@ -2,6 +2,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 const USERNAME_REGEX = /^[a-z0-9_\.]*[a-z]+[a-z0-9_\.]*$/;
 const USERNAME_MAX_LENGTH = 30;
 const USERNAME_MIN_LENGTH = 5;
+const APP_ROOT_ID = "root";
 
 const LANGUAGE_CODES = {
   ENGLISH: "en",
@@ -28,4 +29,5 @@ export {
   LANGUAGE_CODES,
   LANGUAGES_DATA,
   EMAIL_REGEX,
+  APP_ROOT_ID,
 };

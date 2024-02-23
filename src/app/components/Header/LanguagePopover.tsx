@@ -39,7 +39,8 @@ const LanguagePopover = () => {
           ...(isOpen && {
             bgcolor: "action.selected",
           }),
-        }}>
+        }}
+      >
         <Image
           className="object-cover object-center rounded"
           src={selectedLanguage.imgUrl}
@@ -65,14 +66,16 @@ const LanguagePopover = () => {
           },
         }}
         open={isOpen}
-        id={id}>
+        id={id}
+      >
         {Object.values(LANGUAGES_DATA).map(({ label, value }) => (
           <MenuItem
             onClick={() => handleChangeLanguage({ languageCode: value })}
             selected={value === selectedLanguage.value}
             sx={{ typography: "body2", py: 1 }}
             className="flex flex-row gap-3"
-            key={value}>
+            key={value}
+          >
             <Image
               className="object-cover object-center rounded"
               src={LANGUAGES_DATA[value].imgUrl}

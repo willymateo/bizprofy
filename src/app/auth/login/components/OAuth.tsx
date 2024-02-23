@@ -8,7 +8,8 @@ const OAuth = () => (
     <Button
       className="flex flex-row gap-3 !bg-red-500 !rounded-lg !normal-case"
       variant="contained"
-      size="large">
+      size="large"
+    >
       <FontAwesomeIcon icon={faGoogle} />
       Google
     </Button>
@@ -16,7 +17,8 @@ const OAuth = () => (
     <Button
       className="flex flex-row gap-3 !rounded-lg !normal-case"
       variant="contained"
-      size="large">
+      size="large"
+    >
       <FontAwesomeIcon icon={faMicrosoft} />
       Microsoft
     </Button>

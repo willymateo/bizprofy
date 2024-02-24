@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import { useDispatch } from "react-redux";
 
 import { openDrawer } from "@/redux/states/navigation";
-import { Icon } from "@iconify/react";
+import { Icon } from "@iconify-icon/react";
 
 interface Props {
   className?: string;

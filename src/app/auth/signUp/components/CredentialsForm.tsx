@@ -5,11 +5,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import { useRouter } from "next/navigation";
+import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import Alert from "@mui/material/Alert";
-import { Icon } from "@iconify/react";
 import { useState } from "react";
 
 import { useActive } from "@/hooks/useActive";
@@ -17,9 +17,9 @@ import { createUser } from "@/services/users";
 import {
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,
+  PASSWORD_MIN_LENGTH,
   USERNAME_REGEX,
   EMAIL_REGEX,
-  PASSWORD_MIN_LENGTH,
 } from "@/shared/constants";
 
 interface FormInputs {
@@ -157,7 +157,7 @@ const CredentialsForm = () => {
         {...register("password", {
           required: "Password is required",
           minLength: {
-            message: `Password must be at least ${USERNAME_MIN_LENGTH} characters`,
+            message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
             value: PASSWORD_MIN_LENGTH,
           },
         })}
@@ -192,18 +192,15 @@ const CredentialsForm = () => {
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <div className="flex flex-row gap-5 items-center justify-center">
-        <Button
-          className="!rounded-lg !normal-case"
-          onClick={handleSignUp}
-          disabled={isLoading}
-          variant="contained"
-        >
-          Create account
-        </Button>
-
-        {isLoading && <CircularProgress />}
-      </div>
+      <Button
+        className="flex flex-row gap-3 rounded-lg normal-case"
+        onClick={handleSignUp}
+        disabled={isLoading}
+        variant="contained"
+      >
+        Create account
+        {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+      </Button>
     </form>
   );
 };

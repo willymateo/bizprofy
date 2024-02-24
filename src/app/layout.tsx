@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import { ReactNode } from "react";
 
 import { ralewayVariable } from "@/shared/fonts";
 import { APP_ROOT_ID } from "@/shared/constants";
 import { Provider } from "./Provider";
-import { ReactNode } from "react";
 
 import "./globals.css";
 

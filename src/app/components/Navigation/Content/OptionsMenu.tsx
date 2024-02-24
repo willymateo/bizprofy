@@ -3,7 +3,7 @@
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 import { usePathname } from "next/navigation";
-import { Icon } from "@iconify/react";
+import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 
 import { MENU_OPTIONS } from "../constants";
@@ -23,7 +23,7 @@ const OptionsMenu = () => {
               className={`flex flex-row items-center justify-start gap-3 w-full no-underline ${isSelected ? "text-blue-500" : "text-slate-500"}`}
               href={path}
             >
-              <Icon icon={icon} className="w-8 h-8" />
+              <Icon icon={icon} width={32} height={32} />
 
               <Typography>{label}</Typography>
             </Link>

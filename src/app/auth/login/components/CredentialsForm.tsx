@@ -5,11 +5,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import { useRouter } from "next/navigation";
+import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import Alert from "@mui/material/Alert";
-import { Icon } from "@iconify/react";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -91,18 +91,15 @@ const CredentialsForm = () => {
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <div className="flex flex-row gap-5 items-center justify-center">
-        <Button
-          className="!rounded-lg !normal-case"
-          onClick={handleLogin}
-          disabled={isLoading}
-          variant="contained"
-        >
-          Login
-        </Button>
-
-        {isLoading && <CircularProgress />}
-      </div>
+      <Button
+        className="flex flex-row gap-3 rounded-lg normal-case"
+        onClick={handleLogin}
+        disabled={isLoading}
+        variant="contained"
+      >
+        Login
+        {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+      </Button>
     </form>
   );
 };

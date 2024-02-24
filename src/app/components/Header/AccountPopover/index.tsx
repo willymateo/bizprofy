@@ -4,10 +4,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, useState } from "react";
-import { useSession } from "next-auth/react";
-import Popover from "@mui/material/Popover";
 import Divider from "@mui/material/Divider";
 import { signOut } from "next-auth/react";
+import Menu from "@mui/material/Menu";
 
 import { UserSessionInformation } from "./UserSessionInformation";
 import { UserSessionAvatar } from "../../UserSessionAvatar";
@@ -16,14 +15,12 @@ import { OptionsMenu } from "./OptionsMenu";
 
 const AccountPopover = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const { data: session } = useSession();
   const isOpen = Boolean(anchorEl);
   const {
     isActive: isSigningOut = false,
     enable: startSigningOut,
     disable: stopSigningOut,
   } = useActive();
-  const id = isOpen ? "language-popover" : undefined;
 
   const handleOpen = ({ currentTarget }: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(currentTarget);
@@ -44,29 +41,20 @@ const AccountPopover = () => {
 
   return (
     <>
-      <IconButton onClick={handleOpen}>
+      <IconButton onClick={handleOpen} className="w-12 h-12">
         <UserSessionAvatar />
       </IconButton>
 
-      <Popover
+      <Menu
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
+        onClick={handleClose}
         onClose={handleClose}
+        id="account-popover"
         anchorEl={anchorEl}
-        slotProps={{
-          paper: {
-            sx: {
-              width: 200,
-              ml: 0.75,
-              mt: 1,
-              p: 0,
-            },
-          },
-        }}
         open={isOpen}
-        id={id}
       >
-        {(session?.user?.name || session?.user?.email) && <UserSessionInformation />}
+        <UserSessionInformation />
 
         <Divider className="border-dashed" />
 
@@ -83,9 +71,11 @@ const AccountPopover = () => {
           disableRipple
         >
           Logout
-          {isSigningOut && <CircularProgress />}
+          {isSigningOut && (
+            <CircularProgress className="!w-[22px] !h-[22px]" disableShrink color="inherit" />
+          )}
         </MenuItem>
-      </Popover>
+      </Menu>
     </>
   );
 };

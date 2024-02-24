@@ -1,13 +1,14 @@
 "use client";
 
 import ListItemButton from "@mui/material/ListItemButton";
+import Skeleton from "@mui/material/Skeleton";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 import { UserSessionAvatar } from "../../UserSessionAvatar";
 
 const UserSessionInformation = () => {
-  const { data: session } = useSession({ required: true });
+  const { data: session, status } = useSession({ required: true });
 
   return (
     <ListItemButton className="rounded-2xl font-bold px-5 py-4" selected>
@@ -17,7 +18,11 @@ const UserSessionInformation = () => {
       >
         <UserSessionAvatar />
 
-        {session?.user?.name ?? "Willy Mateo"}
+        {status === "loading" ? (
+          <Skeleton variant="rectangular" className="h-11 w-40" />
+        ) : (
+          session?.user?.name
+        )}
       </Link>
     </ListItemButton>
   );

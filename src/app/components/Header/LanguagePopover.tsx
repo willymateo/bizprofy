@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, useState } from "react";
-import Popover from "@mui/material/Popover";
+import Menu from "@mui/material/Menu";
 import Image from "next/image";
 
 import { LANGUAGES_DATA, LANGUAGE_CODES } from "@/shared/constants";
@@ -16,7 +16,6 @@ const LanguagePopover = () => {
   const selectedLanguage = useSelector((state: Store) => state.language);
   const isOpen = Boolean(anchorEl);
   const dispatch = useDispatch();
-  const id = isOpen ? "language-popover" : undefined;
 
   const handleChangeLanguage = ({ languageCode = LANGUAGE_CODES.ENGLISH }) => {
     dispatch(setLanguage(languageCode));
@@ -30,17 +29,7 @@ const LanguagePopover = () => {
 
   return (
     <>
-      <IconButton
-        aria-describedby={id}
-        onClick={handleOpen}
-        sx={{
-          width: 40,
-          height: 40,
-          ...(isOpen && {
-            bgcolor: "action.selected",
-          }),
-        }}
-      >
+      <IconButton onClick={handleOpen} className="w-12 h-12">
         <Image
           className="object-cover object-center rounded"
           src={selectedLanguage.imgUrl}
@@ -50,23 +39,13 @@ const LanguagePopover = () => {
         />
       </IconButton>
 
-      <Popover
+      <Menu
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
+        id="language-popover"
         onClose={handleClose}
         anchorEl={anchorEl}
-        slotProps={{
-          paper: {
-            sx: {
-              width: 180,
-              ml: 0.75,
-              mt: 1,
-              p: 0,
-            },
-          },
-        }}
         open={isOpen}
-        id={id}
       >
         {Object.values(LANGUAGES_DATA).map(({ label, value }) => (
           <MenuItem
@@ -87,7 +66,7 @@ const LanguagePopover = () => {
             {label}
           </MenuItem>
         ))}
-      </Popover>
+      </Menu>
     </>
   );
 };

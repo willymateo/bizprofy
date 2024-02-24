@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ralewayVariable } from "@/shared/fonts";
 import { APP_ROOT_ID } from "@/shared/constants";
 import { Provider } from "./Provider";
+import { ReactNode } from "react";
 
 import "./globals.css";
 
@@ -12,7 +13,7 @@ const metadata: Metadata = {
 };
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const RootLayout = ({ children }: Readonly<Props>) => (

@@ -2,17 +2,17 @@
 
 import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import Popover from "@mui/material/Popover";
 import Divider from "@mui/material/Divider";
 import { signOut } from "next-auth/react";
-import Link from "next/link";
 
-import { UserSessionAvatar } from "../UserSessionAvatar";
+import { UserSessionInformation } from "./UserSessionInformation";
+import { UserSessionAvatar } from "../../UserSessionAvatar";
 import { useActive } from "@/hooks/useActive";
+import { OptionsMenu } from "./OptionsMenu";
 
 const AccountPopover = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -66,34 +66,11 @@ const AccountPopover = () => {
         open={isOpen}
         id={id}
       >
-        {(session?.user?.name || session?.user?.email) && (
-          <div className="flex flex-col px-4 my-4">
-            {session?.user?.name && (
-              <Typography variant="subtitle2" noWrap>
-                {session?.user?.name ?? ""}
-              </Typography>
-            )}
-
-            {session?.user?.email && (
-              <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
-                {session?.user?.email ?? ""}
-              </Typography>
-            )}
-          </div>
-        )}
+        {(session?.user?.name || session?.user?.email) && <UserSessionInformation />}
 
         <Divider className="border-dashed" />
 
-        <MenuItem>
-          <Link href="/me" className="no-underline w-full text-slate-800">
-            Profile
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link href="/settings" className="no-underline w-full text-slate-800">
-            Settings
-          </Link>
-        </MenuItem>
+        <OptionsMenu />
 
         <Divider className="border-dashed" />
 

@@ -1,9 +1,10 @@
 import { Logo } from "../components/Logo";
+import { ReactNode } from "react";
 
 import styles from "./layout.module.css";
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const RootLayout = ({ children }: Readonly<Props>) => (

@@ -6,13 +6,13 @@ import { CssBaseline, createTheme } from "@mui/material";
 import { Provider as ReduxProvider } from "react-redux";
 import { Analytics } from "@vercel/analytics/react";
 import { SessionProvider } from "next-auth/react";
-import { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 
 import { themeOptions } from "@/shared/theme";
 import { reduxStore } from "@/redux/store";
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const Provider = ({ children }: Props) => {

@@ -1,10 +1,16 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import GithubProvider from "next-auth/providers/github";
+import { AuthOptions } from "next-auth";
 
 import { LoginPayload } from "@/services/interfaces";
 import { login } from "@/services/auth";
 
-const authOptions = {
+const authConfig: AuthOptions = {
   providers: [
+    GithubProvider({
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -14,7 +20,8 @@ const authOptions = {
       authorize: async credentials => await login(credentials as LoginPayload),
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET as string,
   pages: { signIn: "/auth/login" },
 };
 
-export { authOptions };
+export { authConfig };

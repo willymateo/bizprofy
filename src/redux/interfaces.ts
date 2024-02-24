@@ -1,5 +1,7 @@
 export interface Store {
   userSession: UserSession;
+  navigation: Navigation;
+  language: Language;
 }
 
 export interface UserSession {
@@ -10,4 +12,14 @@ export interface UserSession {
   lastNames: string;
   email: string;
   photoUrl: string;
+}
+
+export interface Language {
+  imgUrl: string;
+  value: string;
+  label: string;
+}
+
+export interface Navigation {
+  isDrawerOpen: boolean;
 }

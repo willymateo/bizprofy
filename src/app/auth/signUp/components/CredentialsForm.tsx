@@ -1,7 +1,5 @@
 "use client";
 
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
@@ -11,6 +9,7 @@ import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import Alert from "@mui/material/Alert";
+import { Icon } from "@iconify/react";
 import { useState } from "react";
 
 import { useActive } from "@/hooks/useActive";
@@ -20,6 +19,7 @@ import {
   USERNAME_MIN_LENGTH,
   USERNAME_REGEX,
   EMAIL_REGEX,
+  PASSWORD_MIN_LENGTH,
 } from "@/shared/constants";
 
 interface FormInputs {
@@ -86,6 +86,7 @@ const CredentialsForm = () => {
           required: "First names are required",
         })}
         error={Boolean(formError?.firstNames)}
+        placeholder="John William"
         label="First names"
       />
 
@@ -95,6 +96,7 @@ const CredentialsForm = () => {
           required: "Last names are required",
         })}
         error={Boolean(formError?.lastNames)}
+        placeholder="Doe Smith"
         label="Last names"
       />
 
@@ -108,6 +110,7 @@ const CredentialsForm = () => {
           },
         })}
         error={Boolean(formError?.email)}
+        placeholder="johndoe@mail.com"
         label="Email address"
       />
 
@@ -125,11 +128,12 @@ const CredentialsForm = () => {
             value: USERNAME_MAX_LENGTH,
           },
           minLength: {
-            value: USERNAME_MIN_LENGTH,
             message: `Username must be at least ${USERNAME_MIN_LENGTH} characters`,
+            value: USERNAME_MIN_LENGTH,
           },
           required: "Username is required",
         })}
+        placeholder="johndoesmith"
         label="Username"
       />
 
@@ -139,9 +143,9 @@ const CredentialsForm = () => {
             <InputAdornment position="end">
               <IconButton edge="end" onClick={() => togglePasswordVisibility()}>
                 {isPasswordVisible ? (
-                  <FontAwesomeIcon icon={faEyeSlash} />
+                  <Icon icon="solar:eye-closed-line-duotone" />
                 ) : (
-                  <FontAwesomeIcon icon={faEye} />
+                  <Icon icon="solar:eye-bold-duotone" />
                 )}
               </IconButton>
             </InputAdornment>
@@ -152,7 +156,12 @@ const CredentialsForm = () => {
         error={Boolean(formError?.password)}
         {...register("password", {
           required: "Password is required",
+          minLength: {
+            message: `Password must be at least ${USERNAME_MIN_LENGTH} characters`,
+            value: PASSWORD_MIN_LENGTH,
+          },
         })}
+        placeholder="●●●●●●●●"
         label="Password"
       />
 
@@ -162,9 +171,9 @@ const CredentialsForm = () => {
             <InputAdornment position="end">
               <IconButton edge="end" onClick={() => toggleRepeatedPasswordVisibility()}>
                 {isRepeatedPasswordVisible ? (
-                  <FontAwesomeIcon icon={faEyeSlash} />
+                  <Icon icon="solar:eye-closed-line-duotone" />
                 ) : (
-                  <FontAwesomeIcon icon={faEye} />
+                  <Icon icon="solar:eye-bold-duotone" />
                 )}
               </IconButton>
             </InputAdornment>
@@ -178,6 +187,7 @@ const CredentialsForm = () => {
         helperText={formError?.repeatedPassword?.message}
         error={Boolean(formError?.repeatedPassword)}
         label="Repeat password"
+        placeholder="●●●●●●●●"
       />
 
       {error && <Alert severity="error">{error}</Alert>}
@@ -187,7 +197,8 @@ const CredentialsForm = () => {
           className="!rounded-lg !normal-case"
           onClick={handleSignUp}
           disabled={isLoading}
-          variant="contained">
+          variant="contained"
+        >
           Create account
         </Button>
 

@@ -13,7 +13,7 @@ const metadata: Metadata = {
 const NotFound = () => (
   <>
     <header className="fixed top-5 left-5 md:top-7 md:left-7 z-0">
-      <Logo href="/" className="rounded-2xl" />
+      <Logo href="/" />
     </header>
 
     <main className="min-h-screen py-20 flex flex-col items-center justify-center">

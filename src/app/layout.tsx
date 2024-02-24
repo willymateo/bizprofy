@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-import { ralewayVariable } from "@/fonts";
+import { ralewayVariable } from "@/shared/fonts";
+import { APP_ROOT_ID } from "@/shared/constants";
 import { Provider } from "./Provider";
 
 import "./globals.css";
@@ -16,7 +17,7 @@ interface Props {
 
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en">
-    <body className={ralewayVariable.className}>
+    <body id={APP_ROOT_ID} className={ralewayVariable.className}>
       <Provider>{children}</Provider>
     </body>
   </html>

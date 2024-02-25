@@ -14,7 +14,7 @@ const UserSessionInformation = () => {
     <ListItemButton className="rounded-2xl font-bold px-5 py-4" selected>
       <Link
         className="flex flex-row items-center justify-start gap-3 w-full no-underline text-black"
-        href="/me"
+        href="/settings/me"
       >
         <UserSessionAvatar />
 

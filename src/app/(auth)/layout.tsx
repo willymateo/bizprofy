@@ -1,7 +1,6 @@
-import { Logo } from "../components/Logo";
 import { ReactNode } from "react";
 
-import styles from "./layout.module.css";
+import { Logo } from "../components/Logo";
 
 interface Props {
   children: ReactNode;
@@ -10,12 +9,10 @@ interface Props {
 const RootLayout = ({ children }: Readonly<Props>) => (
   <>
     <header className="fixed top-5 left-5 md:top-7 md:left-7 z-0">
-      <Logo href="/" />
+      <Logo />
     </header>
 
-    <main className={`min-h-screen flex flex-col items-center justify-center py-5 ${styles.main}`}>
-      {children}
-    </main>
+    <main className="min-h-screen flex flex-col items-center justify-center py-5">{children}</main>
   </>
 );
 

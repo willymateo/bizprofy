@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { ReactNode } from "react";
 
 import { ralewayVariable } from "@/shared/fonts";
@@ -6,11 +5,6 @@ import { APP_ROOT_ID } from "@/shared/constants";
 import { Provider } from "./Provider";
 
 import "./globals.css";
-
-const metadata: Metadata = {
-  description: "Business management system",
-  title: "Dashboard | Bizprofy",
-};
 
 interface Props {
   children: ReactNode;
@@ -25,4 +19,3 @@ const RootLayout = ({ children }: Readonly<Props>) => (
 );
 
 export default RootLayout;
-export { metadata };

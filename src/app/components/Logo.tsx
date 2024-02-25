@@ -1,15 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-interface Props {
-  className?: string;
-  href?: string;
-}
-
-const Logo = ({ className = "", href = "" }: Props) => (
-  <Link className={href ? "" : "pointer-events-none"} href={href}>
+const Logo = () => (
+  <Link href="/">
     <Image
-      className={`h-14 object-cover object-center ${className}`}
+      className="h-14 object-cover object-center"
       src="/images/logo-light-2-removebg.png"
       alt="Bizprofy logo"
       height={150}

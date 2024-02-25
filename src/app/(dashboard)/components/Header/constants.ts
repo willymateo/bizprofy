@@ -1,7 +1,7 @@
 import { MenuOption } from "./interfaces";
 
 const MENU_OPTIONS: MenuOption[] = [
-  { label: "Profile", path: "/me" },
+  { label: "Profile", path: "/settings/me" },
   { label: "Settings", path: "/settings" },
 ];
 

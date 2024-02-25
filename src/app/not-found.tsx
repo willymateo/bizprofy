@@ -1,9 +1,9 @@
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Metadata } from "next";
-
-import { Logo } from "./components/Logo";
 import Image from "next/image";
+
+import { Logo } from "@/app/components/Logo";
 
 const metadata: Metadata = {
   description: "Page not found on Bizprofy.",
@@ -13,7 +13,7 @@ const metadata: Metadata = {
 const NotFound = () => (
   <>
     <header className="fixed top-5 left-5 md:top-7 md:left-7 z-0">
-      <Logo href="/" />
+      <Logo />
     </header>
 
     <main className="min-h-screen py-20 flex flex-col items-center justify-center">

@@ -11,6 +11,7 @@ export interface LoginPayload {
 }
 
 export interface CreateUserPayload {
+  companyName: string;
   firstNames: string;
   lastNames: string;
   password: string;

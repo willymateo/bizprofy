@@ -12,7 +12,7 @@ const metadata: Metadata = {
 };
 
 const Login = () => (
-  <Card className="flex flex-col gap-10 p-10 z-10 !rounded-2xl max-w-md">
+  <Card className="flex flex-col gap-10 p-10 z-10 rounded-2xl max-w-md">
     <div className="flex flex-col gap-3">
       <h4 className="text-2xl">Login to Bizprofy</h4>
 

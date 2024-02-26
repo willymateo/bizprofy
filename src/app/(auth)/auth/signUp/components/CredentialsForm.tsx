@@ -24,6 +24,7 @@ import {
 
 interface FormInputs {
   repeatedPassword: string;
+  companyName: string;
   firstNames: string;
   lastNames: string;
   username: string;
@@ -81,6 +82,31 @@ const CredentialsForm = () => {
   return (
     <form className="flex flex-col gap-5 justify-center">
       <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:buildings-3-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.companyName?.message}
+        {...register("companyName", {
+          required: "Company name is required",
+        })}
+        error={Boolean(formError?.companyName)}
+        placeholder="Company Inc."
+        label="Company name"
+        required
+      />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:user-hands-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
         helperText={formError?.firstNames?.message}
         {...register("firstNames", {
           required: "First names are required",
@@ -88,9 +114,17 @@ const CredentialsForm = () => {
         error={Boolean(formError?.firstNames)}
         placeholder="John William"
         label="First names"
+        required
       />
 
       <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:user-hands-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
         helperText={formError?.lastNames?.message}
         {...register("lastNames", {
           required: "Last names are required",
@@ -98,9 +132,17 @@ const CredentialsForm = () => {
         error={Boolean(formError?.lastNames)}
         placeholder="Doe Smith"
         label="Last names"
+        required
       />
 
       <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:chat-line-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
         helperText={formError?.email?.message}
         {...register("email", {
           required: "Email is required",
@@ -112,11 +154,10 @@ const CredentialsForm = () => {
         error={Boolean(formError?.email)}
         placeholder="johndoe@mail.com"
         label="Email address"
+        required
       />
 
       <TextField
-        helperText={formError?.username?.message}
-        error={Boolean(formError?.username)}
         {...register("username", {
           pattern: {
             message:
@@ -133,15 +174,30 @@ const CredentialsForm = () => {
           },
           required: "Username is required",
         })}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:user-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.username?.message}
+        error={Boolean(formError?.username)}
         placeholder="johndoesmith"
         label="Username"
+        required
       />
 
       <TextField
         InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:lock-password-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton edge="end" onClick={() => togglePasswordVisibility()}>
+              <IconButton onClick={() => togglePasswordVisibility()}>
                 {isPasswordVisible ? (
                   <Icon icon="solar:eye-closed-line-duotone" />
                 ) : (
@@ -163,13 +219,19 @@ const CredentialsForm = () => {
         })}
         placeholder="●●●●●●●●"
         label="Password"
+        required
       />
 
       <TextField
         InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:lock-password-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton edge="end" onClick={() => toggleRepeatedPasswordVisibility()}>
+              <IconButton onClick={() => toggleRepeatedPasswordVisibility()}>
                 {isRepeatedPasswordVisible ? (
                   <Icon icon="solar:eye-closed-line-duotone" />
                 ) : (
@@ -188,6 +250,7 @@ const CredentialsForm = () => {
         error={Boolean(formError?.repeatedPassword)}
         label="Repeat password"
         placeholder="●●●●●●●●"
+        required
       />
 
       {error && <Alert severity="error">{error}</Alert>}

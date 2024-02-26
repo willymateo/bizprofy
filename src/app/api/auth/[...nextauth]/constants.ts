@@ -22,6 +22,33 @@ const authConfig: AuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET as string,
   pages: { signIn: "/auth/login" },
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token = { ...token, ...user };
+      }
+
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (token) {
+        const { sub, iat, exp, jti, ...rest } = token;
+
+        session = {
+          ...session,
+          user: {
+            ...(session?.user ?? {}),
+            ...rest,
+          },
+        };
+      }
+
+      return session;
+    },
+  },
 };
 
 export { authConfig };

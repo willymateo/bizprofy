@@ -27,6 +27,15 @@ export interface LoginResponse {
   deletedAt: string;
   username: string;
   photoUrl: string;
+  company: Company;
   email: string;
+  id: string;
+}
+
+export interface Company {
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+  name: string;
   id: string;
 }

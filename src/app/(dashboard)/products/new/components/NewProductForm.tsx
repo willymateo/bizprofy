@@ -2,6 +2,7 @@
 
 import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
+import { NumericFormat } from "react-number-format";
 import TextField from "@mui/material/TextField";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify-icon/react";
@@ -10,33 +11,38 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
+import { CreateProductPayload } from "@/services/interfaces";
+import { createProduct } from "@/services/products";
 import { useActive } from "@/hooks/useActive";
-
-interface FormInputs {
-  description: string;
-  unitPrice: number;
-  code: string;
-  name: string;
-}
 
 const NewProductForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
+  const {
+    formState: { errors: formError },
+    handleSubmit,
+    register,
+    watch,
+  } = useForm<CreateProductPayload>({ defaultValues: { unitPrice: 0 } });
   const [error, setError] = useState<string>("");
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors: formError },
-  } = useForm<FormInputs>();
+  const unitPrice = watch("unitPrice");
+  console.log({
+    unitPrice,
+  });
 
   const handleCreate = handleSubmit(async data => {
     startLoading();
     setError("");
 
     try {
-      console.log("Creating product", data);
+      await createProduct({
+        ...data,
+        unitPrice: parseFloat(data.unitPrice as string),
+      });
     } catch (err) {
       console.error("Error creating product", err);
+
+      setError((err as Error).message);
     }
 
     stopLoading();
@@ -83,27 +89,29 @@ const NewProductForm = () => {
             </InputAdornment>
           ),
         }}
-        helperText={formError?.code?.message}
-        error={Boolean(formError?.code)}
+        helperText={formError?.description?.message}
+        error={Boolean(formError?.description)}
         label="Additional description"
-        {...register("code")}
+        {...register("description")}
         multiline
         rows={3}
       />
 
       <TextField
         InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
+          endAdornment: (
+            <InputAdornment position="end">
               <Icon icon="solar:tag-price-bold-duotone" width={24} height={24} />
             </InputAdornment>
           ),
+          startAdornment: <InputAdornment position="start">$</InputAdornment>,
+          inputComponent: NumericFormat as any,
         }}
+        helperText={formError?.unitPrice?.message}
+        error={Boolean(formError?.unitPrice)}
         {...register("unitPrice", {
           required: "Unit price is required",
         })}
-        helperText={formError?.unitPrice?.message}
-        error={Boolean(formError?.unitPrice)}
         label="Unit price"
       />
 

@@ -12,6 +12,7 @@ import { signIn } from "next-auth/react";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
+import { CreateUserPayload } from "@/services/interfaces";
 import { useActive } from "@/hooks/useActive";
 import { createUser } from "@/services/users";
 import {
@@ -22,14 +23,8 @@ import {
   EMAIL_REGEX,
 } from "@/shared/constants";
 
-interface FormInputs {
+interface FormInputs extends CreateUserPayload {
   repeatedPassword: string;
-  companyName: string;
-  firstNames: string;
-  lastNames: string;
-  username: string;
-  password: string;
-  email: string;
 }
 
 const CredentialsForm = () => {

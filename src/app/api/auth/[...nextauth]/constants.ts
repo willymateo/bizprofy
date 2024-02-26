@@ -17,14 +17,25 @@ const authConfig: AuthOptions = {
         emailOrUsername: { label: "Email or username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async credentials => await login(credentials as LoginPayload),
+      authorize: async credentials => {
+        const {
+          firstNames = "",
+          lastNames = "",
+          photoUrl = "",
+          ...rest
+        } = await login(credentials as LoginPayload);
+
+        return {
+          ...rest,
+          name: `${firstNames} ${lastNames}`.trim(),
+          image: photoUrl,
+          firstNames,
+          lastNames,
+          photoUrl,
+        };
+      },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET as string,
-  pages: { signIn: "/auth/login" },
-  session: {
-    strategy: "jwt",
-  },
   callbacks: {
     jwt: async ({ token, user }) => {
       if (user) {
@@ -49,6 +60,9 @@ const authConfig: AuthOptions = {
       return session;
     },
   },
+  secret: process.env.NEXTAUTH_SECRET as string,
+  pages: { signIn: "/auth/login" },
+  session: { strategy: "jwt" },
 };
 
 export { authConfig };

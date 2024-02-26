@@ -1,24 +1,26 @@
 "use client";
 
-import { Icon } from "@iconify-icon/react/dist/iconify.mjs";
 import { useRouter } from "next/navigation";
+import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
+import { ReactNode } from "react";
 
 interface Props {
   className?: string;
+  children: ReactNode;
 }
 
-const Return = ({ className = "" }: Props) => {
+const Return = ({ className = "", children }: Props) => {
   const router = useRouter();
 
   return (
     <Button
-      className={`flex flex-row gap-3 rounded-lg normal-case ${className}`}
       startIcon={<Icon icon="solar:arrow-left-linear" />}
+      className={`rounded-lg normal-case ${className}`}
       onClick={router.back}
-      variant="text"
+      variant="contained"
     >
-      Cancel
+      {children}
     </Button>
   );
 };

@@ -14,9 +14,16 @@ export interface CreateUserPayload {
   companyName: string;
   firstNames: string;
   lastNames: string;
-  password: string;
   username: string;
+  password: string;
   email: string;
+}
+
+export interface CreateProductPayload {
+  description: string;
+  unitPrice: number;
+  code: string;
+  name: string;
 }
 
 export interface LoginResponse {
@@ -29,6 +36,7 @@ export interface LoginResponse {
   photoUrl: string;
   company: Company;
   email: string;
+  token: string;
   id: string;
 }
 

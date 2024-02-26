@@ -13,7 +13,7 @@ interface Props {
   children: ReactNode;
 }
 
-const RootLayout = ({ children }: Readonly<Props>) => (
+const DashboardLayout = ({ children }: Readonly<Props>) => (
   <div className="min-h-screen flex flex-row">
     <Navigation />
 
@@ -25,5 +25,5 @@ const RootLayout = ({ children }: Readonly<Props>) => (
   </div>
 );
 
-export default RootLayout;
+export default DashboardLayout;
 export { metadata };

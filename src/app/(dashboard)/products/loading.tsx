@@ -1,19 +1,9 @@
+import Skeleton from "@mui/material/Skeleton";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
-import type { Metadata } from "next";
 import Link from "next/link";
 
-import { ProductCard } from "./components/ProductCard";
-import { getProducts } from "@/services/products";
-
-const metadata: Metadata = {
-  description: "Business management system",
-  title: "Products | Bizprofy",
-};
-
-const Products = async () => {
-  const products = await getProducts();
-
+const Loading = () => {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-row gap-5 items-center justify-between">
@@ -31,11 +21,12 @@ const Products = async () => {
       </div>
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-start gap-5">
-        {products?.map(product => <ProductCard key={product.id} {...product} />)}
+        {[...Array(6)].map((_, index) => (
+          <Skeleton key={index} variant="rectangular" className="rounded-2xl h-80 w-full" />
+        ))}
       </div>
     </div>
   );
 };
 
-export default Products;
-export { metadata };
+export default Loading;

@@ -15,11 +15,11 @@ const Navigation = () => {
 
   return (
     <>
-      <Drawer onClose={handleCloseDrawer} open={isDrawerOpen}>
+      <Drawer onClose={handleCloseDrawer} open={isDrawerOpen} onClick={handleCloseDrawer}>
         <Content />
       </Drawer>
 
-      <Content className="hidden xl:flex border-y-0 border-r border-l-0 border-dashed border-slate-200" />
+      <Content className="hidden xl:flex" />
     </>
   );
 };

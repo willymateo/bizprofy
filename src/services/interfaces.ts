@@ -5,6 +5,12 @@ export interface ErrorResponse {
   };
 }
 
+export interface DefaultModelInstance {
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+}
+
 export interface LoginPayload {
   emailOrUsername: string;
   password: string;
@@ -26,12 +32,9 @@ export interface CreateProductPayload {
   name: string;
 }
 
-export interface LoginResponse {
+export interface LoginResponse extends DefaultModelInstance {
   firstNames: string;
   lastNames: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string;
   username: string;
   photoUrl: string;
   company: Company;
@@ -40,10 +43,7 @@ export interface LoginResponse {
   id: string;
 }
 
-export interface Company {
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string;
+export interface Company extends DefaultModelInstance {
   name: string;
   id: string;
 }

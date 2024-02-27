@@ -21,7 +21,14 @@ const NewProductForm = () => {
     formState: { errors: formError },
     handleSubmit,
     register,
-  } = useForm<CreateProductPayload>({ defaultValues: { unitPrice: 0 } });
+  } = useForm<CreateProductPayload>({
+    values: {
+      description: "",
+      unitPrice: 0,
+      code: "",
+      name: "",
+    },
+  });
   const [error, setError] = useState<string>("");
   const router = useRouter();
 
@@ -34,6 +41,7 @@ const NewProductForm = () => {
 
       stopLoading();
       router.push("/products");
+      router.refresh();
     } catch (err) {
       console.error("Error creating product", err);
 
@@ -103,21 +111,25 @@ const NewProductForm = () => {
         error={Boolean(formError?.unitPrice)}
         {...register("unitPrice", {
           required: "Unit price is required",
+          valueAsNumber: true,
+          min: 0,
         })}
         label="Unit price"
       />
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <Button
-        className="flex flex-row gap-3 rounded-lg normal-case"
-        onClick={handleCreate}
-        disabled={isLoading}
-        variant="contained"
-      >
-        Create product
-        {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
-      </Button>
+      <div className="flex flex-row items-center justify-center">
+        <Button
+          className="flex flex-row gap-3 rounded-lg normal-case"
+          onClick={handleCreate}
+          disabled={isLoading}
+          variant="contained"
+        >
+          Create product
+          {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+        </Button>
+      </div>
     </form>
   );
 };

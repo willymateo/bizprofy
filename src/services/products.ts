@@ -4,8 +4,9 @@ import { getServerSession } from "next-auth";
 
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
 import { CreateProductPayload, LoginResponse } from "./interfaces";
+import { Product } from "@/app/(dashboard)/products/interfaces";
 
-const getProducts = async () => {
+const getProducts = async (): Promise<Product[]> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as LoginResponse;
 

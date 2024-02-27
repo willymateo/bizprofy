@@ -2,7 +2,6 @@
 
 import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
-import { NumericFormat } from "react-number-format";
 import TextField from "@mui/material/TextField";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify-icon/react";
@@ -11,6 +10,7 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
+import { NumberHookForm } from "@/app/components/Inputs/NumberHookForm";
 import { CreateProductPayload } from "@/services/interfaces";
 import { createProduct } from "@/services/products";
 import { useActive } from "@/hooks/useActive";
@@ -21,32 +21,25 @@ const NewProductForm = () => {
     formState: { errors: formError },
     handleSubmit,
     register,
-    watch,
   } = useForm<CreateProductPayload>({ defaultValues: { unitPrice: 0 } });
   const [error, setError] = useState<string>("");
   const router = useRouter();
-  const unitPrice = watch("unitPrice");
-  console.log({
-    unitPrice,
-  });
 
   const handleCreate = handleSubmit(async data => {
     startLoading();
     setError("");
 
     try {
-      await createProduct({
-        ...data,
-        unitPrice: parseFloat(data.unitPrice as string),
-      });
+      await createProduct(data);
+
+      stopLoading();
+      router.push("/products");
     } catch (err) {
       console.error("Error creating product", err);
 
       setError((err as Error).message);
+      stopLoading();
     }
-
-    stopLoading();
-    router.push("/products");
   });
 
   return (
@@ -97,7 +90,7 @@ const NewProductForm = () => {
         rows={3}
       />
 
-      <TextField
+      <NumberHookForm
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -105,7 +98,6 @@ const NewProductForm = () => {
             </InputAdornment>
           ),
           startAdornment: <InputAdornment position="start">$</InputAdornment>,
-          inputComponent: NumericFormat as any,
         }}
         helperText={formError?.unitPrice?.message}
         error={Boolean(formError?.unitPrice)}

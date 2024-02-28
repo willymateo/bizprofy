@@ -13,17 +13,19 @@ interface Props {
   children: ReactNode;
 }
 
-const RootLayout = ({ children }: Readonly<Props>) => (
+const DashboardLayout = ({ children }: Readonly<Props>) => (
   <div className="min-h-screen flex flex-row">
     <Navigation />
 
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full xl:w-[calc(100%-280px)]">
       <Header />
 
-      <main className="flex flex-col gap-2 h-full mx-6 xl:mx-10">{children}</main>
+      <main className="flex flex-col gap-2 h-full mx-6 mb-6 xl:mx-10 xl:mb-10 xl[-webkit-box-flex:1] xlgrow">
+        {children}
+      </main>
     </div>
   </div>
 );
 
-export default RootLayout;
+export default DashboardLayout;
 export { metadata };

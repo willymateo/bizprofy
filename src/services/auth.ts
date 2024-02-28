@@ -1,8 +1,8 @@
 "use server";
 
-import { LoginPayload } from "./interfaces";
+import { LoginPayload, LoginResponse } from "./interfaces";
 
-const login = async ({ emailOrUsername, password }: LoginPayload) => {
+const login = async ({ emailOrUsername, password }: LoginPayload): Promise<LoginResponse> => {
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/auth/login`, {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -15,7 +15,7 @@ const login = async ({ emailOrUsername, password }: LoginPayload) => {
   const resBody = await res.json();
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to login");
+    throw new Error(resBody.error?.message || resBody.error?.message || "Failed to login");
   }
 
   return resBody;

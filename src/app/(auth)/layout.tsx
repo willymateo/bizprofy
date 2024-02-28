@@ -6,7 +6,7 @@ interface Props {
   children: ReactNode;
 }
 
-const RootLayout = ({ children }: Readonly<Props>) => (
+const AuthLayout = ({ children }: Readonly<Props>) => (
   <>
     <header className="fixed top-5 left-5 md:top-7 md:left-7 z-0">
       <Logo />
@@ -16,4 +16,4 @@ const RootLayout = ({ children }: Readonly<Props>) => (
   </>
 );
 
-export default RootLayout;
+export default AuthLayout;

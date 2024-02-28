@@ -17,11 +17,52 @@ const authConfig: AuthOptions = {
         emailOrUsername: { label: "Email or username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async credentials => await login(credentials as LoginPayload),
+      authorize: async credentials => {
+        const {
+          firstNames = "",
+          lastNames = "",
+          photoUrl = "",
+          ...rest
+        } = await login(credentials as LoginPayload);
+
+        return {
+          ...rest,
+          name: `${firstNames} ${lastNames}`.trim(),
+          image: photoUrl,
+          firstNames,
+          lastNames,
+          photoUrl,
+        };
+      },
     }),
   ],
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token = { ...token, ...user };
+      }
+
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (token) {
+        const { sub, iat, exp, jti, ...rest } = token;
+
+        session = {
+          ...session,
+          user: {
+            ...(session?.user ?? {}),
+            ...rest,
+          },
+        };
+      }
+
+      return session;
+    },
+  },
   secret: process.env.NEXTAUTH_SECRET as string,
   pages: { signIn: "/auth/login" },
+  session: { strategy: "jwt" },
 };
 
 export { authConfig };

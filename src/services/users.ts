@@ -12,7 +12,7 @@ const createUser = async (payload: CreateUserPayload) => {
   const resBody = await res.json();
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to create user.");
+    throw new Error(resBody.error?.message || resBody.error?.message || "Failed to create user");
   }
 
   return resBody;

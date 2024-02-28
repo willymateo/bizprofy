@@ -13,12 +13,8 @@ import Alert from "@mui/material/Alert";
 import { useState } from "react";
 import Link from "next/link";
 
+import { LoginPayload } from "@/services/interfaces";
 import { useActive } from "@/hooks/useActive";
-
-interface FormInputs {
-  emailOrUsername: string;
-  password: string;
-}
 
 const CredentialsForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
@@ -29,7 +25,7 @@ const CredentialsForm = () => {
     register,
     handleSubmit,
     formState: { errors: formError },
-  } = useForm<FormInputs>();
+  } = useForm<LoginPayload>();
 
   const handleLogin = handleSubmit(async data => {
     startLoading();
@@ -53,19 +49,32 @@ const CredentialsForm = () => {
   return (
     <form className="flex flex-col gap-5 justify-center">
       <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:chat-line-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
         helperText={formError?.emailOrUsername?.message}
         error={Boolean(formError?.emailOrUsername)}
         {...register("emailOrUsername", {
           required: "This field is required",
         })}
         label="Email or username"
+        required
       />
 
       <TextField
         InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:lock-password-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton edge="end" onClick={() => togglePasswordVisibility()}>
+              <IconButton onClick={() => togglePasswordVisibility()}>
                 {isPasswordVisible ? (
                   <Icon icon="solar:eye-closed-line-duotone" />
                 ) : (
@@ -83,6 +92,7 @@ const CredentialsForm = () => {
         })}
         placeholder="●●●●●●●●"
         label="Password"
+        required
       />
 
       <div className="flex flex-row items-center justify-end">

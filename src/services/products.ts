@@ -3,12 +3,12 @@
 import { getServerSession } from "next-auth";
 
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { CreateProductPayload, LoginResponse } from "./interfaces";
+import { CreateProductPayload, SessionPayload } from "./interfaces";
 import { Product } from "@/app/(dashboard)/products/interfaces";
 
 const getProducts = async (): Promise<Product[]> => {
   const session = await getServerSession(authConfig);
-  const user = session?.user as LoginResponse;
+  const user = session?.user as SessionPayload;
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/products`, {
     headers: {
@@ -20,6 +20,10 @@ const getProducts = async (): Promise<Product[]> => {
 
   const resBody = await res.json();
 
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || resBody.error?.message || "Invalid credentials");
+  }
+
   if (!res.ok) {
     throw new Error(resBody.error?.message || resBody.error?.message || "Failed to fetch products");
   }
@@ -29,7 +33,7 @@ const getProducts = async (): Promise<Product[]> => {
 
 const createProduct = async (payload: CreateProductPayload) => {
   const session = await getServerSession(authConfig);
-  const user = session?.user as LoginResponse;
+  const user = session?.user as SessionPayload;
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/products`, {
     headers: {
@@ -41,6 +45,10 @@ const createProduct = async (payload: CreateProductPayload) => {
   });
 
   const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || resBody.error?.message || "Invalid credentials");
+  }
 
   if (!res.ok) {
     throw new Error(resBody.error?.message || resBody.error?.message || "Failed to create product");

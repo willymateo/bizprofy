@@ -5,10 +5,15 @@ export interface ErrorResponse {
   };
 }
 
-export interface DefaultModelInstance {
+export enum Order {
+  desc = "DESC",
+  asc = "ASC",
+}
+
+export interface AuditFields {
   createdAt: string;
   updatedAt: string;
-  deletedAt: string;
+  deletedAt: string | null;
 }
 
 export interface LoginPayload {
@@ -32,7 +37,18 @@ export interface CreateProductPayload {
   name: string;
 }
 
-export interface LoginResponse extends DefaultModelInstance {
+export interface GetStockPayload {
+  quantityGreaterThanOrEqualTo?: number;
+  quantityLessThanOrEqualTo?: number;
+  stockTypeIds?: number[];
+  productIds?: string[];
+  stockDate?: string;
+  offset?: number;
+  limit?: number;
+  order?: Order;
+}
+
+export interface SessionPayload extends AuditFields {
   firstNames: string;
   lastNames: string;
   username: string;
@@ -43,7 +59,7 @@ export interface LoginResponse extends DefaultModelInstance {
   id: string;
 }
 
-export interface Company extends DefaultModelInstance {
+export interface Company extends AuditFields {
   name: string;
   id: string;
 }

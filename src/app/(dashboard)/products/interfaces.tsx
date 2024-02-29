@@ -1,6 +1,6 @@
-import { DefaultModelInstance } from "@/services/interfaces";
+import { AuditFields } from "@/services/interfaces";
 
-export interface Product extends DefaultModelInstance {
+export interface Product extends AuditFields {
   description: string;
   companyId: string;
   unitPrice: number;

@@ -11,7 +11,7 @@ interface Props {
 }
 
 const SimpleBar = ({ children, className = "" }: Props) => (
-  <div className={`h-screen w-[280px] ${className}`}>
+  <div className={`w-[280px] ${className}`}>
     <SimpleBarReact
       className={`h-full w-[280px] fixed border-y-0 border-r border-l-0 border-dashed border-slate-200`}
     >

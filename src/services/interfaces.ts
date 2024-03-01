@@ -1,3 +1,5 @@
+import { Stock } from "@/app/(dashboard)/stock/interfaces";
+
 export interface ErrorResponse {
   error: {
     message?: string;
@@ -6,8 +8,8 @@ export interface ErrorResponse {
 }
 
 export enum Order {
-  desc = "DESC",
-  asc = "ASC",
+  desc = "desc",
+  asc = "asc",
 }
 
 export interface AuditFields {
@@ -35,6 +37,11 @@ export interface CreateProductPayload {
   unitPrice: number;
   code: string;
   name: string;
+}
+
+export interface GetStockResponse {
+  rows: Stock[];
+  count: number;
 }
 
 export interface GetStockPayload {

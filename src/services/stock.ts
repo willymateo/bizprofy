@@ -2,9 +2,8 @@
 
 import { getServerSession } from "next-auth";
 
+import { GetStockPayload, GetStockResponse, SessionPayload } from "./interfaces";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { GetStockPayload, SessionPayload } from "./interfaces";
-import { Stock } from "@/app/(dashboard)/stock/interfaces";
 
 const getStock = async ({
   quantityGreaterThanOrEqualTo = 0,
@@ -15,7 +14,7 @@ const getStock = async ({
   offset,
   limit,
   order,
-}: GetStockPayload = {}): Promise<Stock[]> => {
+}: GetStockPayload = {}): Promise<GetStockResponse> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 

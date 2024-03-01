@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { SimpleTable } from "../components/simpleTable";
+import { SimpleTable } from "../components/Table/SimpleTable";
 import { STOCK_TYPE_IDS } from "../constants";
 import { getStock } from "@/services/stock";
 import { StockTypes } from "../interfaces";
@@ -14,7 +14,7 @@ const metadata: Metadata = {
 };
 
 const StockIn = async () => {
-  const stock = await getStock({ stockTypeIds: [STOCK_TYPE_IDS[StockTypes.stockIn]] });
+  const result = await getStock({ stockTypeIds: [STOCK_TYPE_IDS[StockTypes.stockIn]] });
 
   return (
     <div className="flex flex-col gap-5">
@@ -27,12 +27,12 @@ const StockIn = async () => {
             startIcon={<Icon icon="eva:plus-fill" />}
             variant="contained"
           >
-            Add product to stock
+            Register new purchase
           </Button>
         </Link>
       </div>
 
-      <SimpleTable stock={stock} />
+      <SimpleTable {...result} />
     </div>
   );
 };

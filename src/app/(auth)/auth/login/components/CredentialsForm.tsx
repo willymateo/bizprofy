@@ -13,7 +13,7 @@ import Alert from "@mui/material/Alert";
 import { useState } from "react";
 import Link from "next/link";
 
-import { LoginPayload } from "@/services/interfaces";
+import { LoginPayload } from "@/services/auth/interfaces";
 import { useActive } from "@/hooks/useActive";
 
 const CredentialsForm = () => {

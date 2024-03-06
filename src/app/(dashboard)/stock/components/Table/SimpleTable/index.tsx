@@ -6,10 +6,11 @@ import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
-import { GetStockResponse, Order } from "@/services/interfaces";
+import { GetStockResponse } from "@/services/stock/interfaces";
 import { StockTableFooter } from "./StockTableFooter";
 import { StockTableBody } from "./StockTableBody";
 import { PAGE_SIZE_OPTIONS } from "./constants";
+import { Order } from "@/services/interfaces";
 import { Stock } from "../../../interfaces";
 import { TableHeader } from "./TableHeader";
 import { ToolBar } from "./ToolBar";

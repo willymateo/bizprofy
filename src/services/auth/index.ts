@@ -1,6 +1,7 @@
 "use server";
 
-import { LoginPayload, SessionPayload } from "./interfaces";
+import { SessionPayload } from "../interfaces";
+import { LoginPayload } from "./interfaces";
 
 const login = async ({ emailOrUsername, password }: LoginPayload): Promise<SessionPayload> => {
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/auth/login`, {

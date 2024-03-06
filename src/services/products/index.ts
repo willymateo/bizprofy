@@ -2,19 +2,63 @@
 
 import { getServerSession } from "next-auth";
 
+import { CreateProductPayload, GetProductsPayload } from "./interfaces";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { CreateProductPayload, SessionPayload } from "./interfaces";
 import { Product } from "@/app/(dashboard)/products/interfaces";
+import { SessionPayload } from "../interfaces";
 
-const getProducts = async (): Promise<Product[]> => {
+interface GetProductsProps extends GetProductsPayload {
+  abortController?: AbortController;
+}
+
+const getProducts = async ({
+  unitPriceGreaterThanOrEqualTo,
+  unitPriceLessThanOrEqualTo,
+  abortController,
+  offset,
+  limit,
+  order,
+  q,
+}: GetProductsProps = {}): Promise<Product[]> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products`, {
+  const url = new URL("products", process.env.BIZPROFY_API_URL);
+
+  const searchParams = new URLSearchParams();
+
+  if (unitPriceGreaterThanOrEqualTo) {
+    searchParams.append("unitPriceGreaterThanOrEqualTo", unitPriceGreaterThanOrEqualTo.toString());
+  }
+
+  if (unitPriceLessThanOrEqualTo) {
+    searchParams.append("unitPriceLessThanOrEqualTo", unitPriceLessThanOrEqualTo.toString());
+  }
+
+  if (offset) {
+    searchParams.append("offset", offset.toString());
+  }
+
+  if (limit) {
+    searchParams.append("limit", limit.toString());
+  }
+
+  if (order) {
+    searchParams.append("order", order);
+  }
+
+  if (q) {
+    searchParams.append("q", q);
+  }
+
+  url.search = searchParams.toString();
+
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
     },
+    signal: abortController?.signal,
     method: "GET",
   });
 

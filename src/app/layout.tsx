@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 import { ralewayVariable } from "@/shared/fonts";
 import { APP_ROOT_ID } from "@/shared/constants";
-import { Provider } from "./Provider";
+import { Providers } from "./Providers";
 
 import "./globals.css";
 
@@ -13,7 +13,7 @@ interface Props {
 const RootLayout = ({ children }: Readonly<Props>) => (
   <html lang="en">
     <body id={APP_ROOT_ID} className={ralewayVariable.className}>
-      <Provider>{children}</Provider>
+      <Providers>{children}</Providers>
     </body>
   </html>
 );

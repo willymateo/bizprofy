@@ -10,6 +10,7 @@ const ProductCard = ({
   description = "",
   photoUrl = "",
   unitPrice = 0,
+  unitCost = 0,
   code = "",
   name = "",
   id = "",
@@ -41,12 +42,18 @@ const ProductCard = ({
           {name}
         </Link>
 
-        <div className="flex flex-row gap-5 items-center justify-between">
+        <div className="flex flex-col gap-5 justify-center">
           <p className="max-w-full overflow-hidden text-ellipsis">{code}</p>
-          <p>
-            <span>$</span>
-            {unitPrice}
-          </p>
+
+          <div className="flex flex-row gap-5 items-center justify-between">
+            <p className="font-bold">
+              Unit price: <span>${unitPrice}</span>
+            </p>
+
+            <p className="font-bold">
+              Unit cost: <span>${unitCost}</span>
+            </p>
+          </div>
         </div>
       </div>
     </Card>

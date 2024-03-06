@@ -14,4 +14,11 @@ const STOCK_TYPE_IDS = {
   [StockTypes.currentStock]: 4,
 };
 
-export { STOCK_TYPE_IDS, STOCK_TYPES_BY_ID };
+const STOCK_ROUTES_BY_TYPE = {
+  [StockTypes.openingStock]: "openning",
+  [StockTypes.stockIn]: "in",
+  [StockTypes.stockOut]: "out",
+  [StockTypes.currentStock]: "current",
+};
+
+export { STOCK_TYPE_IDS, STOCK_TYPES_BY_ID, STOCK_ROUTES_BY_TYPE };

@@ -3,13 +3,22 @@ import { forwardRef } from "react";
 
 import { NumericFormatCustom } from "./NumericFormatCustom";
 
-const NumberHookForm = forwardRef<HTMLDivElement, Omit<TextFieldProps, "variant">>(
-  ({ InputProps = {}, ...rest }: Omit<TextFieldProps, "variant">, ref) => (
+interface Props extends Omit<TextFieldProps, "variant"> {
+  isInteger?: boolean;
+}
+
+const NumberHookForm = forwardRef<HTMLDivElement, Props>(
+  ({ isInteger = false, InputProps = {}, ...rest }: Props, ref) => (
     <TextField
       {...rest}
       InputProps={{
         ...InputProps,
         inputComponent: NumericFormatCustom as any,
+      }}
+      onKeyDown={e => {
+        if (isInteger && [".", "-"].includes(e.key)) {
+          e.preventDefault();
+        }
       }}
       ref={ref}
     />

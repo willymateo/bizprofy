@@ -12,9 +12,11 @@ interface Props {
 const StockTableFooter = ({ rows = [] }: Props) => {
   let totalPriceSum = 0;
   let totalQuantity = 0;
+  let totalCostSum = 0;
 
   rows.forEach(({ product, quantity }) => {
     totalPriceSum += (product?.unitPrice ?? 0) * quantity;
+    totalCostSum += (product?.unitCost ?? 0) * quantity;
     totalQuantity += quantity;
   });
 
@@ -26,10 +28,17 @@ const StockTableFooter = ({ rows = [] }: Props) => {
         <TableCell />
         <TableCell />
         <TableCell />
+        <TableCell />
         <TableCell className="font-bold">
           <p>{totalQuantity}</p>
         </TableCell>
-        <TableCell className="font-bold">
+        <TableCell className="font-bold text-right">
+          <p>
+            <span>$</span>
+            {totalCostSum.toFixed(NUM_DECIMALS)}
+          </p>
+        </TableCell>
+        <TableCell className="font-bold text-right">
           <p>
             <span>$</span>
             {totalPriceSum.toFixed(NUM_DECIMALS)}

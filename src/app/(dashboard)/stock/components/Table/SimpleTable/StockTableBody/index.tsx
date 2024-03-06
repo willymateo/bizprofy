@@ -2,8 +2,8 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 
+import { GetStockResponse } from "@/services/stock/interfaces";
 import { Stock } from "@/app/(dashboard)/stock/interfaces";
-import { GetStockResponse } from "@/services/interfaces";
 import { getNumRowsToCompletePageSize } from "../utils";
 import { HEADER_COLUMNS } from "../constants";
 import { NotFound } from "./NotFound";

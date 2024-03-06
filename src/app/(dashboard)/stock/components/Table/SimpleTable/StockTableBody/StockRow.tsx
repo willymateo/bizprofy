@@ -27,6 +27,8 @@ const StockRow = ({ isSelected = false, quantity = 0, product, onClick }: Props)
 
   const totalPrice = (product?.unitPrice ?? 0) * quantity;
 
+  const totalCost = (product?.unitCost ?? 0) * quantity;
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={isSelected}>
@@ -34,13 +36,20 @@ const StockRow = ({ isSelected = false, quantity = 0, product, onClick }: Props)
           <Checkbox disableRipple checked={isSelected} onChange={onClick} />
         </TableCell>
 
-        <TableCell>{product?.id}</TableCell>
+        <TableCell className="whitespace-nowrap">{product?.id}</TableCell>
 
         <TableCell>{product?.code && <Chip label={product?.code} />}</TableCell>
 
         <TableCell>{product?.name}</TableCell>
 
-        <TableCell className="font-bold">
+        <TableCell className="font-bold text-right">
+          <p>
+            <span>$</span>
+            {product?.unitCost.toFixed(NUM_DECIMALS)}
+          </p>
+        </TableCell>
+
+        <TableCell className="font-bold text-right">
           <p>
             <span>$</span>
             {product?.unitPrice.toFixed(NUM_DECIMALS)}
@@ -49,7 +58,14 @@ const StockRow = ({ isSelected = false, quantity = 0, product, onClick }: Props)
 
         <TableCell>{quantity}</TableCell>
 
-        <TableCell className="font-bold">
+        <TableCell className="font-bold text-right">
+          <p>
+            <span>$</span>
+            {totalCost.toFixed(NUM_DECIMALS)}
+          </p>
+        </TableCell>
+
+        <TableCell className="font-bold text-right">
           <p>
             <span>$</span>
             {totalPrice.toFixed(NUM_DECIMALS)}

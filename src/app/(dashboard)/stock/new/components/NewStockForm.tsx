@@ -1,46 +1,78 @@
 "use client";
 
 import CircularProgress from "@mui/material/CircularProgress";
+import { useRouter, useSearchParams } from "next/navigation";
 import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
-import { useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
 
-import { NumberHookForm } from "@/app/components/Inputs/NumberHookForm";
-import { CreateProductPayload } from "@/services/interfaces";
-import { createProduct } from "@/services/products";
+import { DateTimePickerHookForm } from "@/app/components/inputs/DateTimePickerHookForm";
+import { ProductsHookForm } from "@/app/components/inputs/ProductsHookForm";
+import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
+import { STOCK_ROUTES_BY_TYPE, STOCK_TYPE_IDS } from "../../constants";
+import { Product } from "@/app/(dashboard)/products/interfaces";
+import { createStock } from "@/services/stock";
 import { useActive } from "@/hooks/useActive";
+import { StockTypes } from "../../interfaces";
+
+const NOW_DAYJS = dayjs();
+
+interface StockFormProps {
+  product: Product | null;
+  quantity: number;
+  stockDate: Dayjs;
+}
 
 const NewStockForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
+  const [error, setError] = useState<string>("");
+  const searchParams = useSearchParams();
   const {
     formState: { errors: formError },
     handleSubmit,
     register,
-  } = useForm<CreateProductPayload>({
+    control,
+  } = useForm<StockFormProps>({
     values: {
-      description: "",
-      unitPrice: 0,
-      code: "",
-      name: "",
+      stockDate: NOW_DAYJS,
+      product: null,
+      quantity: 0,
     },
   });
-  const [error, setError] = useState<string>("");
   const router = useRouter();
 
-  const handleCreate = handleSubmit(async data => {
+  // change this logic to server side
+  useEffect(() => {
+    const stockType = searchParams.get("type") as StockTypes;
+    const stockTypeId = STOCK_TYPE_IDS[stockType];
+
+    if (!stockTypeId) {
+      router.push("/stock/in");
+    }
+  }, [searchParams, router]);
+
+  const handleCreate = handleSubmit(async ({ product, quantity = 0, stockDate }) => {
     startLoading();
     setError("");
 
     try {
-      await createProduct(data);
+      const stockType = searchParams.get("type") as StockTypes;
+      const stockTypeId = STOCK_TYPE_IDS[stockType];
+      const newRoute = `/stock/${STOCK_ROUTES_BY_TYPE[stockType]}`;
+
+      await createStock({
+        stockDate: stockDate.toISOString(),
+        productId: product?.id as string,
+        stockTypeId,
+        quantity,
+      });
 
       stopLoading();
-      router.push("/products");
+      router.push(newRoute);
       router.refresh();
     } catch (err) {
       console.error("Error creating product", err);
@@ -52,69 +84,41 @@ const NewStockForm = () => {
 
   return (
     <form className="flex flex-col gap-5 justify-center">
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon icon="solar:code-scan-line-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-        }}
-        helperText={formError?.code?.message}
-        error={Boolean(formError?.code)}
-        {...register("code")}
-        label="Product code"
-      />
+      <ProductsHookForm
+        rules={{
+          validate: value => {
+            const product = value as Product;
 
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon icon="solar:bag-4-bold-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
+            return Boolean(product?.id) || "Product is required";
+          },
         }}
-        {...register("name", {
-          required: "Product name is required",
-        })}
-        helperText={formError?.name?.message}
-        error={Boolean(formError?.name)}
-        label="Product name"
-      />
-
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon icon="solar:chat-line-bold-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-        }}
-        helperText={formError?.description?.message}
-        error={Boolean(formError?.description)}
-        label="Additional description"
-        {...register("description")}
-        multiline
-        rows={3}
+        control={control}
+        name="product"
       />
 
       <NumberHookForm
         InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <Icon icon="solar:tag-price-bold-duotone" width={24} height={24} />
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:document-add-bold-duotone" width={24} height={24} />
             </InputAdornment>
           ),
-          startAdornment: <InputAdornment position="start">$</InputAdornment>,
         }}
-        helperText={formError?.unitPrice?.message}
-        error={Boolean(formError?.unitPrice)}
-        {...register("unitPrice", {
-          required: "Unit price is required",
+        {...register("quantity", {
+          required: "Product quantity is required",
           valueAsNumber: true,
           min: 0,
         })}
-        label="Unit price"
+        helperText={formError?.quantity?.message}
+        error={Boolean(formError?.quantity)}
+        label="Product quantity"
+        isInteger
+      />
+
+      <DateTimePickerHookForm
+        rules={{ required: "Stock date is required" }}
+        control={control}
+        name="stockDate"
       />
 
       {error && <Alert severity="error">{error}</Alert>}

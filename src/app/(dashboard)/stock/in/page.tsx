@@ -21,7 +21,7 @@ const StockIn = async () => {
       <div className="flex flex-row gap-5 items-center justify-between">
         <h1>Stock in</h1>
 
-        <Link href="/stock/new" className="no-underline">
+        <Link href={`/stock/new?type=${StockTypes.stockIn}`} className="no-underline">
           <Button
             className="rounded-lg normal-case"
             startIcon={<Icon icon="eva:plus-fill" />}

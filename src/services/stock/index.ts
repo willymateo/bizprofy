@@ -2,8 +2,9 @@
 
 import { getServerSession } from "next-auth";
 
-import { GetStockPayload, GetStockResponse, SessionPayload } from "./interfaces";
+import { CreateStockPayload, GetStockResponse, GetStockPayload } from "./interfaces";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
+import { SessionPayload } from "../interfaces";
 
 const getStock = async ({
   quantityGreaterThanOrEqualTo = 0,
@@ -76,4 +77,30 @@ const getStock = async ({
   return resBody;
 };
 
-export { getStock };
+const createStock = async (payload: CreateStockPayload) => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/stock`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+    method: "POST",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || resBody.error?.message || "Failed to create stock");
+  }
+
+  return resBody;
+};
+
+export { getStock, createStock };

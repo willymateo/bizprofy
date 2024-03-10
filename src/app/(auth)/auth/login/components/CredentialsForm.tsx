@@ -20,12 +20,12 @@ const CredentialsForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const { isActive: isPasswordVisible = false, toggle: togglePasswordVisibility } = useActive();
   const [error, setError] = useState<string>("");
-  const router = useRouter();
   const {
-    register,
-    handleSubmit,
     formState: { errors: formError },
+    handleSubmit,
+    register,
   } = useForm<LoginPayload>();
+  const router = useRouter();
 
   const handleLogin = handleSubmit(async data => {
     startLoading();

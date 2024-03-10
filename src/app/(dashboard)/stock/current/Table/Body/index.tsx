@@ -3,22 +3,23 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 
 import { getNumRowsToCompletePageSize } from "../../../components/Table/utils";
-import { GetStockResponse } from "@/services/stock/interfaces";
-import { Stock } from "@/app/(dashboard)/stock/interfaces";
-import { HeaderColumnTypes } from "../interfaces";
+import { HEADER_COLUMNS } from "../constants";
+import { BodyRowData } from "../interfaces";
 import { NotFound } from "./NotFound";
 import { StockRow } from "./StockRow";
 import { Dispatch } from "react";
 
-interface Props extends GetStockResponse {
-  setSelectedRows: Dispatch<Record<string, Stock>>;
-  selectedRows: Record<string, Stock>;
+interface Props {
+  setSelectedRows: Dispatch<Record<string, BodyRowData>>;
+  selectedRows: Record<string, BodyRowData>;
   currentPageNumber: number;
+  rows: BodyRowData[];
   pageSize: number;
-  query: string;
+  query?: string;
+  count: number;
 }
 
-const StockTableBody = ({
+const Body = ({
   currentPageNumber = 0,
   selectedRows = {},
   setSelectedRows,
@@ -44,7 +45,7 @@ const StockTableBody = ({
       return setSelectedRows(newSelectedRows);
     }
 
-    const stockElement = rows.find(({ id }) => id === stockId);
+    const stockElement = rows.find(({ product }) => product.id === stockId);
 
     if (!stockElement) {
       return;
@@ -57,28 +58,20 @@ const StockTableBody = ({
     <TableBody>
       {rows
         .slice(currentPageNumber * pageSize, currentPageNumber * pageSize + pageSize)
-        .map((stockElement: Stock) => (
+        .map((stockElement: BodyRowData) => (
           <StockRow
-            isSelected={Boolean(selectedRows[stockElement.id])}
-            onClick={() => selectRow(stockElement.id)}
-            key={stockElement.id}
-            columns={columns}
+            isSelected={Boolean(selectedRows[stockElement?.product?.id])}
+            onClick={() => selectRow(stockElement?.product?.id)}
+            key={stockElement?.product?.id}
             {...stockElement}
           />
         ))}
 
       {[...Array(numRowsToCompletePageSize)].map((_, rowIndex) => (
         <TableRow key={rowIndex}>
-          <TableCell />
-          <TableCell />
-          <TableCell />
-          <TableCell />
-          <TableCell />
-          <TableCell />
-          <TableCell />
-          <TableCell />
-          <TableCell />
-          <TableCell />
+          {[...Array(HEADER_COLUMNS.length + 2)].map((_, index) => (
+            <TableCell key={index} />
+          ))}
         </TableRow>
       ))}
 
@@ -87,4 +80,4 @@ const StockTableBody = ({
   );
 };
 
-export { StockTableBody };
+export { Body };

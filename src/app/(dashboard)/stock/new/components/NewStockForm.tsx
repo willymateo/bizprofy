@@ -1,8 +1,8 @@
 "use client";
 
 import CircularProgress from "@mui/material/CircularProgress";
-import { useRouter, useSearchParams } from "next/navigation";
 import InputAdornment from "@mui/material/InputAdornment";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
@@ -24,14 +24,21 @@ const NOW_DAYJS = dayjs();
 
 interface StockFormProps {
   product: Product | null;
+  transactionDate: Dayjs;
   quantity: number;
-  stockDate: Dayjs;
 }
 
-const NewStockForm = () => {
+interface Props {
+  stockType: CreatableStockTypes;
+  stockTypeId: number;
+}
+
+const NewStockForm = ({
+  stockTypeId = STOCK_TYPE_IDS[CreatableStockTypes.stockIn],
+  stockType = CreatableStockTypes.stockIn,
+}: Props) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
-  const searchParams = useSearchParams();
   const {
     formState: { errors: formError },
     handleSubmit,
@@ -39,13 +46,12 @@ const NewStockForm = () => {
     control,
   } = useForm<StockFormProps>({
     values: {
-      stockDate: NOW_DAYJS,
+      transactionDate: NOW_DAYJS,
       product: null,
       quantity: 0,
     },
   });
   const router = useRouter();
-  const stockType = searchParams.get("type") as CreatableStockTypes;
 
   // change this logic to server side
   useEffect(() => {
@@ -54,16 +60,15 @@ const NewStockForm = () => {
     }
   }, [router, stockType]);
 
-  const handleCreate = handleSubmit(async ({ product, quantity = 0, stockDate }) => {
+  const handleCreate = handleSubmit(async ({ product, quantity = 0, transactionDate }) => {
     startLoading();
     setError("");
 
     try {
-      const stockTypeId = STOCK_TYPE_IDS[stockType];
       const newRoute = `/stock/${STOCK_ROUTES_BY_TYPE[stockType]}`;
 
       await createStock({
-        stockDate: stockDate.toISOString(),
+        transactionDate: transactionDate.toISOString(),
         productId: product?.id as string,
         stockTypeId,
         quantity,
@@ -114,9 +119,11 @@ const NewStockForm = () => {
       />
 
       <DateTimePickerHookForm
-        rules={{ required: "Stock date is required" }}
+        rules={{ required: "Transaction date is required" }}
+        label="Transaction date"
+        name="transactionDate"
         control={control}
-        name="stockDate"
+        closeOnSelect
       />
 
       {error && <Alert severity="error">{error}</Alert>}

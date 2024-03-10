@@ -5,4 +5,9 @@ const CREATE_BUTTON_LABEL_BY_STOCK_TYPE = {
   [CreatableStockTypes.stockOut]: "Register sale",
 };
 
-export { CREATE_BUTTON_LABEL_BY_STOCK_TYPE };
+const TITLE_BY_STOCK_TYPE = {
+  [CreatableStockTypes.stockIn]: "New purchase",
+  [CreatableStockTypes.stockOut]: "New sale",
+};
+
+export { CREATE_BUTTON_LABEL_BY_STOCK_TYPE, TITLE_BY_STOCK_TYPE };

@@ -1,14 +1,25 @@
 import { FieldValues, UseControllerProps, useController } from "react-hook-form";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { Dayjs } from "dayjs";
 
 import { DATE_FORMAT } from "@/shared/constants";
 
 interface Props<T extends FieldValues> extends UseControllerProps<T> {
+  closeOnSelect?: boolean;
+  className?: string;
+  minDateTime?: Dayjs;
+  maxDateTime?: Dayjs;
   format?: string;
+  label?: string;
 }
 
 const DateTimePickerHookForm = <T extends FieldValues>({
+  closeOnSelect = true,
   format = DATE_FORMAT,
+  label = "Date",
+  className = "",
+  minDateTime,
+  maxDateTime,
   ...props
 }: Props<T>) => {
   const {
@@ -18,10 +29,14 @@ const DateTimePickerHookForm = <T extends FieldValues>({
 
   return (
     <DateTimePicker
+      closeOnSelect={closeOnSelect}
+      minDateTime={minDateTime}
+      maxDateTime={maxDateTime}
+      className={className}
       onChange={onChange}
-      label="Stock date"
       onClose={onBlur}
       format={format}
+      label={label}
       value={value}
     />
   );

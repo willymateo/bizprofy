@@ -3,29 +3,49 @@
 import TablePagination from "@mui/material/TablePagination";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import TableContainer from "@mui/material/TableContainer";
-import Table from "@mui/material/Table";
+import MuiTable from "@mui/material/Table";
+import { useForm } from "react-hook-form";
 import Card from "@mui/material/Card";
+import dayjs, { Dayjs } from "dayjs";
 
-import { GetStockResponse } from "@/services/stock/interfaces";
-import { StockTableFooter } from "./StockTableFooter";
-import { StockTableBody } from "./StockTableBody";
+import { BodyRowData, TableData } from "./interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
 import { Order } from "@/services/interfaces";
-import { TableHeader } from "./TableHeader";
-import { Stock } from "../../interfaces";
 import { ToolBar } from "./ToolBar";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { Body } from "./Body";
 
-interface Props extends GetStockResponse {
-  className?: string;
+interface CurrentStockFormProps {
+  transactionDateGreaterThanOrEqualTo: Dayjs;
+  transactionDateLessThanOrEqualTo: Dayjs;
+  query?: string;
 }
 
-const ComplexTable = ({ className = "", rows = [], count = 0 }: Props) => {
-  const [selectedRows, setSelectedRows] = useState<Record<string, Stock>>({});
+interface Props {
+  transactionDateGreaterThanOrEqualTo: string;
+  transactionDateLessThanOrEqualTo: string;
+  tableData: TableData;
+}
+
+const Table = ({ tableData, ...props }: Props) => {
+  const { control, watch, handleSubmit } = useForm<CurrentStockFormProps>({
+    values: {
+      transactionDateGreaterThanOrEqualTo: dayjs(props.transactionDateGreaterThanOrEqualTo),
+      transactionDateLessThanOrEqualTo: dayjs(props.transactionDateLessThanOrEqualTo),
+      query: "",
+    },
+  });
+  const [selectedRows, setSelectedRows] = useState<Record<string, BodyRowData>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
   const [pageSize, setPageSize] = useState<number>(PAGE_SIZE_OPTIONS[0]);
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(0);
   const [orderBy, setOrderBy] = useState<string>("");
-  const [query, setQuery] = useState<string>("");
+  const [q, setQuery] = useState<string>("");
+
+  const transactionDateGreaterThanOrEqualTo = watch("transactionDateGreaterThanOrEqualTo");
+  const transactionDateLessThanOrEqualTo = watch("transactionDateLessThanOrEqualTo");
+  const query = watch("query");
 
   const handleSort = (id: string = "") => {
     const isAsc = orderBy === id && orderDirection === Order.asc;
@@ -52,50 +72,52 @@ const ComplexTable = ({ className = "", rows = [], count = 0 }: Props) => {
   };
 
   return (
-    <Card className={`flex flex-col ${className}`}>
+    <Card className="flex flex-col">
       <ToolBar
+        transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
+        transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
         numRowsSelected={Object.keys(selectedRows).length}
-        onChangeQuery={handleChangeQuery}
-        query={query}
+        setCurrentPageNumber={setCurrentPageNumber}
+        control={control}
       />
 
       <TableContainer className="max-h-[35rem]">
-        <Table stickyHeader>
-          <TableHeader
+        <MuiTable stickyHeader>
+          <Header
+            numTotalRows={tableData?.bodyRowData?.length ?? 0}
             numRowsSelected={Object.keys(selectedRows).length}
+            rows={tableData?.bodyRowData ?? []}
             setSelectedRows={setSelectedRows}
             orderDirection={orderDirection}
             handleSort={handleSort}
-            numTotalRows={count}
             orderBy={orderBy}
-            rows={rows}
           />
 
-          <StockTableBody
+          <Body
+            count={tableData?.bodyRowData?.length ?? 0}
             currentPageNumber={currentPageNumber}
+            rows={tableData?.bodyRowData ?? []}
             setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
             pageSize={pageSize}
             query={query}
-            count={count}
-            rows={rows}
           />
 
-          <StockTableFooter rows={rows} />
-        </Table>
+          <Footer {...(tableData?.footerData ?? {})} />
+        </MuiTable>
       </TableContainer>
 
       <TablePagination
+        count={tableData?.bodyRowData?.length ?? 0}
         onRowsPerPageChange={handleChangePageSize}
         rowsPerPageOptions={PAGE_SIZE_OPTIONS}
         onPageChange={handleChangePage}
         page={currentPageNumber}
         rowsPerPage={pageSize}
         component="div"
-        count={count}
       />
     </Card>
   );
 };
 
-export { ComplexTable };
+export { Table };

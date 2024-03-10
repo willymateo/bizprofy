@@ -18,10 +18,23 @@ export enum HeaderColumnTypes {
   totalPrice = "totalPrice",
 }
 
-export interface TableData {
+export interface BodyRowData {
   purchasesNumber: number;
   salesNumber: number;
   totalPrice: number;
   totalCost: number;
   product: Product;
+}
+
+export interface FooterData {
+  totalPurchasesNumber: number;
+  totalSalesNumber: number;
+  totalPriceSum: number;
+  totalCostSum: number;
+  profit: number;
+}
+
+export interface TableData {
+  bodyRowData: BodyRowData[];
+  footerData: FooterData;
 }

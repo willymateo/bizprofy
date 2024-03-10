@@ -1,3 +1,5 @@
+import { Stock } from "../../../interfaces";
+
 export interface HeaderColumns {
   id: HeaderColumnTypes;
   className?: string;
@@ -14,4 +16,15 @@ export enum HeaderColumnTypes {
   quantity = "quantity",
   totalCost = "totalCost",
   totalPrice = "totalPrice",
+}
+
+export interface FooterData {
+  totalQuantity: number;
+  totalPriceSum: number;
+  totalCostSum: number;
+}
+
+export interface TableData {
+  footerData: FooterData;
+  bodyRowData: Stock[];
 }

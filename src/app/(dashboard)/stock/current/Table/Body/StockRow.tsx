@@ -8,28 +8,25 @@ import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
 
-import { DATE_FORMAT, NUM_DECIMALS } from "@/shared/constants";
-import { Stock } from "@/app/(dashboard)/stock/interfaces";
-import dayjs from "dayjs";
+import { NUM_DECIMALS } from "@/shared/constants";
+import { BodyRowData } from "../interfaces";
 
-interface Props extends Stock {
+interface Props extends BodyRowData {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isSelected?: boolean;
 }
 
 const StockRow = ({
+  purchasesNumber = 0,
   isSelected = false,
-  transactionDate,
-  quantity = 0,
+  salesNumber = 0,
+  totalPrice = 0,
+  totalCost = 0,
   product,
   onClick,
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const isMenuOpen = Boolean(anchorEl);
-
-  const totalPrice = (product?.unitPrice ?? 0) * quantity;
-
-  const totalCost = (product?.unitCost ?? 0) * quantity;
 
   const handleOpenMenu = ({ currentTarget }: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(currentTarget);
@@ -42,15 +39,14 @@ const StockRow = ({
         <TableCell>
           <Checkbox disableRipple checked={isSelected} onChange={onClick} />
         </TableCell>
-        <TableCell className="whitespace-nowrap">
-          {dayjs(transactionDate).format(DATE_FORMAT)}
-        </TableCell>
 
         <TableCell className="whitespace-nowrap">{product?.id}</TableCell>
 
         <TableCell>{product?.code && <Chip label={product?.code} />}</TableCell>
 
         <TableCell>{product?.name}</TableCell>
+
+        <TableCell className="text-right">{purchasesNumber}</TableCell>
 
         <TableCell className="font-bold text-right">
           <p>
@@ -62,16 +58,16 @@ const StockRow = ({
         <TableCell className="font-bold text-right">
           <p>
             <span>$</span>
-            {product?.unitPrice.toFixed(NUM_DECIMALS)}
+            {totalCost.toFixed(NUM_DECIMALS)}
           </p>
         </TableCell>
 
-        <TableCell className="text-right">{quantity}</TableCell>
+        <TableCell className="text-right">{salesNumber}</TableCell>
 
         <TableCell className="font-bold text-right">
           <p>
             <span>$</span>
-            {totalCost.toFixed(NUM_DECIMALS)}
+            {product?.unitPrice.toFixed(NUM_DECIMALS)}
           </p>
         </TableCell>
 

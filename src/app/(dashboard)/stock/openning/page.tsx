@@ -10,10 +10,16 @@ const metadata: Metadata = {
 };
 
 const OpenningStock = async () => {
-  const stockIn = await getStock({ stockTypeIds: [STOCK_TYPE_IDS[CreatableStockTypes.stockIn]] });
-  const stockOut = await getStock({ stockTypeIds: [STOCK_TYPE_IDS[CreatableStockTypes.stockOut]] });
+  const result = await getStock({
+    stockTypeIds: [
+      STOCK_TYPE_IDS[CreatableStockTypes.stockOut],
+      STOCK_TYPE_IDS[CreatableStockTypes.stockIn],
+    ],
+  });
 
-  console.log({ stockIn, stockOut });
+  console.log({
+    result,
+  });
 
   return (
     <div>

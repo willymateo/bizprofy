@@ -19,7 +19,7 @@ interface Props extends GetStockResponse {
   query: string;
 }
 
-const StockTableBody = ({
+const Body = ({
   columns = Object.values(HeaderColumnTypes),
   currentPageNumber = 0,
   selectedRows = {},
@@ -89,4 +89,4 @@ const StockTableBody = ({
   );
 };
 
-export { StockTableBody };
+export { Body };

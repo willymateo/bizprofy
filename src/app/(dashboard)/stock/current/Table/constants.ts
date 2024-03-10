@@ -17,19 +17,19 @@ const HEADER_COLUMNS: HeaderColumns[] = [
     className: "text-center whitespace-nowrap",
   },
   {
+    id: HeaderColumnTypes.purchasesNumber,
+    label: "Number of Purchases",
+    className: "text-center whitespace-nowrap",
+  },
+  {
     id: HeaderColumnTypes.unitCost,
     label: "Unit Cost",
     className: "text-center whitespace-nowrap font-bold",
   },
   {
-    id: HeaderColumnTypes.unitPrice,
-    label: "Unit Price",
+    id: HeaderColumnTypes.totalCost,
+    label: "Total Cost",
     className: "text-center whitespace-nowrap font-bold",
-  },
-  {
-    id: HeaderColumnTypes.purchasesNumber,
-    label: "Number of Purchases",
-    className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.salesNumber,
@@ -37,8 +37,8 @@ const HEADER_COLUMNS: HeaderColumns[] = [
     className: "text-center whitespace-nowrap",
   },
   {
-    id: HeaderColumnTypes.totalCost,
-    label: "Total Cost",
+    id: HeaderColumnTypes.unitPrice,
+    label: "Unit Price",
     className: "text-center whitespace-nowrap font-bold",
   },
   {

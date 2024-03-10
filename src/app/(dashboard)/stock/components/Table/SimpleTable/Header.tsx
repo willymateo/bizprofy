@@ -21,7 +21,7 @@ interface Props {
   rows: Stock[];
 }
 
-const TableHeader = ({
+const Header = ({
   columns = Object.values(HeaderColumnTypes),
   orderDirection = Order.asc,
   numRowsSelected = 0,
@@ -81,4 +81,4 @@ const TableHeader = ({
   );
 };
 
-export { TableHeader };
+export { Header };

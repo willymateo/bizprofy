@@ -1,20 +1,21 @@
 "use client";
 
+import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import TablePagination from "@mui/material/TablePagination";
-import { ChangeEvent, MouseEvent, useState } from "react";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
 import { GetStockResponse } from "@/services/stock/interfaces";
-import { StockTableFooter } from "./StockTableFooter";
-import { StockTableBody } from "./StockTableBody";
-import { HeaderColumnTypes } from "./interfaces";
+import { HeaderColumnTypes, TableData } from "./interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
 import { Order } from "@/services/interfaces";
 import { Stock } from "../../../interfaces";
-import { TableHeader } from "./TableHeader";
+import { getTableData } from "./utils";
 import { ToolBar } from "./ToolBar";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { Body } from "./Body";
 
 interface Props extends GetStockResponse {
   columns?: HeaderColumnTypes[];
@@ -23,16 +24,22 @@ interface Props extends GetStockResponse {
 
 const SimpleTable = ({
   columns = Object.values(HeaderColumnTypes),
+  rows: originalRows = [],
   className = "",
-  rows = [],
   count = 0,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<Record<string, Stock>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
   const [pageSize, setPageSize] = useState<number>(PAGE_SIZE_OPTIONS[0]);
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(0);
+  const [tableData, setTableData] = useState<TableData | null>(null);
   const [orderBy, setOrderBy] = useState<string>("");
   const [query, setQuery] = useState<string>("");
+
+  useEffect(() => {
+    const newTableData = getTableData({ rows: originalRows });
+    setTableData(newTableData);
+  }, [originalRows]);
 
   const handleSort = (id: string = "") => {
     const isAsc = orderBy === id && orderDirection === Order.asc;
@@ -68,29 +75,29 @@ const SimpleTable = ({
 
       <TableContainer className="max-h-[35rem]">
         <Table stickyHeader>
-          <TableHeader
+          <Header
             numRowsSelected={Object.keys(selectedRows).length}
+            rows={tableData?.bodyRowData ?? []}
             setSelectedRows={setSelectedRows}
             orderDirection={orderDirection}
             handleSort={handleSort}
             numTotalRows={count}
             columns={columns}
             orderBy={orderBy}
-            rows={rows}
           />
 
-          <StockTableBody
+          <Body
             currentPageNumber={currentPageNumber}
+            rows={tableData?.bodyRowData ?? []}
             setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
             pageSize={pageSize}
             columns={columns}
             query={query}
             count={count}
-            rows={rows}
           />
 
-          <StockTableFooter rows={rows} columns={columns} />
+          <Footer {...(tableData?.footerData ?? {})} columns={columns} />
         </Table>
       </TableContainer>
 

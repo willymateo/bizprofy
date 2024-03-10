@@ -2,11 +2,12 @@ import { Stock } from "@/app/(dashboard)/stock/interfaces";
 import { Order } from "../interfaces";
 
 export interface GetStockPayload {
+  transactionDateGreaterThanOrEqualTo?: string;
+  transactionDateLessThanOrEqualTo?: string;
   quantityGreaterThanOrEqualTo?: number;
   quantityLessThanOrEqualTo?: number;
   stockTypeIds?: number[];
   productIds?: string[];
-  stockDate?: string;
   offset?: number;
   limit?: number;
   order?: Order;
@@ -18,8 +19,8 @@ export interface GetStockResponse {
 }
 
 export interface CreateStockPayload {
+  transactionDate?: string;
   stockTypeId: number;
-  stockDate?: string;
   productId: string;
   quantity: number;
 }

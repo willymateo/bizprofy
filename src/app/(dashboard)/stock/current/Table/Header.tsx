@@ -7,19 +7,19 @@ import { ChangeEvent, Dispatch } from "react";
 
 import { Order } from "@/services/interfaces";
 import { HEADER_COLUMNS } from "./constants";
-import { Stock } from "../../interfaces";
+import { BodyRowData } from "./interfaces";
 
 interface Props {
-  setSelectedRows: Dispatch<Record<string, Stock>>;
+  setSelectedRows: Dispatch<Record<string, BodyRowData>>;
   handleSort: (propertyId: string) => void;
   numRowsSelected: number;
   orderDirection: Order;
   numTotalRows: number;
+  rows: BodyRowData[];
   orderBy: string;
-  rows: Stock[];
 }
 
-const TableHeader = ({
+const Header = ({
   orderDirection = Order.asc,
   numRowsSelected = 0,
   numTotalRows = 0,
@@ -30,10 +30,10 @@ const TableHeader = ({
 }: Props) => {
   const selectAll = ({ target: { checked = false } }: ChangeEvent<HTMLInputElement>) => {
     if (checked) {
-      const newSelectedRows: Record<string, Stock> = {};
+      const newSelectedRows: Record<string, BodyRowData> = {};
 
       rows.forEach(row => {
-        newSelectedRows[row.id] = row;
+        newSelectedRows[row?.product?.id] = row;
       });
 
       return setSelectedRows(newSelectedRows);
@@ -76,4 +76,4 @@ const TableHeader = ({
   );
 };
 
-export { TableHeader };
+export { Header };

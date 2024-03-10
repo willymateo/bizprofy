@@ -7,11 +7,12 @@ import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
 import { SessionPayload } from "../interfaces";
 
 const getStock = async ({
+  transactionDateGreaterThanOrEqualTo,
+  transactionDateLessThanOrEqualTo,
   quantityGreaterThanOrEqualTo = 0,
   quantityLessThanOrEqualTo,
   stockTypeIds = [],
   productIds = [],
-  stockDate,
   offset,
   limit,
   order,
@@ -22,8 +23,16 @@ const getStock = async ({
   const url = new URL("stock", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
 
+  if (transactionDateGreaterThanOrEqualTo) {
+    searchParams.append("transactionDateGreaterThanOrEqualTo", transactionDateGreaterThanOrEqualTo);
+  }
+
   if (quantityGreaterThanOrEqualTo) {
     searchParams.append("quantityGreaterThanOrEqualTo", quantityGreaterThanOrEqualTo.toString());
+  }
+
+  if (transactionDateLessThanOrEqualTo) {
+    searchParams.append("transactionDateLessThanOrEqualTo", transactionDateLessThanOrEqualTo);
   }
 
   if (quantityLessThanOrEqualTo) {
@@ -36,10 +45,6 @@ const getStock = async ({
 
   if (productIds?.length) {
     searchParams.append("productIds", productIds.join(","));
-  }
-
-  if (stockDate) {
-    searchParams.append("stockDate", stockDate);
   }
 
   if (offset) {

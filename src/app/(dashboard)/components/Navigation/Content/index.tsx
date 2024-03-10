@@ -1,5 +1,3 @@
-"use client";
-
 import List from "@mui/material/List";
 
 import { UserSessionInformation } from "./UserSessionInformation";

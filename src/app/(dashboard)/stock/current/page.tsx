@@ -1,31 +1,58 @@
-import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import dayjs from "dayjs";
 
-import { CreatableStockTypes } from "../interfaces";
-import { STOCK_TYPE_IDS } from "../constants";
-import { ComplexTable } from "./ComplexTable";
+import { CreatableStockTypes, ExtraStockTypes } from "../interfaces";
+import { STOCK_ROUTES_BY_TYPE, STOCK_TYPE_IDS } from "../constants";
+import { GetStockPayload } from "@/services/stock/interfaces";
+import { getTableData } from "./Table/utils";
 import { getStock } from "@/services/stock";
+import { Table } from "./Table";
 
-const metadata: Metadata = {
-  description: "Business management system",
-  title: "Current stock | Bizprofy",
+type Props = {
+  searchParams: GetStockPayload;
+  params: {};
 };
 
-const CurrentStock = async () => {
-  const stock = await getStock({
+const CurrentStock = async ({ searchParams }: Props) => {
+  const now = dayjs();
+  const {
+    transactionDateGreaterThanOrEqualTo = now.startOf("day").toISOString(),
+    transactionDateLessThanOrEqualTo = now.endOf("day").toISOString(),
+  } = searchParams;
+  const transactionDateGreaterThanOrEqualToDate = dayjs(transactionDateGreaterThanOrEqualTo);
+  const transactionDateLessThanOrEqualToDate = dayjs(transactionDateLessThanOrEqualTo);
+
+  if (
+    !transactionDateGreaterThanOrEqualToDate.isValid() ||
+    !transactionDateLessThanOrEqualToDate.isValid() ||
+    transactionDateGreaterThanOrEqualToDate.isAfter(transactionDateLessThanOrEqualToDate)
+  ) {
+    redirect(
+      `/stock/${STOCK_ROUTES_BY_TYPE[ExtraStockTypes.currentStock]}?${new URLSearchParams({
+        transactionDateGreaterThanOrEqualTo: dayjs().startOf("day").toISOString(),
+        transactionDateLessThanOrEqualTo: dayjs().endOf("day").toISOString(),
+      }).toString()}`,
+    );
+  }
+
+  const { rows } = await getStock({
     stockTypeIds: [
       STOCK_TYPE_IDS[CreatableStockTypes.stockOut],
       STOCK_TYPE_IDS[CreatableStockTypes.stockIn],
     ],
+    transactionDateGreaterThanOrEqualTo,
+    transactionDateLessThanOrEqualTo,
   });
 
-  return (
-    <div className="flex flex-col gap-5">
-      <h1>Current stocks status</h1>
+  const newTableData = getTableData({ rows });
 
-      <ComplexTable {...stock} />
-    </div>
+  return (
+    <Table
+      transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
+      transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
+      tableData={newTableData}
+    />
   );
 };
 
 export default CurrentStock;
-export { metadata };

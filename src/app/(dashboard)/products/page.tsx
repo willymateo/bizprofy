@@ -30,7 +30,7 @@ const Products = async () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-start gap-5">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-stretch gap-5">
         {products?.map(product => <ProductCard key={product.id} {...product} />)}
       </div>
     </div>

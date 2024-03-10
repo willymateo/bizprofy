@@ -2,9 +2,9 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 
+import { getNumRowsToCompletePageSize } from "../../../components/Table/utils";
 import { GetStockResponse } from "@/services/stock/interfaces";
 import { Stock } from "@/app/(dashboard)/stock/interfaces";
-import { getNumRowsToCompletePageSize } from "../../utils";
 import { HeaderColumnTypes } from "../interfaces";
 import { NotFound } from "./NotFound";
 import { StockRow } from "./StockRow";
@@ -13,14 +13,12 @@ import { Dispatch } from "react";
 interface Props extends GetStockResponse {
   setSelectedRows: Dispatch<Record<string, Stock>>;
   selectedRows: Record<string, Stock>;
-  columns?: HeaderColumnTypes[];
   currentPageNumber: number;
   pageSize: number;
   query: string;
 }
 
 const StockTableBody = ({
-  columns = Object.values(HeaderColumnTypes),
   currentPageNumber = 0,
   selectedRows = {},
   setSelectedRows,
@@ -72,14 +70,14 @@ const StockTableBody = ({
       {[...Array(numRowsToCompletePageSize)].map((_, rowIndex) => (
         <TableRow key={rowIndex}>
           <TableCell />
-          {columns.includes(HeaderColumnTypes.productId) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.productCode) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.productName) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.unitCost) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.unitPrice) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.quantity) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.totalCost) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.totalPrice) && <TableCell />}
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
           <TableCell />
         </TableRow>
       ))}

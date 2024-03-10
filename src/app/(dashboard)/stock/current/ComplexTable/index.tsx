@@ -9,24 +9,17 @@ import Card from "@mui/material/Card";
 import { GetStockResponse } from "@/services/stock/interfaces";
 import { StockTableFooter } from "./StockTableFooter";
 import { StockTableBody } from "./StockTableBody";
-import { HeaderColumnTypes } from "./interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
 import { Order } from "@/services/interfaces";
-import { Stock } from "../../../interfaces";
 import { TableHeader } from "./TableHeader";
+import { Stock } from "../../interfaces";
 import { ToolBar } from "./ToolBar";
 
 interface Props extends GetStockResponse {
-  columns?: HeaderColumnTypes[];
   className?: string;
 }
 
-const SimpleTable = ({
-  columns = Object.values(HeaderColumnTypes),
-  className = "",
-  rows = [],
-  count = 0,
-}: Props) => {
+const ComplexTable = ({ className = "", rows = [], count = 0 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<Record<string, Stock>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
   const [pageSize, setPageSize] = useState<number>(PAGE_SIZE_OPTIONS[0]);
@@ -74,7 +67,6 @@ const SimpleTable = ({
             orderDirection={orderDirection}
             handleSort={handleSort}
             numTotalRows={count}
-            columns={columns}
             orderBy={orderBy}
             rows={rows}
           />
@@ -84,13 +76,12 @@ const SimpleTable = ({
             setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
             pageSize={pageSize}
-            columns={columns}
             query={query}
             count={count}
             rows={rows}
           />
 
-          <StockTableFooter rows={rows} columns={columns} />
+          <StockTableFooter rows={rows} />
         </Table>
       </TableContainer>
 
@@ -107,4 +98,4 @@ const SimpleTable = ({
   );
 };
 
-export { SimpleTable };
+export { ComplexTable };

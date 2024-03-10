@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
+import { CreatableStockTypes } from "../interfaces";
 import { STOCK_TYPE_IDS } from "../constants";
 import { getStock } from "@/services/stock";
-import { StockTypes } from "../interfaces";
 
 const metadata: Metadata = {
   description: "Business management system",
@@ -10,11 +10,10 @@ const metadata: Metadata = {
 };
 
 const OpenningStock = async () => {
-  const stock = await getStock({ stockTypeIds: [STOCK_TYPE_IDS[StockTypes.openingStock]] });
+  const stockIn = await getStock({ stockTypeIds: [STOCK_TYPE_IDS[CreatableStockTypes.stockIn]] });
+  const stockOut = await getStock({ stockTypeIds: [STOCK_TYPE_IDS[CreatableStockTypes.stockOut]] });
 
-  console.log({
-    stock,
-  });
+  console.log({ stockIn, stockOut });
 
   return (
     <div>

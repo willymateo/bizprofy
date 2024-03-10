@@ -2,6 +2,7 @@ import { AuditFields } from "@/services/interfaces";
 import { Product } from "../products/interfaces";
 
 export interface Stock extends AuditFields {
+  transactionDate: string;
   stockDate: string;
   quantity: number;
   product: Product;
@@ -13,9 +14,14 @@ export interface StockType extends AuditFields {
   id: number;
 }
 
-export enum StockTypes {
+export enum CreatableStockTypes {
+  stockIn = "stock_in",
+  stockOut = "stock_out",
+}
+
+export enum ExtraStockTypes {
   openingStock = "opening_stock",
   currentStock = "current_stock",
-  stockOut = "stock_out",
-  stockIn = "stock_in",
 }
+
+export type StockTypes = CreatableStockTypes | ExtraStockTypes;

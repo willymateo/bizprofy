@@ -2,11 +2,6 @@ import { HeaderColumnTypes, HeaderColumns } from "./interfaces";
 
 const HEADER_COLUMNS: HeaderColumns[] = [
   {
-    id: HeaderColumnTypes.transactionDate,
-    label: "Date",
-    className: "text-center whitespace-nowrap",
-  },
-  {
     id: HeaderColumnTypes.productId,
     label: "Product ID",
     className: "text-center whitespace-nowrap",
@@ -32,8 +27,13 @@ const HEADER_COLUMNS: HeaderColumns[] = [
     className: "text-center whitespace-nowrap font-bold",
   },
   {
-    id: HeaderColumnTypes.quantity,
-    label: "Quantity",
+    id: HeaderColumnTypes.purchasesNumber,
+    label: "Number of Purchases",
+    className: "text-center whitespace-nowrap",
+  },
+  {
+    id: HeaderColumnTypes.salesNumber,
+    label: "Number of Sales",
     className: "text-center whitespace-nowrap",
   },
   {

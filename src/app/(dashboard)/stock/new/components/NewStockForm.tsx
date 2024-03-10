@@ -14,10 +14,11 @@ import { DateTimePickerHookForm } from "@/app/components/inputs/DateTimePickerHo
 import { ProductsHookForm } from "@/app/components/inputs/ProductsHookForm";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
 import { STOCK_ROUTES_BY_TYPE, STOCK_TYPE_IDS } from "../../constants";
+import { CREATE_BUTTON_LABEL_BY_STOCK_TYPE } from "../constants";
 import { Product } from "@/app/(dashboard)/products/interfaces";
+import { CreatableStockTypes } from "../../interfaces";
 import { createStock } from "@/services/stock";
 import { useActive } from "@/hooks/useActive";
-import { StockTypes } from "../../interfaces";
 
 const NOW_DAYJS = dayjs();
 
@@ -44,23 +45,20 @@ const NewStockForm = () => {
     },
   });
   const router = useRouter();
+  const stockType = searchParams.get("type") as CreatableStockTypes;
 
   // change this logic to server side
   useEffect(() => {
-    const stockType = searchParams.get("type") as StockTypes;
-    const stockTypeId = STOCK_TYPE_IDS[stockType];
-
-    if (!stockTypeId) {
+    if (!Object.values(CreatableStockTypes).includes(stockType)) {
       router.push("/stock/in");
     }
-  }, [searchParams, router]);
+  }, [router, stockType]);
 
   const handleCreate = handleSubmit(async ({ product, quantity = 0, stockDate }) => {
     startLoading();
     setError("");
 
     try {
-      const stockType = searchParams.get("type") as StockTypes;
       const stockTypeId = STOCK_TYPE_IDS[stockType];
       const newRoute = `/stock/${STOCK_ROUTES_BY_TYPE[stockType]}`;
 
@@ -130,7 +128,7 @@ const NewStockForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create product
+          {CREATE_BUTTON_LABEL_BY_STOCK_TYPE[stockType] ?? "Create"}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>

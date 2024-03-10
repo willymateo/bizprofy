@@ -1,3 +1,5 @@
+import { Product } from "@/app/(dashboard)/products/interfaces";
+
 export interface HeaderColumns {
   id: HeaderColumnTypes;
   className?: string;
@@ -5,13 +7,21 @@ export interface HeaderColumns {
 }
 
 export enum HeaderColumnTypes {
-  transactionDate = "transactionDate",
   productId = "productId",
   productCode = "productCode",
   productName = "productName",
   unitCost = "unitCost",
   unitPrice = "unitPrice",
-  quantity = "quantity",
+  purchasesNumber = "purchasesNumber",
+  salesNumber = "salesNumber",
   totalCost = "totalCost",
   totalPrice = "totalPrice",
+}
+
+export interface TableData {
+  purchasesNumber: number;
+  salesNumber: number;
+  totalPrice: number;
+  totalCost: number;
+  product: Product;
 }

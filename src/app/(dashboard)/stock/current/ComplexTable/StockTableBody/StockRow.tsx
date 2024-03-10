@@ -10,17 +10,14 @@ import Menu from "@mui/material/Menu";
 
 import { DATE_FORMAT, NUM_DECIMALS } from "@/shared/constants";
 import { Stock } from "@/app/(dashboard)/stock/interfaces";
-import { HeaderColumnTypes } from "../interfaces";
 import dayjs from "dayjs";
 
 interface Props extends Stock {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  columns?: HeaderColumnTypes[];
   isSelected?: boolean;
 }
 
 const StockRow = ({
-  columns = Object.values(HeaderColumnTypes),
   isSelected = false,
   transactionDate,
   quantity = 0,
@@ -45,61 +42,45 @@ const StockRow = ({
         <TableCell>
           <Checkbox disableRipple checked={isSelected} onChange={onClick} />
         </TableCell>
-        {columns.includes(HeaderColumnTypes.transactionDate) && (
-          <TableCell className="whitespace-nowrap">
-            {dayjs(transactionDate).format(DATE_FORMAT)}
-          </TableCell>
-        )}
+        <TableCell className="whitespace-nowrap">
+          {dayjs(transactionDate).format(DATE_FORMAT)}
+        </TableCell>
 
-        {columns.includes(HeaderColumnTypes.productId) && (
-          <TableCell className="whitespace-nowrap">{product?.id}</TableCell>
-        )}
+        <TableCell className="whitespace-nowrap">{product?.id}</TableCell>
 
-        {columns.includes(HeaderColumnTypes.productCode) && (
-          <TableCell>{product?.code && <Chip label={product?.code} />}</TableCell>
-        )}
+        <TableCell>{product?.code && <Chip label={product?.code} />}</TableCell>
 
-        {columns.includes(HeaderColumnTypes.productName) && <TableCell>{product?.name}</TableCell>}
+        <TableCell>{product?.name}</TableCell>
 
-        {columns.includes(HeaderColumnTypes.unitCost) && (
-          <TableCell className="font-bold text-right">
-            <p>
-              <span>$</span>
-              {product?.unitCost.toFixed(NUM_DECIMALS)}
-            </p>
-          </TableCell>
-        )}
+        <TableCell className="font-bold text-right">
+          <p>
+            <span>$</span>
+            {product?.unitCost.toFixed(NUM_DECIMALS)}
+          </p>
+        </TableCell>
 
-        {columns.includes(HeaderColumnTypes.unitPrice) && (
-          <TableCell className="font-bold text-right">
-            <p>
-              <span>$</span>
-              {product?.unitPrice.toFixed(NUM_DECIMALS)}
-            </p>
-          </TableCell>
-        )}
+        <TableCell className="font-bold text-right">
+          <p>
+            <span>$</span>
+            {product?.unitPrice.toFixed(NUM_DECIMALS)}
+          </p>
+        </TableCell>
 
-        {columns.includes(HeaderColumnTypes.quantity) && (
-          <TableCell className="text-right">{quantity}</TableCell>
-        )}
+        <TableCell className="text-right">{quantity}</TableCell>
 
-        {columns.includes(HeaderColumnTypes.totalCost) && (
-          <TableCell className="font-bold text-right">
-            <p>
-              <span>$</span>
-              {totalCost.toFixed(NUM_DECIMALS)}
-            </p>
-          </TableCell>
-        )}
+        <TableCell className="font-bold text-right">
+          <p>
+            <span>$</span>
+            {totalCost.toFixed(NUM_DECIMALS)}
+          </p>
+        </TableCell>
 
-        {columns.includes(HeaderColumnTypes.totalPrice) && (
-          <TableCell className="font-bold text-right">
-            <p>
-              <span>$</span>
-              {totalPrice.toFixed(NUM_DECIMALS)}
-            </p>
-          </TableCell>
-        )}
+        <TableCell className="font-bold text-right">
+          <p>
+            <span>$</span>
+            {totalPrice.toFixed(NUM_DECIMALS)}
+          </p>
+        </TableCell>
 
         <TableCell>
           <IconButton onClick={handleOpenMenu}>

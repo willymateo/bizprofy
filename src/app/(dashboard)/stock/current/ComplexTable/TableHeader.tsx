@@ -5,15 +5,13 @@ import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import { ChangeEvent, Dispatch } from "react";
 
-import { HeaderColumnTypes } from "./interfaces";
 import { Order } from "@/services/interfaces";
 import { HEADER_COLUMNS } from "./constants";
-import { Stock } from "../../../interfaces";
+import { Stock } from "../../interfaces";
 
 interface Props {
   setSelectedRows: Dispatch<Record<string, Stock>>;
   handleSort: (propertyId: string) => void;
-  columns?: HeaderColumnTypes[];
   numRowsSelected: number;
   orderDirection: Order;
   numTotalRows: number;
@@ -22,7 +20,6 @@ interface Props {
 }
 
 const TableHeader = ({
-  columns = Object.values(HeaderColumnTypes),
   orderDirection = Order.asc,
   numRowsSelected = 0,
   numTotalRows = 0,
@@ -56,24 +53,22 @@ const TableHeader = ({
           />
         </TableCell>
 
-        {HEADER_COLUMNS.filter(({ id = "" }) => columns.includes(id as HeaderColumnTypes)).map(
-          ({ className = "", id = "", label = "" }) => (
-            <TableCell
-              sortDirection={orderBy === id ? orderDirection : false}
-              className={className}
-              key={id}
+        {HEADER_COLUMNS.map(({ className = "", id = "", label = "" }) => (
+          <TableCell
+            sortDirection={orderBy === id ? orderDirection : false}
+            className={className}
+            key={id}
+          >
+            <TableSortLabel
+              direction={orderBy === id ? orderDirection : "asc"}
+              onClick={() => handleSort(id)}
+              active={orderBy === id}
+              hideSortIcon
             >
-              <TableSortLabel
-                direction={orderBy === id ? orderDirection : "asc"}
-                onClick={() => handleSort(id)}
-                active={orderBy === id}
-                hideSortIcon
-              >
-                {label}
-              </TableSortLabel>
-            </TableCell>
-          ),
-        )}
+              {label}
+            </TableSortLabel>
+          </TableCell>
+        ))}
 
         <TableCell />
       </TableRow>

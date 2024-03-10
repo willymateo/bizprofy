@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
+import { CreatableStockTypes } from "../interfaces";
 import { STOCK_TYPE_IDS } from "../constants";
+import { ComplexTable } from "./ComplexTable";
 import { getStock } from "@/services/stock";
-import { StockTypes } from "../interfaces";
 
 const metadata: Metadata = {
   description: "Business management system",
@@ -10,15 +11,18 @@ const metadata: Metadata = {
 };
 
 const CurrentStock = async () => {
-  const stock = await getStock({ stockTypeIds: [STOCK_TYPE_IDS[StockTypes.currentStock]] });
-
-  console.log({
-    stock,
+  const stock = await getStock({
+    stockTypeIds: [
+      STOCK_TYPE_IDS[CreatableStockTypes.stockOut],
+      STOCK_TYPE_IDS[CreatableStockTypes.stockIn],
+    ],
   });
 
   return (
-    <div>
-      <h1>CurrentStock</h1>
+    <div className="flex flex-col gap-5">
+      <h1>Current stocks status</h1>
+
+      <ComplexTable {...stock} />
     </div>
   );
 };

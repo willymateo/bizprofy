@@ -1,0 +1,24 @@
+import { CreatableStockTypes, ExtraStockTypes } from "./interfaces";
+
+const STOCK_TYPES_BY_ID = {
+  1: ExtraStockTypes.openingStock,
+  2: CreatableStockTypes.stockIn,
+  3: CreatableStockTypes.stockOut,
+  4: ExtraStockTypes.currentStock,
+};
+
+const STOCK_TYPE_IDS = {
+  [ExtraStockTypes.openingStock]: 1,
+  [CreatableStockTypes.stockIn]: 2,
+  [CreatableStockTypes.stockOut]: 3,
+  [ExtraStockTypes.currentStock]: 4,
+};
+
+const STOCK_ROUTES_BY_TYPE = {
+  [ExtraStockTypes.openingStock]: "openning",
+  [CreatableStockTypes.stockIn]: "in",
+  [CreatableStockTypes.stockOut]: "out",
+  [ExtraStockTypes.currentStock]: "current",
+};
+
+export { STOCK_TYPE_IDS, STOCK_TYPES_BY_ID, STOCK_ROUTES_BY_TYPE };

@@ -12,7 +12,7 @@ interface Props {
   children: ReactNode;
 }
 
-const ProductsLayout = ({ children }: Readonly<Props>) => (
+const NewProductLayout = ({ children }: Readonly<Props>) => (
   <div className="flex flex-col gap-5">
     <div className="flex flex-row gap-5 items-center justify-between">
       <h1>New product</h1>
@@ -24,5 +24,5 @@ const ProductsLayout = ({ children }: Readonly<Props>) => (
   </div>
 );
 
-export default ProductsLayout;
+export default NewProductLayout;
 export { metadata };

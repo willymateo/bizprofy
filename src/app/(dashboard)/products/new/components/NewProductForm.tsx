@@ -10,8 +10,8 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { NumberHookForm } from "@/app/components/Inputs/NumberHookForm";
-import { CreateProductPayload } from "@/services/interfaces";
+import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
+import { CreateProductPayload } from "@/services/products/interfaces";
 import { createProduct } from "@/services/products";
 import { useActive } from "@/hooks/useActive";
 
@@ -25,6 +25,7 @@ const NewProductForm = () => {
     values: {
       description: "",
       unitPrice: 0,
+      unitCost: 0,
       code: "",
       name: "",
     },
@@ -96,6 +97,25 @@ const NewProductForm = () => {
         {...register("description")}
         multiline
         rows={3}
+      />
+
+      <NumberHookForm
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <Icon icon="solar:tag-price-line-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+          startAdornment: <InputAdornment position="start">$</InputAdornment>,
+        }}
+        helperText={formError?.unitCost?.message}
+        {...register("unitCost", {
+          required: "Unit const is required",
+          valueAsNumber: true,
+          min: 0,
+        })}
+        error={Boolean(formError?.unitCost)}
+        label="Unit cost"
       />
 
       <NumberHookForm

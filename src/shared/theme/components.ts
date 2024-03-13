@@ -1,5 +1,6 @@
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import { Components, Theme, alpha } from "@mui/material/styles";
+import type {} from "@mui/x-date-pickers/themeAugmentation";
 
 import { customShadows } from "./customShadows";
 import { common, grey, text } from "./palette";

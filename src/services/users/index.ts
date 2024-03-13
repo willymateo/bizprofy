@@ -11,6 +11,10 @@ const createUser = async (payload: CreateUserPayload) => {
 
   const resBody = await res.json();
 
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || resBody.error?.message || "Invalid credentials");
+  }
+
   if (!res.ok) {
     throw new Error(resBody.error?.message || resBody.error?.message || "Failed to create user");
   }

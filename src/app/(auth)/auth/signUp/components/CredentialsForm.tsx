@@ -12,7 +12,7 @@ import { signIn } from "next-auth/react";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateUserPayload } from "@/services/interfaces";
+import { CreateUserPayload } from "@/services/users/interfaces";
 import { useActive } from "@/hooks/useActive";
 import { createUser } from "@/services/users";
 import {

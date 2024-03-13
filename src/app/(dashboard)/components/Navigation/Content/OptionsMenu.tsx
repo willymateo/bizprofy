@@ -1,5 +1,3 @@
-"use client";
-
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 import { usePathname } from "next/navigation";
@@ -18,16 +16,20 @@ const OptionsMenu = () => {
         const isSelected = pathname === path;
 
         return (
-          <ListItemButton selected={isSelected} className="rounded-2xl" key={index}>
-            <Link
-              className={`flex flex-row items-center justify-start gap-3 w-full no-underline ${isSelected ? "text-blue-500" : "text-slate-500"}`}
-              href={path}
+          <Link
+            className={`no-underline ${isSelected ? "text-blue-500" : "text-slate-500"}`}
+            href={path}
+            key={index}
+          >
+            <ListItemButton
+              className="flex flex-row items-center justify-start gap-3 rounded-2xl"
+              selected={isSelected}
             >
               <Icon icon={icon} width={32} height={32} />
 
               <Typography>{label}</Typography>
-            </Link>
-          </ListItemButton>
+            </ListItemButton>
+          </Link>
         );
       })}
     </div>

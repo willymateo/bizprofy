@@ -13,19 +13,19 @@ import Alert from "@mui/material/Alert";
 import { useState } from "react";
 import Link from "next/link";
 
-import { LoginPayload } from "@/services/interfaces";
+import { LoginPayload } from "@/services/auth/interfaces";
 import { useActive } from "@/hooks/useActive";
 
 const CredentialsForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const { isActive: isPasswordVisible = false, toggle: togglePasswordVisibility } = useActive();
   const [error, setError] = useState<string>("");
-  const router = useRouter();
   const {
-    register,
-    handleSubmit,
     formState: { errors: formError },
+    handleSubmit,
+    register,
   } = useForm<LoginPayload>();
+  const router = useRouter();
 
   const handleLogin = handleSubmit(async data => {
     startLoading();

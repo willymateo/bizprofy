@@ -1,45 +1,43 @@
 "use client";
 
-import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import TablePagination from "@mui/material/TablePagination";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
-import { GetStockResponse } from "@/services/stock/interfaces";
-import { HeaderColumnTypes, TableData } from "./interfaces";
+import { HeaderColumnTypes, Order, TableData } from "./interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
-import { Order } from "@/services/interfaces";
 import { Stock } from "../../../interfaces";
-import { getTableData } from "./utils";
 import { ToolBar } from "./ToolBar";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Body } from "./Body";
 
-interface Props extends GetStockResponse {
+interface Props extends TableData {
+  transactionDateGreaterThanOrEqualTo: string;
+  transactionDateLessThanOrEqualTo: string;
   columns?: HeaderColumnTypes[];
   className?: string;
+  href: string;
 }
 
 const SimpleTable = ({
   columns = Object.values(HeaderColumnTypes),
-  rows: originalRows = [],
+  transactionDateGreaterThanOrEqualTo,
+  transactionDateLessThanOrEqualTo,
   className = "",
+  footerData,
   count = 0,
+  bodyData,
+  href,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<Record<string, Stock>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
   const [pageSize, setPageSize] = useState<number>(PAGE_SIZE_OPTIONS[0]);
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(0);
-  const [tableData, setTableData] = useState<TableData | null>(null);
   const [orderBy, setOrderBy] = useState<string>("");
   const [query, setQuery] = useState<string>("");
-
-  useEffect(() => {
-    const newTableData = getTableData({ rows: originalRows });
-    setTableData(newTableData);
-  }, [originalRows]);
 
   const handleSort = (id: string = "") => {
     const isAsc = orderBy === id && orderDirection === Order.asc;
@@ -68,36 +66,37 @@ const SimpleTable = ({
   return (
     <Card className={`flex flex-col ${className}`}>
       <ToolBar
+        transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
+        transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
         numRowsSelected={Object.keys(selectedRows).length}
-        onChangeQuery={handleChangeQuery}
-        query={query}
+        href={href}
       />
 
       <TableContainer className="max-h-[35rem]">
         <Table stickyHeader>
           <Header
             numRowsSelected={Object.keys(selectedRows).length}
-            rows={tableData?.bodyRowData ?? []}
             setSelectedRows={setSelectedRows}
             orderDirection={orderDirection}
             handleSort={handleSort}
             numTotalRows={count}
             columns={columns}
             orderBy={orderBy}
+            rows={bodyData}
           />
 
           <Body
             currentPageNumber={currentPageNumber}
-            rows={tableData?.bodyRowData ?? []}
             setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
             pageSize={pageSize}
             columns={columns}
+            rows={bodyData}
             query={query}
             count={count}
           />
 
-          <Footer {...(tableData?.footerData ?? {})} columns={columns} />
+          <Footer {...footerData} columns={columns} />
         </Table>
       </TableContainer>
 

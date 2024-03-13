@@ -5,8 +5,7 @@ import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import { ChangeEvent, Dispatch } from "react";
 
-import { HeaderColumnTypes } from "./interfaces";
-import { Order } from "@/services/interfaces";
+import { HeaderColumnTypes, Order } from "./interfaces";
 import { HEADER_COLUMNS } from "./constants";
 import { Stock } from "../../../interfaces";
 

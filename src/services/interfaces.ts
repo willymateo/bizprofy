@@ -6,8 +6,8 @@ export interface ErrorResponse {
 }
 
 export enum Order {
-  desc = "desc",
-  asc = "asc",
+  desc = "DESC",
+  asc = "ASC",
 }
 
 export interface AuditFields {

@@ -26,5 +26,11 @@ export interface FooterData {
 
 export interface TableData {
   footerData: FooterData;
-  bodyRowData: Stock[];
+  bodyData: Stock[];
+  count: number;
+}
+
+export enum Order {
+  desc = "desc",
+  asc = "asc",
 }

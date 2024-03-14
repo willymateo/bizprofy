@@ -3,10 +3,12 @@
 import TablePagination from "@mui/material/TablePagination";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import TableContainer from "@mui/material/TableContainer";
+import { useRouter } from "next/navigation";
 import Table from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
 import { HeaderColumnTypes, Order, TableData } from "./interfaces";
+import { GetStockPayload } from "@/services/stock/interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
 import { Stock } from "../../../interfaces";
 import { ToolBar } from "./ToolBar";
@@ -14,7 +16,7 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Body } from "./Body";
 
-interface Props extends TableData {
+interface Props extends TableData, GetStockPayload {
   transactionDateGreaterThanOrEqualTo: string;
   transactionDateLessThanOrEqualTo: string;
   columns?: HeaderColumnTypes[];
@@ -26,18 +28,19 @@ const SimpleTable = ({
   columns = Object.values(HeaderColumnTypes),
   transactionDateGreaterThanOrEqualTo,
   transactionDateLessThanOrEqualTo,
+  limit = PAGE_SIZE_OPTIONS[0],
   className = "",
   footerData,
+  offset = 0,
   count = 0,
   bodyData,
   href,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<Record<string, Stock>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
-  const [pageSize, setPageSize] = useState<number>(PAGE_SIZE_OPTIONS[0]);
-  const [currentPageNumber, setCurrentPageNumber] = useState<number>(0);
   const [orderBy, setOrderBy] = useState<string>("");
   const [query, setQuery] = useState<string>("");
+  const router = useRouter();
 
   const handleSort = (id: string = "") => {
     const isAsc = orderBy === id && orderDirection === Order.asc;
@@ -49,17 +52,29 @@ const SimpleTable = ({
   };
 
   const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) =>
-    setCurrentPageNumber(newPage);
+    router.replace(
+      `${href}?${new URLSearchParams({
+        offset: (newPage * limit).toString(),
+        transactionDateGreaterThanOrEqualTo,
+        transactionDateLessThanOrEqualTo,
+        limit: limit.toString(),
+      }).toString()}`,
+    );
 
   const handleChangePageSize = ({
     target: { value },
-  }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setPageSize(parseInt(value, 10));
-    setCurrentPageNumber(0);
-  };
+  }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    router.replace(
+      `${href}?${new URLSearchParams({
+        transactionDateGreaterThanOrEqualTo,
+        transactionDateLessThanOrEqualTo,
+        limit: value,
+        offset: "0",
+      }).toString()}`,
+    );
 
   const handleChangeQuery = ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
-    setCurrentPageNumber(0);
+    // setCurrentPageNumber(0);
     setQuery(value);
   };
 
@@ -69,6 +84,8 @@ const SimpleTable = ({
         transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
         transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
         numRowsSelected={Object.keys(selectedRows).length}
+        offset={offset}
+        limit={limit}
         href={href}
       />
 
@@ -86,10 +103,10 @@ const SimpleTable = ({
           />
 
           <Body
-            currentPageNumber={currentPageNumber}
             setSelectedRows={setSelectedRows}
+            currentPageNumber={offset / limit}
             selectedRows={selectedRows}
-            pageSize={pageSize}
+            pageSize={limit}
             columns={columns}
             rows={bodyData}
             query={query}
@@ -104,8 +121,8 @@ const SimpleTable = ({
         onRowsPerPageChange={handleChangePageSize}
         rowsPerPageOptions={PAGE_SIZE_OPTIONS}
         onPageChange={handleChangePage}
-        page={currentPageNumber}
-        rowsPerPage={pageSize}
+        page={offset / limit}
+        rowsPerPage={limit}
         component="div"
         count={count}
       />

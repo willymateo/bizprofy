@@ -57,17 +57,15 @@ const Body = ({
 
   return (
     <TableBody>
-      {rows
-        .slice(currentPageNumber * pageSize, currentPageNumber * pageSize + pageSize)
-        .map((stockElement: Stock) => (
-          <StockRow
-            isSelected={Boolean(selectedRows[stockElement.id])}
-            onClick={() => selectRow(stockElement.id)}
-            key={stockElement.id}
-            columns={columns}
-            {...stockElement}
-          />
-        ))}
+      {rows.map((stockElement: Stock) => (
+        <StockRow
+          isSelected={Boolean(selectedRows[stockElement.id])}
+          onClick={() => selectRow(stockElement.id)}
+          key={stockElement.id}
+          columns={columns}
+          {...stockElement}
+        />
+      ))}
 
       {[...Array(numRowsToCompletePageSize)].map((_, rowIndex) => (
         <TableRow key={rowIndex}>

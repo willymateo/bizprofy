@@ -1,7 +1,8 @@
-import { CreatableStockTypes, Stock } from "../../../interfaces";
+import { GetStockResponse } from "@/services/stock/interfaces";
+import { CreatableStockTypes } from "../../../interfaces";
 import { TableData } from "./interfaces";
 
-const getTableData = ({ rows = [] }: { rows: Stock[] }): TableData => {
+const getTableData = ({ rows = [], count }: GetStockResponse): TableData => {
   let totalPriceSum = 0;
   let totalQuantity = 0;
   let totalCostSum = 0;
@@ -17,12 +18,13 @@ const getTableData = ({ rows = [] }: { rows: Stock[] }): TableData => {
   });
 
   return {
-    bodyRowData: rows,
     footerData: {
       totalQuantity,
       totalPriceSum,
       totalCostSum,
     },
+    bodyData: rows,
+    count,
   };
 };
 

@@ -13,12 +13,12 @@ type Props = {
   params: {};
 };
 
-const CurrentStock = async ({ searchParams }: Props) => {
-  const now = dayjs();
-  const {
-    transactionDateGreaterThanOrEqualTo = now.startOf("day").toISOString(),
-    transactionDateLessThanOrEqualTo = now.endOf("day").toISOString(),
-  } = searchParams;
+const CurrentStock = async ({
+  searchParams: {
+    transactionDateGreaterThanOrEqualTo = dayjs().startOf("day").toISOString(),
+    transactionDateLessThanOrEqualTo = dayjs().endOf("day").toISOString(),
+  },
+}: Props) => {
   const transactionDateGreaterThanOrEqualToDate = dayjs(transactionDateGreaterThanOrEqualTo);
   const transactionDateLessThanOrEqualToDate = dayjs(transactionDateLessThanOrEqualTo);
 
@@ -31,7 +31,7 @@ const CurrentStock = async ({ searchParams }: Props) => {
       `/stock/${STOCK_ROUTES_BY_TYPE[ExtraStockTypes.currentStock]}?${new URLSearchParams({
         transactionDateGreaterThanOrEqualTo: dayjs().startOf("day").toISOString(),
         transactionDateLessThanOrEqualTo: dayjs().endOf("day").toISOString(),
-      }).toString()}`,
+      })}`,
     );
   }
 
@@ -42,6 +42,8 @@ const CurrentStock = async ({ searchParams }: Props) => {
     ],
     transactionDateGreaterThanOrEqualTo,
     transactionDateLessThanOrEqualTo,
+    limit: Number.MAX_SAFE_INTEGER,
+    offset: 0,
   });
 
   const newTableData = getTableData({ rows });

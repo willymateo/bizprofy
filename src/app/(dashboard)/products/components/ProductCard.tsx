@@ -44,7 +44,13 @@ const ProductCard = ({
             {name}
           </Link>
 
-          {code && <Chip label={code} className="w-fit max-w-full overflow-hidden text-ellipsis" />}
+          {code && (
+            <Chip
+              className="w-fit max-w-full overflow-hidden text-ellipsis"
+              color="info"
+              label={code}
+            />
+          )}
         </div>
 
         <div className="flex flex-row gap-5 items-center justify-between">

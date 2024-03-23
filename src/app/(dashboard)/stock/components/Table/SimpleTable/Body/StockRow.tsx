@@ -7,12 +7,12 @@ import { MouseEvent, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
+import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "@/app/components/inputs/DateTimePickerHookForm/constants";
 import { Stock } from "@/app/(dashboard)/stock/interfaces";
 import { NUM_DECIMALS } from "@/shared/constants";
 import { HeaderColumnTypes } from "../interfaces";
-import dayjs from "dayjs";
 
 interface Props extends Stock {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -48,7 +48,7 @@ const StockRow = ({
         </TableCell>
         {columns.includes(HeaderColumnTypes.transactionDate) && (
           <TableCell className="whitespace-nowrap">
-            {dayjs(transactionDate).format(DATE_FORMAT)}
+            {dayjs(transactionDate)?.format(DATE_FORMAT)}
           </TableCell>
         )}
 
@@ -57,7 +57,7 @@ const StockRow = ({
         )}
 
         {columns.includes(HeaderColumnTypes.productCode) && (
-          <TableCell>{product?.code && <Chip label={product?.code} />}</TableCell>
+          <TableCell>{product?.code && <Chip label={product?.code} color="info" />}</TableCell>
         )}
 
         {columns.includes(HeaderColumnTypes.productName) && <TableCell>{product?.name}</TableCell>}

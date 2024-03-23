@@ -86,10 +86,9 @@ const Table = ({
             setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
             pageSize={pageSize}
-            query={query}
           />
 
-          <Footer {...(tableData?.footerData ?? {})} />
+          {tableData?.bodyRowData?.length ? <Footer {...(tableData?.footerData ?? {})} /> : null}
         </MuiTable>
       </TableContainer>
 

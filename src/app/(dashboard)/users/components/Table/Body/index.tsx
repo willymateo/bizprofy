@@ -3,19 +3,17 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { Dispatch } from "react";
 
-import { NotFound } from "../../../components/Table/SimpleTable/Body/NotFound";
+import { GetUsersResponse, User } from "@/services/users/interfaces";
 import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
 import { HEADER_COLUMNS } from "../constants";
-import { BodyRowData } from "../interfaces";
-import { StockRow } from "./StockRow";
+import { NotFound } from "./NotFound";
+import { UserRow } from "./UserRow";
 
-interface Props {
-  setSelectedRows: Dispatch<Record<string, BodyRowData>>;
-  selectedRows: Record<string, BodyRowData>;
+interface Props extends GetUsersResponse {
+  setSelectedRows: Dispatch<Record<string, User>>;
+  selectedRows: Record<string, User>;
   currentPageNumber: number;
-  rows: BodyRowData[];
   pageSize: number;
-  count: number;
 }
 
 const Body = ({
@@ -41,7 +39,7 @@ const Body = ({
       return setSelectedRows(newSelectedRows);
     }
 
-    const stockElement = rows.find(({ product }) => product.id === stockId);
+    const stockElement = rows.find(({ id }) => id === stockId);
 
     if (!stockElement) {
       return;
@@ -52,16 +50,14 @@ const Body = ({
 
   return (
     <TableBody>
-      {rows
-        .slice(currentPageNumber * pageSize, currentPageNumber * pageSize + pageSize)
-        .map((stockElement: BodyRowData) => (
-          <StockRow
-            isSelected={Boolean(selectedRows[stockElement?.product?.id])}
-            onClick={() => selectRow(stockElement?.product?.id)}
-            key={stockElement?.product?.id}
-            {...stockElement}
-          />
-        ))}
+      {rows.map((row: User) => (
+        <UserRow
+          isSelected={Boolean(selectedRows[row.id])}
+          onClick={() => selectRow(row.id)}
+          key={row.id}
+          {...row}
+        />
+      ))}
 
       {[...Array(numRowsToCompletePageSize)].map((_, rowIndex) => (
         <TableRow key={rowIndex} className="h-[75px]">
@@ -71,7 +67,7 @@ const Body = ({
         </TableRow>
       ))}
 
-      {!rows.length ? <NotFound numColumns={HEADER_COLUMNS.length + 2} /> : null}
+      {!rows.length ? <NotFound /> : null}
     </TableBody>
   );
 };

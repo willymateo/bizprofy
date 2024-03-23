@@ -7,22 +7,27 @@ import { MouseEvent, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
+import dayjs from "dayjs";
 
-import { NUM_DECIMALS } from "@/shared/constants";
-import { BodyRowData } from "../interfaces";
+import { DATE_FORMAT } from "@/app/components/inputs/DateTimePickerHookForm/constants";
+import { User } from "@/services/users/interfaces";
 
-interface Props extends BodyRowData {
+interface Props extends User {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isSelected?: boolean;
 }
 
-const StockRow = ({
-  purchasesNumber = 0,
+const UserRow = ({
   isSelected = false,
-  salesNumber = 0,
-  totalPrice = 0,
-  totalCost = 0,
-  product,
+  firstNames = "",
+  lastNames = "",
+  username = "",
+  photoUrl = "",
+  email = "",
+  createdAt,
+  updatedAt,
+  deletedAt,
+  id = "",
   onClick,
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -40,43 +45,19 @@ const StockRow = ({
           <Checkbox disableRipple checked={isSelected} onChange={onClick} />
         </TableCell>
 
-        <TableCell className="whitespace-nowrap">{product?.id}</TableCell>
-
-        <TableCell>{product?.code && <Chip label={product?.code} color="info" />}</TableCell>
-
-        <TableCell>{product?.name}</TableCell>
-
-        <TableCell className="text-right">{purchasesNumber}</TableCell>
-
-        <TableCell className="font-bold text-right">
-          <p>
-            <span>$</span>
-            {product?.unitCost.toFixed(NUM_DECIMALS)}
-          </p>
+        <TableCell className="whitespace-nowrap">{id ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">
+          {username && <Chip label={username ?? ""} color="info" />}
         </TableCell>
-
-        <TableCell className="font-bold text-right">
-          <p>
-            <span>$</span>
-            {totalCost.toFixed(NUM_DECIMALS)}
-          </p>
+        <TableCell className="whitespace-nowrap">{firstNames ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">{lastNames ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">{email ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">{photoUrl ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">
+          {deletedAt ? <Chip label="Inactive" /> : <Chip label="Active" color="success" />}
         </TableCell>
-
-        <TableCell className="text-right">{salesNumber}</TableCell>
-
-        <TableCell className="font-bold text-right">
-          <p>
-            <span>$</span>
-            {product?.unitPrice.toFixed(NUM_DECIMALS)}
-          </p>
-        </TableCell>
-
-        <TableCell className="font-bold text-right">
-          <p>
-            <span>$</span>
-            {totalPrice.toFixed(NUM_DECIMALS)}
-          </p>
-        </TableCell>
+        <TableCell className="whitespace-nowrap">{dayjs(createdAt).format(DATE_FORMAT)}</TableCell>
+        <TableCell className="whitespace-nowrap">{dayjs(updatedAt).format(DATE_FORMAT)}</TableCell>
 
         <TableCell>
           <IconButton onClick={handleOpenMenu}>
@@ -106,4 +87,4 @@ const StockRow = ({
   );
 };
 
-export { StockRow };
+export { UserRow };

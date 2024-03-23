@@ -17,6 +17,7 @@ import { useActive } from "@/hooks/useActive";
 
 const NewProductForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
+  const [error, setError] = useState<string>("");
   const {
     formState: { errors: formError },
     handleSubmit,
@@ -30,7 +31,6 @@ const NewProductForm = () => {
       name: "",
     },
   });
-  const [error, setError] = useState<string>("");
   const router = useRouter();
 
   const handleCreate = handleSubmit(async data => {

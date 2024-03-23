@@ -71,7 +71,7 @@ const NewProductForm = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Icon icon="solar:bag-4-bold-duotone" width={24} height={24} />
+              <Icon icon="solar:bag-heart-bold-duotone" width={24} height={24} />
             </InputAdornment>
           ),
         }}

@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 
 import { CreateStockPayload, GetStockResponse, GetStockPayload } from "./interfaces";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
+import { Stock } from "@/app/(dashboard)/stock/interfaces";
 import { Order, SessionPayload } from "../interfaces";
 
 const getStock = async ({
@@ -87,7 +88,7 @@ const getStock = async ({
   return resBody;
 };
 
-const createStock = async (payload: CreateStockPayload) => {
+const createStock = async (payload: CreateStockPayload): Promise<Stock> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 

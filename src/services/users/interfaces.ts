@@ -1,4 +1,4 @@
-import { AuditFields, Company, Order } from "../interfaces";
+import { AuditFields, Order } from "../interfaces";
 
 export interface CreateUserPayload {
   firstNames: string;
@@ -6,11 +6,6 @@ export interface CreateUserPayload {
   username: string;
   password: string;
   email: string;
-}
-
-export interface createUserResponse {
-  company?: Company;
-  user: User;
 }
 
 export interface GetUsersPayload {

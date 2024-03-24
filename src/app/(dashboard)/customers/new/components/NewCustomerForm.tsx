@@ -11,9 +11,9 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateUserPayload } from "@/services/users/interfaces";
+import { CreateCustomerPayload } from "@/services/customers/interfaces";
+import { createCustomer } from "@/services/customers";
 import { useActive } from "@/hooks/useActive";
-import { createUser } from "@/services/users";
 import {
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,
@@ -22,11 +22,7 @@ import {
   EMAIL_REGEX,
 } from "@/shared/constants";
 
-interface FormInputs extends CreateUserPayload {
-  repeatedPassword: string;
-}
-
-const NewUserForm = () => {
+const NewCustomerForm = () => {
   const { isActive: isRepeatedPasswordVisible = false, toggle: toggleRepeatedPasswordVisibility } =
     useActive();
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
@@ -36,32 +32,30 @@ const NewUserForm = () => {
     formState: { errors: formError },
     handleSubmit,
     register,
-    watch,
-  } = useForm<FormInputs>({
+  } = useForm<CreateCustomerPayload>({
     values: {
-      repeatedPassword: "",
+      phoneNumber: "",
       firstNames: "",
       lastNames: "",
-      username: "",
-      password: "",
+      address: "",
+      idCard: "",
       email: "",
     },
   });
-  const password = watch("password");
   const router = useRouter();
 
-  const handleCreate = handleSubmit(async ({ repeatedPassword: _, ...data }) => {
+  const handleCreate = handleSubmit(async data => {
     startLoading();
     setError("");
 
     try {
-      await createUser(data);
+      await createCustomer(data);
 
       stopLoading();
-      router.push("/users");
+      router.push("/customers");
       router.refresh();
     } catch (err) {
-      console.error("Error creating user", err);
+      console.error("Error creating customer", err);
 
       setError((err as Error).message);
       stopLoading();
@@ -241,4 +235,4 @@ const NewUserForm = () => {
   );
 };
 
-export { NewUserForm };
+export { NewCustomerForm };

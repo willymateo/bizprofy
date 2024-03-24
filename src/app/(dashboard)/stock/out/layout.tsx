@@ -25,8 +25,8 @@ const StockInLayout = ({ children }: Readonly<Props>) => (
         className="no-underline"
       >
         <Button
-          className="rounded-lg normal-case"
           startIcon={<Icon icon="eva:plus-fill" />}
+          className="rounded-lg normal-case"
           variant="contained"
         >
           Register new sale

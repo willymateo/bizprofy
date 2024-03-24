@@ -1,7 +1,7 @@
 "use server";
 
+import { LoginPayload, SignUpPayload, SignUpResponse } from "./interfaces";
 import { SessionPayload } from "../interfaces";
-import { LoginPayload, SignUpPayload } from "./interfaces";
 
 const login = async ({ emailOrUsername, password }: LoginPayload): Promise<SessionPayload> => {
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/auth/login`, {
@@ -22,7 +22,7 @@ const login = async ({ emailOrUsername, password }: LoginPayload): Promise<Sessi
   return resBody;
 };
 
-const signUp = async (payload: SignUpPayload) => {
+const signUp = async (payload: SignUpPayload): Promise<SignUpResponse> => {
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/auth/signUp`, {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

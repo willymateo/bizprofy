@@ -75,7 +75,7 @@ const getProducts = async ({
   return resBody;
 };
 
-const createProduct = async (payload: CreateProductPayload) => {
+const createProduct = async (payload: CreateProductPayload): Promise<Product> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 

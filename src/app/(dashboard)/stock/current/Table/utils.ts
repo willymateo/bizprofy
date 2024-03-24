@@ -1,4 +1,4 @@
-import { CreatableStockTypes, Stock } from "../../interfaces";
+import { CreatableStockTypes, Stock } from "@/services/stock/interfaces";
 import { BodyRowData, TableData } from "./interfaces";
 
 const getTableData = ({ rows = [] }: { rows: Stock[] }): TableData => {

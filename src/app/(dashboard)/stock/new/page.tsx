@@ -3,8 +3,8 @@ import Card from "@mui/material/Card";
 import { Metadata } from "next";
 
 import { Return as ReturnButton } from "@/app/components/Buttons/Return";
+import { CreatableStockTypes } from "@/services/stock/interfaces";
 import { NewStockForm } from "./components/NewStockForm";
-import { CreatableStockTypes } from "../interfaces";
 import { TITLE_BY_STOCK_TYPE } from "./constants";
 import { STOCK_TYPE_IDS } from "../constants";
 

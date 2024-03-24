@@ -1,4 +1,4 @@
-import { CreatableStockTypes } from "../interfaces";
+import { CreatableStockTypes } from "@/services/stock/interfaces";
 
 const CREATE_BUTTON_LABEL_BY_STOCK_TYPE = {
   [CreatableStockTypes.stockIn]: "Register purchase",

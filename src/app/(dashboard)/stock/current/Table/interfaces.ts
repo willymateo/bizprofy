@@ -1,4 +1,4 @@
-import { Product } from "@/app/(dashboard)/products/interfaces";
+import { Product } from "@/services/products/interfaces";
 
 export interface HeaderColumns {
   id: HeaderColumnTypes;

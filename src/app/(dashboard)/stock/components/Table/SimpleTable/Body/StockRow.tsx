@@ -10,7 +10,7 @@ import Menu from "@mui/material/Menu";
 import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "@/app/components/inputs/DateTimePickerHookForm/constants";
-import { Stock } from "@/app/(dashboard)/stock/interfaces";
+import { Stock } from "@/services/stock/interfaces";
 import { NUM_DECIMALS } from "@/shared/constants";
 import { HeaderColumnTypes } from "../interfaces";
 

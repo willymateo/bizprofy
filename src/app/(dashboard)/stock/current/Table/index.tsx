@@ -8,9 +8,9 @@ import Card from "@mui/material/Card";
 
 import { Order } from "../../components/Table/SimpleTable/interfaces";
 import { ToolBar } from "../../components/Table/SimpleTable/ToolBar";
+import { ExtraStockTypes } from "@/services/stock/interfaces";
 import { STOCK_ROUTES_BY_TYPE } from "../../constants";
 import { BodyRowData, TableData } from "./interfaces";
-import { ExtraStockTypes } from "../../interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
 import { Footer } from "./Footer";
 import { Header } from "./Header";

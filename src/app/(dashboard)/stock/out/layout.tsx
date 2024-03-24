@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { ReactNode } from "react";
 import Link from "next/link";
 
-import { CreatableStockTypes } from "../interfaces";
+import { CreatableStockTypes } from "@/services/stock/interfaces";
 
 const metadata: Metadata = {
   description: "Business management system",

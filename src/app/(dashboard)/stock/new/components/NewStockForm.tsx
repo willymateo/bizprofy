@@ -14,9 +14,9 @@ import { DateTimePickerHookForm } from "@/app/components/inputs/DateTimePickerHo
 import { ProductsHookForm } from "@/app/components/inputs/ProductsHookForm";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
 import { STOCK_ROUTES_BY_TYPE, STOCK_TYPE_IDS } from "../../constants";
+import { CreatableStockTypes } from "@/services/stock/interfaces";
 import { CREATE_BUTTON_LABEL_BY_STOCK_TYPE } from "../constants";
-import { Product } from "@/app/(dashboard)/products/interfaces";
-import { CreatableStockTypes } from "../../interfaces";
+import { Product } from "@/services/products/interfaces";
 import { createStock } from "@/services/stock";
 import { useActive } from "@/hooks/useActive";
 

@@ -1,4 +1,4 @@
-import { CreatableStockTypes, ExtraStockTypes } from "../../stock/interfaces";
+import { CreatableStockTypes, ExtraStockTypes } from "@/services/stock/interfaces";
 import { STOCK_ROUTES_BY_TYPE } from "../../stock/constants";
 import { MenuOption } from "./interfaces";
 

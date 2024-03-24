@@ -3,9 +3,8 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { Dispatch } from "react";
 
+import { GetStockResponse, Stock } from "@/services/stock/interfaces";
 import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
-import { GetStockResponse } from "@/services/stock/interfaces";
-import { Stock } from "@/app/(dashboard)/stock/interfaces";
 import { HeaderColumnTypes } from "../interfaces";
 import { NotFound } from "./NotFound";
 import { StockRow } from "./StockRow";

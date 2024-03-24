@@ -81,6 +81,7 @@ const NewProductForm = () => {
         helperText={formError?.name?.message}
         error={Boolean(formError?.name)}
         label="Product name"
+        required
       />
 
       <TextField
@@ -116,6 +117,7 @@ const NewProductForm = () => {
         })}
         error={Boolean(formError?.unitCost)}
         label="Unit cost"
+        required
       />
 
       <NumberHookForm
@@ -135,6 +137,7 @@ const NewProductForm = () => {
           min: 0,
         })}
         label="Unit price"
+        required
       />
 
       {error && <Alert severity="error">{error}</Alert>}

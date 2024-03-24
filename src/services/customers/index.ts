@@ -2,20 +2,25 @@
 
 import { getServerSession } from "next-auth";
 
-import { CreateUserPayload, GetUsersPayload, GetUsersResponse, User } from "./interfaces";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
 import { Order, SessionPayload } from "../interfaces";
+import {
+  CreateCustomerPayload,
+  GetCustomersResponse,
+  GetCustomersPayload,
+  Customer,
+} from "./interfaces";
 
-const getUsers = async ({
+const getCustomers = async ({
   order = Order.desc,
   orderByField,
   offset = 0,
   limit = 5,
-}: GetUsersPayload = {}): Promise<GetUsersResponse> => {
+}: GetCustomersPayload = {}): Promise<GetCustomersResponse> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const url = new URL("users", process.env.BIZPROFY_API_URL);
+  const url = new URL("customers", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
 
   if (orderByField) {
@@ -51,17 +56,17 @@ const getUsers = async ({
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch users");
+    throw new Error(resBody.error?.message || "Failed to fetch customers");
   }
 
   return resBody;
 };
 
-const createUser = async (payload: CreateUserPayload): Promise<User> => {
+const createCustomer = async (payload: CreateCustomerPayload): Promise<Customer> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/users`, {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers`, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
@@ -77,10 +82,10 @@ const createUser = async (payload: CreateUserPayload): Promise<User> => {
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to create user");
+    throw new Error(resBody.error?.message || "Failed to create customer");
   }
 
   return resBody;
 };
 
-export { getUsers, createUser };
+export { getCustomers, createCustomer };

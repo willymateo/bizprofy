@@ -78,7 +78,7 @@ const NewStockForm = ({
       router.push(newRoute);
       router.refresh();
     } catch (err) {
-      console.error("Error creating product", err);
+      console.error("Error creating stock", err);
 
       setError((err as Error).message);
       stopLoading();
@@ -116,6 +116,7 @@ const NewStockForm = ({
         error={Boolean(formError?.quantity)}
         label="Product quantity"
         isInteger
+        required
       />
 
       <DateTimePickerHookForm

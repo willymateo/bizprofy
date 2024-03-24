@@ -9,7 +9,7 @@ const NotFound = () => (
     <TableCell align="center" colSpan={HEADER_COLUMNS.length + 2} className="h-[375px]">
       <Paper sx={{ textAlign: "center" }}>
         <Typography variant="h6" paragraph>
-          No users found
+          No customers found
         </Typography>
 
         <Typography variant="body2">

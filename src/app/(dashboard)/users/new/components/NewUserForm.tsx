@@ -61,7 +61,7 @@ const NewUserForm = () => {
       router.push("/users");
       router.refresh();
     } catch (err) {
-      console.error("Error creating product", err);
+      console.error("Error creating user", err);
 
       setError((err as Error).message);
       stopLoading();

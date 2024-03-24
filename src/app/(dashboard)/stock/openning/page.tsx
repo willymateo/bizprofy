@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { CreatableStockTypes } from "../interfaces";
+import { CreatableStockTypes } from "@/services/stock/interfaces";
 import { STOCK_TYPE_IDS } from "../constants";
 import { getStock } from "@/services/stock";
 

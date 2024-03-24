@@ -1,4 +1,4 @@
-import { CreatableStockTypes, ExtraStockTypes } from "./interfaces";
+import { CreatableStockTypes, ExtraStockTypes } from "@/services/stock/interfaces";
 
 const STOCK_TYPES_BY_ID = {
   1: ExtraStockTypes.openingStock,

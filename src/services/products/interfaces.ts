@@ -1,4 +1,4 @@
-import { Order } from "../interfaces";
+import { AuditFields, Order } from "../interfaces";
 
 export interface GetProductsPayload {
   unitPriceGreaterThanOrEqualTo?: number;
@@ -17,4 +17,15 @@ export interface CreateProductPayload {
   unitCost: number;
   code: string;
   name: string;
+}
+
+export interface Product extends AuditFields {
+  description: string;
+  companyId: string;
+  unitPrice: number;
+  unitCost: number;
+  photoUrl: string;
+  code: string;
+  name: string;
+  id: string;
 }

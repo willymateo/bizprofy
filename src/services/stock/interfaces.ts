@@ -1,5 +1,5 @@
-import { Stock } from "@/app/(dashboard)/stock/interfaces";
-import { Order } from "../interfaces";
+import { AuditFields, Order } from "../interfaces";
+import { Product } from "../products/interfaces";
 
 export interface GetStockPayload {
   transactionDateGreaterThanOrEqualTo?: string;
@@ -24,4 +24,29 @@ export interface CreateStockPayload {
   stockTypeId: number;
   productId: string;
   quantity: number;
+}
+
+export interface Stock extends AuditFields {
+  transactionDate: string;
+  stockType: StockType;
+  quantity: number;
+  product: Product;
+  id: string;
+}
+
+export enum CreatableStockTypes {
+  stockIn = "stock_in",
+  stockOut = "stock_out",
+}
+
+export enum ExtraStockTypes {
+  openingStock = "opening_stock",
+  currentStock = "current_stock",
+}
+
+export type StockTypes = CreatableStockTypes | ExtraStockTypes;
+
+export interface StockType extends AuditFields {
+  type: StockTypes;
+  id: number;
 }

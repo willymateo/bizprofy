@@ -2,9 +2,8 @@
 
 import { getServerSession } from "next-auth";
 
-import { CreateProductPayload, GetProductsPayload } from "./interfaces";
+import { CreateProductPayload, GetProductsPayload, Product } from "./interfaces";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { Product } from "@/app/(dashboard)/products/interfaces";
 import { SessionPayload } from "../interfaces";
 
 interface GetProductsProps extends GetProductsPayload {

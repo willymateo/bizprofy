@@ -2,9 +2,8 @@
 
 import { getServerSession } from "next-auth";
 
-import { CreateStockPayload, GetStockResponse, GetStockPayload } from "./interfaces";
+import { CreateStockPayload, GetStockResponse, GetStockPayload, Stock } from "./interfaces";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { Stock } from "@/app/(dashboard)/stock/interfaces";
 import { Order, SessionPayload } from "../interfaces";
 
 const getStock = async ({

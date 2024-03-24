@@ -116,6 +116,7 @@ const NewStockForm = ({
         error={Boolean(formError?.quantity)}
         label="Product quantity"
         isInteger
+        required
       />
 
       <DateTimePickerHookForm

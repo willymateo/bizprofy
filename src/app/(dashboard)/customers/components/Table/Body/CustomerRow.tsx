@@ -53,7 +53,6 @@ const CustomerRow = ({
         <TableCell className="whitespace-nowrap">{lastNames ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{email ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{phoneNumber ?? ""}</TableCell>
-        <TableCell className="whitespace-nowrap">{phoneNumber ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{address ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">
           {deletedAt ? <Chip label="Inactive" /> : <Chip label="Active" color="success" />}

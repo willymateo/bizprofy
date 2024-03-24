@@ -2,7 +2,6 @@
 
 import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify-icon/react";
@@ -13,20 +12,11 @@ import { useState } from "react";
 
 import { CreateCustomerPayload } from "@/services/customers/interfaces";
 import { createCustomer } from "@/services/customers";
+import { EMAIL_REGEX } from "@/shared/constants";
 import { useActive } from "@/hooks/useActive";
-import {
-  USERNAME_MAX_LENGTH,
-  USERNAME_MIN_LENGTH,
-  PASSWORD_MIN_LENGTH,
-  USERNAME_REGEX,
-  EMAIL_REGEX,
-} from "@/shared/constants";
 
 const NewCustomerForm = () => {
-  const { isActive: isRepeatedPasswordVisible = false, toggle: toggleRepeatedPasswordVisibility } =
-    useActive();
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
-  const { isActive: isPasswordVisible = false, toggle: togglePasswordVisibility } = useActive();
   const [error, setError] = useState<string>("");
   const {
     formState: { errors: formError },
@@ -64,6 +54,24 @@ const NewCustomerForm = () => {
 
   return (
     <form className="flex flex-col gap-5 justify-center">
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:card-2-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.idCard?.message}
+        error={Boolean(formError?.idCard)}
+        {...register("idCard", {
+          required: "Id card is required",
+        })}
+        placeholder="1234567890"
+        label="Id card"
+        required
+      />
+
       <TextField
         InputProps={{
           startAdornment: (
@@ -123,99 +131,33 @@ const NewCustomerForm = () => {
       />
 
       <TextField
-        {...register("username", {
-          pattern: {
-            message:
-              "Username should be in lowercase and can have numbers. The only allowed special characters are '_' and '.'",
-            value: USERNAME_REGEX,
-          },
-          maxLength: {
-            message: `Username must be less than ${USERNAME_MAX_LENGTH} characters`,
-            value: USERNAME_MAX_LENGTH,
-          },
-          minLength: {
-            message: `Username must be at least ${USERNAME_MIN_LENGTH} characters`,
-            value: USERNAME_MIN_LENGTH,
-          },
-          required: "Username is required",
-        })}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Icon icon="solar:user-bold-duotone" width={24} height={24} />
+              <Icon icon="solar:phone-calling-bold-duotone" width={24} height={24} />
             </InputAdornment>
           ),
         }}
-        helperText={formError?.username?.message}
-        error={Boolean(formError?.username)}
-        placeholder="johndoesmith"
-        label="Username"
-        required
+        helperText={formError?.phoneNumber?.message}
+        error={Boolean(formError?.phoneNumber)}
+        {...register("phoneNumber", {})}
+        placeholder="+1 99 999 9999"
+        label="Phone number"
       />
 
       <TextField
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Icon icon="solar:lock-password-bold-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => togglePasswordVisibility()}>
-                {isPasswordVisible ? (
-                  <Icon icon="solar:eye-closed-line-duotone" />
-                ) : (
-                  <Icon icon="solar:eye-bold-duotone" />
-                )}
-              </IconButton>
+              <Icon icon="solar:point-on-map-bold-duotone" width={24} height={24} />
             </InputAdornment>
           ),
         }}
-        type={isPasswordVisible ? "text" : "password"}
-        helperText={formError?.password?.message}
-        error={Boolean(formError?.password)}
-        {...register("password", {
-          required: "Password is required",
-          minLength: {
-            message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
-            value: PASSWORD_MIN_LENGTH,
-          },
-        })}
-        placeholder="●●●●●●●●"
-        label="Password"
-        required
-      />
-
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon icon="solar:lock-password-bold-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => toggleRepeatedPasswordVisibility()}>
-                {isRepeatedPasswordVisible ? (
-                  <Icon icon="solar:eye-closed-line-duotone" />
-                ) : (
-                  <Icon icon="solar:eye-bold-duotone" />
-                )}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        {...register("repeatedPassword", {
-          validate: value => value === password || "Passwords don't match",
-          required: "This field is required",
-        })}
-        type={isRepeatedPasswordVisible ? "text" : "password"}
-        helperText={formError?.repeatedPassword?.message}
-        error={Boolean(formError?.repeatedPassword)}
-        label="Repeat password"
-        placeholder="●●●●●●●●"
-        required
+        helperText={formError?.address?.message}
+        error={Boolean(formError?.address)}
+        {...register("address", {})}
+        placeholder="1234 Main St, City, Country"
+        label="Address"
       />
 
       {error && <Alert severity="error">{error}</Alert>}
@@ -227,7 +169,7 @@ const NewCustomerForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create user
+          Create customer
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>

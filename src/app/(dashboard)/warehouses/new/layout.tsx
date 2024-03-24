@@ -5,17 +5,17 @@ import { Return as ReturnButton } from "@/app/components/Buttons/Return";
 
 const metadata: Metadata = {
   description: "Business management system",
-  title: "New customer | Bizprofy",
+  title: "New warehouse | Bizprofy",
 };
 
 interface Props {
   children: ReactNode;
 }
 
-const NewCustomerLayout = ({ children }: Readonly<Props>) => (
+const NewWarehouseLayout = ({ children }: Readonly<Props>) => (
   <div className="flex flex-col gap-5">
     <div className="flex flex-row gap-5 items-center justify-between">
-      <h1>New customer</h1>
+      <h1>New warehouse</h1>
 
       <ReturnButton className="w-fit">Cancel</ReturnButton>
     </div>
@@ -24,5 +24,5 @@ const NewCustomerLayout = ({ children }: Readonly<Props>) => (
   </div>
 );
 
-export default NewCustomerLayout;
+export default NewWarehouseLayout;
 export { metadata };

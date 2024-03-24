@@ -7,8 +7,8 @@ import { getProducts } from "@/services/products";
 import TextField from "@mui/material/TextField";
 import { Icon } from "@iconify-icon/react";
 
-import { Product } from "@/app/(dashboard)/products/interfaces";
 import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
+import { Product } from "@/services/products/interfaces";
 import { useActive } from "@/hooks/useActive";
 
 const ProductsHookForm = <T extends FieldValues>(props: UseControllerProps<T>) => {

@@ -10,19 +10,19 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateCustomerPayload } from "@/services/customers/interfaces";
-import { createCustomer } from "@/services/customers";
+import { CreateProviderPayload } from "@/services/providers/interfaces";
+import { createProvider } from "@/services/providers";
 import { EMAIL_REGEX } from "@/shared/constants";
 import { useActive } from "@/hooks/useActive";
 
-const NewCustomerForm = () => {
+const NewProviderForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
     formState: { errors: formError },
     handleSubmit,
     register,
-  } = useForm<CreateCustomerPayload>({
+  } = useForm<CreateProviderPayload>({
     values: {
       phoneNumber: "",
       firstNames: "",
@@ -39,13 +39,13 @@ const NewCustomerForm = () => {
     setError("");
 
     try {
-      await createCustomer(data);
+      await createProvider(data);
 
       stopLoading();
-      router.push("/customers");
+      router.push("/providers");
       router.refresh();
     } catch (err) {
-      console.error("Error creating customer", err);
+      console.error("Error creating provider", err);
 
       setError((err as Error).message);
       stopLoading();
@@ -54,24 +54,6 @@ const NewCustomerForm = () => {
 
   return (
     <form className="flex flex-col gap-5 justify-center">
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon icon="solar:card-2-bold-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-        }}
-        helperText={formError?.idCard?.message}
-        error={Boolean(formError?.idCard)}
-        {...register("idCard", {
-          required: "Id card is required",
-        })}
-        placeholder="1234567890"
-        label="Id card"
-        required
-      />
-
       <TextField
         InputProps={{
           startAdornment: (
@@ -112,13 +94,27 @@ const NewCustomerForm = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
+              <Icon icon="solar:card-2-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.idCard?.message}
+        error={Boolean(formError?.idCard)}
+        {...register("idCard", {})}
+        placeholder="1234567890"
+        label="Id card"
+      />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
               <Icon icon="solar:chat-line-bold-duotone" width={24} height={24} />
             </InputAdornment>
           ),
         }}
         helperText={formError?.email?.message}
         {...register("email", {
-          required: "Email is required",
           pattern: {
             message: "Invalid email address",
             value: EMAIL_REGEX,
@@ -127,7 +123,6 @@ const NewCustomerForm = () => {
         error={Boolean(formError?.email)}
         placeholder="johndoe@mail.com"
         label="Email address"
-        required
       />
 
       <TextField
@@ -169,7 +164,7 @@ const NewCustomerForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create customer
+          Create provider
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -177,4 +172,4 @@ const NewCustomerForm = () => {
   );
 };
 
-export { NewCustomerForm };
+export { NewProviderForm };

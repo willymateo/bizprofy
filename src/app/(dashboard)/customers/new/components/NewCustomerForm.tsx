@@ -118,7 +118,6 @@ const NewCustomerForm = () => {
         }}
         helperText={formError?.email?.message}
         {...register("email", {
-          required: "Email is required",
           pattern: {
             message: "Invalid email address",
             value: EMAIL_REGEX,
@@ -127,7 +126,6 @@ const NewCustomerForm = () => {
         error={Boolean(formError?.email)}
         placeholder="johndoe@mail.com"
         label="Email address"
-        required
       />
 
       <TextField

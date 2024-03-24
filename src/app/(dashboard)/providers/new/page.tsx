@@ -1,11 +1,11 @@
 import Card from "@mui/material/Card";
 
-import { NewCustomerForm } from "./components/NewCustomerForm";
+import { NewProviderForm } from "./components/NewProviderForm";
 
-const NewCustomer = () => (
+const NewProvider = () => (
   <Card className="flex flex-col gap-10 p-10 rounded-2xl">
-    <NewCustomerForm />
+    <NewProviderForm />
   </Card>
 );
 
-export default NewCustomer;
+export default NewProvider;

@@ -12,7 +12,9 @@ export interface GetProductsPayload {
 }
 
 export interface CreateProductPayload {
+  productCategoryId: string;
   description: string;
+  providerId: string;
   unitPrice: number;
   unitCost: number;
   code: string;

@@ -3,24 +3,24 @@ import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import { ChangeEvent, useRef, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
-import { getProducts } from "@/services/products";
 import TextField from "@mui/material/TextField";
 import { Icon } from "@iconify-icon/react";
 
 import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
-import { Product } from "@/services/products/interfaces";
+import { Provider } from "@/services/providers/interfaces";
+import { getProviders } from "@/services/providers";
 import { useActive } from "@/hooks/useActive";
 
-const ProductsHookForm = <T extends FieldValues>(props: UseControllerProps<T>) => {
+const ProvidersHookForm = <T extends FieldValues>(props: UseControllerProps<T>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const abortControllerRef = useRef<AbortController | null>(null);
-  const [options, setOptions] = useState<Product[]>([]);
+  const [options, setOptions] = useState<Provider[]>([]);
   const {
     field: { value, onChange, onBlur },
     fieldState: { error },
   } = useController(props);
 
-  const fetchProducts = async ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
+  const fetchProviders = async ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
     if (value?.length < MIN_CHARACTERS_TO_SEARCH) {
       return;
     }
@@ -32,14 +32,13 @@ const ProductsHookForm = <T extends FieldValues>(props: UseControllerProps<T>) =
       const newAbortController = new AbortController();
       abortControllerRef.current = newAbortController;
 
-      const fetchedProducts = await getProducts({
+      const { rows } = await getProviders({
         q: value,
-        // abortController: newAbortController,
       });
 
-      setOptions(fetchedProducts);
+      setOptions(rows);
     } catch (err) {
-      console.error("Error fetching products", err);
+      console.error("Error fetching providers", err);
     }
 
     stopLoading();
@@ -47,7 +46,9 @@ const ProductsHookForm = <T extends FieldValues>(props: UseControllerProps<T>) =
 
   return (
     <Autocomplete
-      getOptionLabel={({ code = "", name = "" }) => (code ? `${code} - ${name}` : name)}
+      getOptionLabel={({ idCard = "", firstNames = "", lastNames = "" }) =>
+        idCard ? `${idCard} - ${firstNames} ${lastNames}` : `${firstNames} ${lastNames}`
+      }
       renderInput={params => (
         <TextField
           {...params}
@@ -55,7 +56,7 @@ const ProductsHookForm = <T extends FieldValues>(props: UseControllerProps<T>) =
             ...params.InputProps,
             startAdornment: (
               <InputAdornment position="start">
-                <Icon icon="solar:bag-4-bold-duotone" width={24} height={24} />
+                <Icon icon="solar:case-round-minimalistic-bold-duotone" width={24} height={24} />
               </InputAdornment>
             ),
             endAdornment: isLoading ? (
@@ -66,11 +67,11 @@ const ProductsHookForm = <T extends FieldValues>(props: UseControllerProps<T>) =
               params.InputProps?.endAdornment
             ),
           }}
-          placeholder="Type code, name or description of a product"
+          placeholder="Type ID card or name of a provider"
           helperText={error?.message}
-          onChange={fetchProducts}
+          onChange={fetchProviders}
           error={Boolean(error)}
-          label="Product"
+          label="Provider"
         />
       )}
       onChange={(_, newValue) => onChange(newValue)}
@@ -84,4 +85,4 @@ const ProductsHookForm = <T extends FieldValues>(props: UseControllerProps<T>) =
   );
 };
 
-export { ProductsHookForm };
+export { ProvidersHookForm };

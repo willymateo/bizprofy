@@ -7,6 +7,7 @@ export interface GetStockPayload {
   quantityGreaterThanOrEqualTo?: number;
   quantityLessThanOrEqualTo?: number;
   stockTypeIds?: number[];
+  orderByField?: string;
   productIds?: string[];
   offset?: number;
   limit?: number;

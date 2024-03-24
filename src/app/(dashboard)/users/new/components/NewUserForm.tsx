@@ -8,13 +8,12 @@ import { useRouter } from "next/navigation";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { SignUpPayload } from "@/services/auth/interfaces";
+import { CreateUserPayload } from "@/services/users/interfaces";
 import { useActive } from "@/hooks/useActive";
-import { signUp } from "@/services/auth";
+import { createUser } from "@/services/users";
 import {
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,
@@ -23,11 +22,11 @@ import {
   EMAIL_REGEX,
 } from "@/shared/constants";
 
-interface FormInputs extends SignUpPayload {
+interface FormInputs extends CreateUserPayload {
   repeatedPassword: string;
 }
 
-const CredentialsForm = () => {
+const NewUserForm = () => {
   const { isActive: isRepeatedPasswordVisible = false, toggle: toggleRepeatedPasswordVisibility } =
     useActive();
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
@@ -38,62 +37,39 @@ const CredentialsForm = () => {
     handleSubmit,
     register,
     watch,
-  } = useForm<FormInputs>();
+  } = useForm<FormInputs>({
+    values: {
+      repeatedPassword: "",
+      firstNames: "",
+      lastNames: "",
+      username: "",
+      password: "",
+      email: "",
+    },
+  });
   const password = watch("password");
   const router = useRouter();
 
-  const handleSignUp = handleSubmit(async ({ repeatedPassword: _, ...data }) => {
+  const handleCreate = handleSubmit(async ({ repeatedPassword: _, ...data }) => {
     startLoading();
     setError("");
 
     try {
-      await signUp(data);
-
-      const { email, password } = data ?? {};
-      const res = await signIn("credentials", {
-        emailOrUsername: email,
-        redirect: false,
-        password,
-      });
-
-      if (res?.error) {
-        stopLoading();
-
-        return setError(res.error);
-      }
+      await createUser(data);
 
       stopLoading();
-      router.push("/");
-      return router.refresh();
+      router.push("/users");
+      router.refresh();
     } catch (err) {
-      console.log("Error creating user: ", err);
+      console.error("Error creating product", err);
 
       setError((err as Error).message);
+      stopLoading();
     }
-
-    stopLoading();
   });
 
   return (
     <form className="flex flex-col gap-5 justify-center">
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon icon="solar:buildings-3-bold-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-        }}
-        helperText={formError?.companyName?.message}
-        {...register("companyName", {
-          required: "Company name is required",
-        })}
-        error={Boolean(formError?.companyName)}
-        placeholder="Company Inc."
-        label="Company name"
-        required
-      />
-
       <TextField
         InputProps={{
           startAdornment: (
@@ -250,17 +226,19 @@ const CredentialsForm = () => {
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <Button
-        className="flex flex-row gap-3 rounded-lg normal-case"
-        onClick={handleSignUp}
-        disabled={isLoading}
-        variant="contained"
-      >
-        Create account
-        {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
-      </Button>
+      <div className="flex flex-row items-center justify-center">
+        <Button
+          className="flex flex-row gap-3 rounded-lg normal-case"
+          onClick={handleCreate}
+          disabled={isLoading}
+          variant="contained"
+        >
+          Create user
+          {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+        </Button>
+      </div>
     </form>
   );
 };
 
-export { CredentialsForm };
+export { NewUserForm };

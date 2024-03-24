@@ -4,18 +4,19 @@ import { getServerSession } from "next-auth";
 
 import { CreateStockPayload, GetStockResponse, GetStockPayload } from "./interfaces";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { SessionPayload } from "../interfaces";
+import { Order, SessionPayload } from "../interfaces";
 
 const getStock = async ({
   transactionDateGreaterThanOrEqualTo,
   transactionDateLessThanOrEqualTo,
   quantityGreaterThanOrEqualTo = 0,
   quantityLessThanOrEqualTo,
+  order = Order.desc,
   stockTypeIds = [],
   productIds = [],
-  offset,
-  limit,
-  order,
+  orderByField,
+  offset = 0,
+  limit = 5,
 }: GetStockPayload = {}): Promise<GetStockResponse> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
@@ -47,6 +48,10 @@ const getStock = async ({
     searchParams.append("productIds", productIds.join(","));
   }
 
+  if (orderByField) {
+    searchParams.append("orderByField", orderByField);
+  }
+
   if (offset) {
     searchParams.append("offset", offset.toString());
   }
@@ -72,11 +77,11 @@ const getStock = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || resBody.error?.message || "Invalid credentials");
+    throw new Error(resBody.error?.message || "Invalid credentials");
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || resBody.error?.message || "Failed to fetch stock");
+    throw new Error(resBody.error?.message || "Failed to fetch stock");
   }
 
   return resBody;
@@ -98,11 +103,11 @@ const createStock = async (payload: CreateStockPayload) => {
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || resBody.error?.message || "Invalid credentials");
+    throw new Error(resBody.error?.message || "Invalid credentials");
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || resBody.error?.message || "Failed to create stock");
+    throw new Error(resBody.error?.message || "Failed to create stock");
   }
 
   return resBody;

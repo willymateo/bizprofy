@@ -4,39 +4,28 @@ import TablePagination from "@mui/material/TablePagination";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import TableContainer from "@mui/material/TableContainer";
 import { useRouter } from "next/navigation";
-import Table from "@mui/material/Table";
+import MuiTable from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
-import { HeaderColumnTypes, Order, TableData } from "./interfaces";
-import { GetStockPayload } from "@/services/stock/interfaces";
+import { GetUsersPayload, GetUsersResponse, User } from "@/services/users/interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
-import { Stock } from "../../../interfaces";
+import { Order } from "./interfaces";
 import { ToolBar } from "./ToolBar";
-import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Body } from "./Body";
 
-interface Props extends TableData, GetStockPayload {
-  transactionDateGreaterThanOrEqualTo: string;
-  transactionDateLessThanOrEqualTo: string;
-  columns?: HeaderColumnTypes[];
+interface Props extends GetUsersPayload, GetUsersResponse {
   className?: string;
-  href: string;
 }
 
-const SimpleTable = ({
-  columns = Object.values(HeaderColumnTypes),
-  transactionDateGreaterThanOrEqualTo,
-  transactionDateLessThanOrEqualTo,
+const Table = ({
   limit = PAGE_SIZE_OPTIONS[0],
   className = "",
-  footerData,
   offset = 0,
   count = 0,
-  bodyData,
-  href,
+  rows = [],
 }: Props) => {
-  const [selectedRows, setSelectedRows] = useState<Record<string, Stock>>({});
+  const [selectedRows, setSelectedRows] = useState<Record<string, User>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
   const [orderBy, setOrderBy] = useState<string>("");
   const [query, setQuery] = useState<string>("");
@@ -53,10 +42,8 @@ const SimpleTable = ({
 
   const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) =>
     router.replace(
-      `${href}?${new URLSearchParams({
+      `/users?${new URLSearchParams({
         offset: (newPage * limit).toString(),
-        transactionDateGreaterThanOrEqualTo,
-        transactionDateLessThanOrEqualTo,
         limit: limit.toString(),
       }).toString()}`,
     );
@@ -65,9 +52,7 @@ const SimpleTable = ({
     target: { value },
   }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     router.replace(
-      `${href}?${new URLSearchParams({
-        transactionDateGreaterThanOrEqualTo,
-        transactionDateLessThanOrEqualTo,
+      `/users?${new URLSearchParams({
         limit: value,
         offset: "0",
       }).toString()}`,
@@ -80,26 +65,18 @@ const SimpleTable = ({
 
   return (
     <Card className={`flex flex-col ${className}`}>
-      <ToolBar
-        transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
-        transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
-        numRowsSelected={Object.keys(selectedRows).length}
-        offset={offset}
-        limit={limit}
-        href={href}
-      />
+      <ToolBar numRowsSelected={Object.keys(selectedRows).length} offset={offset} limit={limit} />
 
       <TableContainer className="max-h-[35rem]">
-        <Table stickyHeader>
+        <MuiTable stickyHeader>
           <Header
             numRowsSelected={Object.keys(selectedRows).length}
             setSelectedRows={setSelectedRows}
             orderDirection={orderDirection}
             handleSort={handleSort}
             numTotalRows={count}
-            columns={columns}
             orderBy={orderBy}
-            rows={bodyData}
+            rows={rows}
           />
 
           <Body
@@ -107,13 +84,10 @@ const SimpleTable = ({
             currentPageNumber={offset / limit}
             selectedRows={selectedRows}
             pageSize={limit}
-            columns={columns}
-            rows={bodyData}
             count={count}
+            rows={rows}
           />
-
-          {bodyData.length ? <Footer {...footerData} columns={columns} /> : null}
-        </Table>
+        </MuiTable>
       </TableContainer>
 
       <TablePagination
@@ -129,4 +103,4 @@ const SimpleTable = ({
   );
 };
 
-export { SimpleTable };
+export { Table };

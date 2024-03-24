@@ -1,24 +1,19 @@
 import Typography from "@mui/material/Typography";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import { HEADER_COLUMNS } from "../constants";
 import Paper from "@mui/material/Paper";
 
-interface Props {
-  query: string;
-}
-
-const NotFound = ({ query = "" }: Props) => (
+const NotFound = () => (
   <TableRow>
-    <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+    <TableCell align="center" colSpan={HEADER_COLUMNS.length} className="h-[375px]">
       <Paper sx={{ textAlign: "center" }}>
         <Typography variant="h6" paragraph>
-          Not found
+          No users found
         </Typography>
 
         <Typography variant="body2">
-          No results found for &nbsp;
-          <strong>&quot;{query}&quot;</strong>.
-          <br /> Try checking for typos or using complete words.
+          We couldn't find any results matching your search criteria.
         </Typography>
       </Paper>
     </TableCell>

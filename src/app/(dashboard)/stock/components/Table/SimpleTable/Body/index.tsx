@@ -1,14 +1,14 @@
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import { Dispatch } from "react";
 
+import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
 import { GetStockResponse } from "@/services/stock/interfaces";
 import { Stock } from "@/app/(dashboard)/stock/interfaces";
-import { getNumRowsToCompletePageSize } from "../../utils";
 import { HeaderColumnTypes } from "../interfaces";
 import { NotFound } from "./NotFound";
 import { StockRow } from "./StockRow";
-import { Dispatch } from "react";
 
 interface Props extends GetStockResponse {
   setSelectedRows: Dispatch<Record<string, Stock>>;
@@ -16,7 +16,6 @@ interface Props extends GetStockResponse {
   columns?: HeaderColumnTypes[];
   currentPageNumber: number;
   pageSize: number;
-  query: string;
 }
 
 const Body = ({
@@ -25,13 +24,10 @@ const Body = ({
   selectedRows = {},
   setSelectedRows,
   pageSize = 0,
-  query = "",
   count = 0,
   rows = [],
 }: Props) => {
-  const queryNotFound = query.length > 0 && !rows.length;
-
-  const numRowsToCompletePageSize = getNumRowsToCompletePageSize({
+  const numRowsToCompletePageSize = getNumRowsToCompleteTablePageSize({
     numTotalRows: count,
     currentPageNumber,
     pageSize,
@@ -68,7 +64,7 @@ const Body = ({
       ))}
 
       {[...Array(numRowsToCompletePageSize)].map((_, rowIndex) => (
-        <TableRow key={rowIndex}>
+        <TableRow key={rowIndex} className="h-[75px]">
           <TableCell />
           {columns.includes(HeaderColumnTypes.productId) && <TableCell />}
           {columns.includes(HeaderColumnTypes.productCode) && <TableCell />}
@@ -82,7 +78,7 @@ const Body = ({
         </TableRow>
       ))}
 
-      {queryNotFound && <NotFound query={query} />}
+      {!rows.length ? <NotFound numColumns={columns.length + 2} /> : null}
     </TableBody>
   );
 };

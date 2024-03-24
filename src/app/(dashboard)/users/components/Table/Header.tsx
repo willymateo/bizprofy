@@ -5,23 +5,21 @@ import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import { ChangeEvent, Dispatch } from "react";
 
-import { HeaderColumnTypes, Order } from "./interfaces";
+import { User } from "@/services/users/interfaces";
 import { HEADER_COLUMNS } from "./constants";
-import { Stock } from "../../../interfaces";
+import { Order } from "./interfaces";
 
 interface Props {
-  setSelectedRows: Dispatch<Record<string, Stock>>;
+  setSelectedRows: Dispatch<Record<string, User>>;
   handleSort: (propertyId: string) => void;
-  columns?: HeaderColumnTypes[];
   numRowsSelected: number;
   orderDirection: Order;
   numTotalRows: number;
   orderBy: string;
-  rows: Stock[];
+  rows: User[];
 }
 
 const Header = ({
-  columns = Object.values(HeaderColumnTypes),
   orderDirection = Order.asc,
   numRowsSelected = 0,
   numTotalRows = 0,
@@ -32,7 +30,7 @@ const Header = ({
 }: Props) => {
   const selectAll = ({ target: { checked = false } }: ChangeEvent<HTMLInputElement>) => {
     if (checked) {
-      const newSelectedRows: Record<string, Stock> = {};
+      const newSelectedRows: Record<string, User> = {};
 
       rows.forEach(row => {
         newSelectedRows[row.id] = row;
@@ -55,24 +53,22 @@ const Header = ({
           />
         </TableCell>
 
-        {HEADER_COLUMNS.filter(({ id = "" }) => columns.includes(id as HeaderColumnTypes)).map(
-          ({ className = "", id = "", label = "" }) => (
-            <TableCell
-              sortDirection={orderBy === id ? orderDirection : false}
-              className={className}
-              key={id}
+        {HEADER_COLUMNS.map(({ className = "", id = "", label = "" }) => (
+          <TableCell
+            sortDirection={orderBy === id ? orderDirection : false}
+            className={className}
+            key={id}
+          >
+            <TableSortLabel
+              direction={orderBy === id ? orderDirection : Order.asc}
+              onClick={() => handleSort(id)}
+              active={orderBy === id}
+              hideSortIcon
             >
-              <TableSortLabel
-                direction={orderBy === id ? orderDirection : Order.asc}
-                onClick={() => handleSort(id)}
-                active={orderBy === id}
-                hideSortIcon
-              >
-                {label}
-              </TableSortLabel>
-            </TableCell>
-          ),
-        )}
+              {label}
+            </TableSortLabel>
+          </TableCell>
+        ))}
 
         <TableCell />
       </TableRow>

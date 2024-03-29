@@ -17,9 +17,9 @@ const AccountPopover = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const isOpen = Boolean(anchorEl);
   const {
-    isActive: isSigningOut = false,
-    enable: startSigningOut,
-    disable: stopSigningOut,
+    isActive: isLogingOut = false,
+    enable: startLogingOut,
+    disable: stopLogingOut,
   } = useActive();
 
   const handleOpen = ({ currentTarget }: MouseEvent<HTMLButtonElement>) =>
@@ -28,7 +28,7 @@ const AccountPopover = () => {
   const handleClose = () => setAnchorEl(null);
 
   const handleSignOut = async () => {
-    startSigningOut();
+    startLogingOut();
 
     try {
       await signOut();
@@ -36,7 +36,7 @@ const AccountPopover = () => {
       console.log("Error signing out", err);
     }
 
-    stopSigningOut();
+    stopLogingOut();
   };
 
   return (
@@ -64,14 +64,14 @@ const AccountPopover = () => {
 
         <MenuItem
           sx={{ typography: "body2", color: "error.main" }}
-          disabled={isSigningOut}
           onClick={handleSignOut}
+          disabled={isLogingOut}
           className="py-4 gap-5"
           disableTouchRipple
           disableRipple
         >
           Logout
-          {isSigningOut && (
+          {isLogingOut && (
             <CircularProgress className="!w-[22px] !h-[22px]" disableShrink color="inherit" />
           )}
         </MenuItem>

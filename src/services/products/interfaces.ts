@@ -31,3 +31,25 @@ export interface Product extends AuditFields {
   name: string;
   id: string;
 }
+
+export interface GetProductCategoriesPayload {
+  orderByField?: string;
+  offset?: number;
+  limit?: number;
+  order?: Order;
+}
+
+export interface GetProductCategoriesResponse {
+  rows: ProductCategory[];
+  count: number;
+}
+
+export interface CreateProductCategoryPayload {
+  name: string;
+}
+
+export interface ProductCategory extends AuditFields {
+  companyId: string;
+  name: string;
+  id: string;
+}

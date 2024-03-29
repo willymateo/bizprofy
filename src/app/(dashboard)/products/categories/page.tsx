@@ -3,44 +3,44 @@ import Button from "@mui/material/Button";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { NoProductsFound } from "./components/NotProductsFound";
-import { ProductCard } from "./components/ProductCard";
-import { getProducts } from "@/services/products";
+import { getProductCategories } from "@/services/products";
+import { ProductCategoryCard } from "./components/ProductCategoryCard";
+import { NoProductCategoriesFound } from "./components/NotProductCategoriesFound";
 
 const metadata: Metadata = {
   description: "Business management system",
-  title: "Products | Bizprofy",
+  title: "Product types | Bizprofy",
 };
 
-const Products = async () => {
-  const products = await getProducts();
+const ProductCategories = async () => {
+  const { rows } = await getProductCategories();
 
   return (
     <div className="flex flex-col gap-5 h-full">
       <div className="flex flex-row gap-5 items-center justify-between">
-        <h1>Products</h1>
+        <h1>Product categories</h1>
 
-        <Link href="/products/new" className="no-underline">
+        <Link href="/products/categories/new" className="no-underline">
           <Button
             className="rounded-lg normal-case"
             startIcon={<Icon icon="eva:plus-fill" />}
             variant="contained"
           >
-            Add product
+            Add product category
           </Button>
         </Link>
       </div>
 
-      {products.length === 0 && <NoProductsFound />}
+      {rows.length === 0 && <NoProductCategoriesFound />}
 
-      {products.length > 0 && (
+      {rows.length > 0 && (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-stretch gap-5">
-          {products?.map(product => <ProductCard key={product.id} {...product} />)}
+          {rows?.map(product => <ProductCategoryCard key={product.id} {...product} />)}
         </div>
       )}
     </div>
   );
 };
 
-export default Products;
+export default ProductCategories;
 export { metadata };

@@ -21,6 +21,7 @@ interface FormInputs extends Omit<CreateProductPayload, "productCategoryId" | "p
   provider: Provider | null;
   productCategory: any;
 }
+
 const NewProductForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");

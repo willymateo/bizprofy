@@ -30,7 +30,7 @@ const ProvidersPage = async ({
       `/providers?${new URLSearchParams({
         limit: PAGE_SIZE_OPTIONS[0].toString(),
         offset: "0",
-      }).toString()}`,
+      })}`,
     );
   }
 

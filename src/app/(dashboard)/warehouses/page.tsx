@@ -8,30 +8,29 @@ import { GetWarehousesPayload } from "@/services/warehouses/interfaces";
 import { NoWarehousesFound } from "./components/NoWarehousesFound";
 import { WarehouseCard } from "./components/WarehouseCard";
 import { getWarehouses } from "@/services/warehouses";
-import { PAGE_SIZE_OPTIONS } from "./constants";
 
 const metadata: Metadata = {
   description: "Business management system",
   title: "Warehouses | Bizprofy",
 };
 
+const PAGE_SIZE = 10;
+
 type Props = {
   searchParams: GetWarehousesPayload;
   params: {};
 };
 
-const WarehousesPage = async ({
-  searchParams: { limit = PAGE_SIZE_OPTIONS[0], offset = 0 },
-}: Props) => {
+const WarehousesPage = async ({ searchParams: { limit = PAGE_SIZE, offset = 0 } }: Props) => {
   offset = parseInt(offset.toString(), 10);
   limit = parseInt(limit.toString(), 10);
 
   if (isNaN(offset) || isNaN(limit)) {
     redirect(
       `/warehouses?${new URLSearchParams({
-        limit: PAGE_SIZE_OPTIONS[0].toString(),
+        limit: PAGE_SIZE.toString(),
         offset: "0",
-      }).toString()}`,
+      })}`,
     );
   }
 

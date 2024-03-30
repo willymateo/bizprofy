@@ -10,16 +10,17 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
+import { ProductCategoriesHookForm } from "@/app/components/inputs/ProductCategoriesHookForm";
+import { CreateProductPayload, ProductCategory } from "@/services/products/interfaces";
 import { ProvidersHookForm } from "@/app/components/inputs/ProvidersHookForm";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
-import { CreateProductPayload } from "@/services/products/interfaces";
 import { Provider } from "@/services/providers/interfaces";
 import { createProduct } from "@/services/products";
 import { useActive } from "@/hooks/useActive";
 
 interface FormInputs extends Omit<CreateProductPayload, "productCategoryId" | "providerId"> {
+  productCategory: ProductCategory | null;
   provider: Provider | null;
-  productCategory: any;
 }
 
 const NewProductForm = () => {
@@ -71,20 +72,6 @@ const NewProductForm = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Icon icon="solar:code-scan-line-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-        }}
-        helperText={formError?.code?.message}
-        error={Boolean(formError?.code)}
-        {...register("code")}
-        label="Product code"
-      />
-
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
               <Icon icon="solar:bag-heart-bold-duotone" width={24} height={24} />
             </InputAdornment>
           ),
@@ -96,22 +83,6 @@ const NewProductForm = () => {
         error={Boolean(formError?.name)}
         label="Product name"
         required
-      />
-
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon icon="solar:chat-line-bold-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-        }}
-        helperText={formError?.description?.message}
-        error={Boolean(formError?.description)}
-        label="Additional description"
-        {...register("description")}
-        multiline
-        rows={3}
       />
 
       <NumberHookForm
@@ -134,18 +105,6 @@ const NewProductForm = () => {
         required
       />
 
-      <ProvidersHookForm
-        rules={{
-          validate: value => {
-            const provider = value as Provider;
-
-            return Boolean(provider?.id) || "Provider is required";
-          },
-        }}
-        control={control}
-        name="provider"
-      />
-
       <NumberHookForm
         InputProps={{
           endAdornment: (
@@ -165,6 +124,40 @@ const NewProductForm = () => {
         label="Unit price"
         required
       />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:code-scan-line-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.code?.message}
+        error={Boolean(formError?.code)}
+        {...register("code")}
+        label="Product code"
+      />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:chat-line-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.description?.message}
+        error={Boolean(formError?.description)}
+        label="Additional description"
+        {...register("description")}
+        multiline
+        rows={3}
+      />
+
+      <ProductCategoriesHookForm name="productCategory" control={control} />
+
+      <ProvidersHookForm control={control} name="provider" />
 
       {error && <Alert severity="error">{error}</Alert>}
 

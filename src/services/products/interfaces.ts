@@ -1,4 +1,5 @@
 import { AuditFields, Order } from "../interfaces";
+import { Provider } from "../providers/interfaces";
 
 export interface GetProductsPayload {
   unitPriceGreaterThanOrEqualTo?: number;
@@ -11,10 +12,15 @@ export interface GetProductsPayload {
   q?: string;
 }
 
+export interface GetProductsResponse {
+  rows: Product[];
+  count: number;
+}
+
 export interface CreateProductPayload {
-  productCategoryId: string;
+  productCategoryId: string | null;
+  providerId: string | null;
   description: string;
-  providerId: string;
   unitPrice: number;
   unitCost: number;
   code: string;
@@ -22,6 +28,8 @@ export interface CreateProductPayload {
 }
 
 export interface Product extends AuditFields {
+  productCategory: ProductCategory | null;
+  provider: Provider | null;
   description: string;
   companyId: string;
   unitPrice: number;
@@ -37,6 +45,7 @@ export interface GetProductCategoriesPayload {
   offset?: number;
   limit?: number;
   order?: Order;
+  q?: string;
 }
 
 export interface GetProductCategoriesResponse {

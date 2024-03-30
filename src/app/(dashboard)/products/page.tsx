@@ -13,7 +13,10 @@ const metadata: Metadata = {
 };
 
 const Products = async () => {
-  const products = await getProducts();
+  const { rows = [] } = await getProducts({
+    offset: 0,
+    limit: 9,
+  });
 
   return (
     <div className="flex flex-col gap-5 h-full">
@@ -31,11 +34,11 @@ const Products = async () => {
         </Link>
       </div>
 
-      {!products?.length && <NoProductsFound />}
+      {!rows?.length && <NoProductsFound />}
 
-      {products?.length > 0 && (
+      {rows?.length > 0 && (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-stretch gap-5">
-          {products?.map(product => <ProductCard key={product.id} {...product} />)}
+          {rows?.map(product => <ProductCard key={product.id} {...product} />)}
         </div>
       )}
     </div>

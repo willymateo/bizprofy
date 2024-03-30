@@ -1,4 +1,5 @@
 import Tooltip from "@mui/material/Tooltip";
+import { Icon } from "@iconify-icon/react";
 import Switch from "@mui/material/Switch";
 import Card from "@mui/material/Card";
 import Chip from "@mui/material/Chip";
@@ -27,9 +28,10 @@ const WarehouseCard = (warehouse: Warehouse) => (
 
         {warehouse?.code && (
           <Chip
+            icon={<Icon icon="solar:code-scan-line-duotone" className="pl-3" />}
             className="w-fit max-w-full overflow-hidden text-ellipsis"
+            label={warehouse?.code ?? ""}
             color="info"
-            label={warehouse?.code}
           />
         )}
       </div>

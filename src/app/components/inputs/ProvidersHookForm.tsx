@@ -32,7 +32,9 @@ const ProvidersHookForm = <T extends FieldValues>(props: UseControllerProps<T>) 
       const newAbortController = new AbortController();
       abortControllerRef.current = newAbortController;
 
-      const { rows } = await getProviders({
+      const { rows = [] } = await getProviders({
+        limit: Number.MAX_SAFE_INTEGER,
+        offset: 0,
         q: value,
       });
 

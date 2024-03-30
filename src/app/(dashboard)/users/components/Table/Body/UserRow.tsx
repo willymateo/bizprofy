@@ -47,7 +47,13 @@ const UserRow = ({
 
         <TableCell className="whitespace-nowrap">{id ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">
-          {username && <Chip label={username ?? ""} color="info" />}
+          {username && (
+            <Chip
+              icon={<Icon icon="solar:user-bold-duotone" className="pl-3" />}
+              label={username ?? ""}
+              color="info"
+            />
+          )}
         </TableCell>
         <TableCell className="whitespace-nowrap">{firstNames ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{lastNames ?? ""}</TableCell>

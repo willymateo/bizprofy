@@ -2,17 +2,18 @@
 
 import { getServerSession } from "next-auth";
 
+import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
+import { Order, SessionPayload } from "../interfaces";
 import {
-  Product,
-  ProductCategory,
-  GetProductsPayload,
-  CreateProductPayload,
-  GetProductCategoriesPayload,
   GetProductCategoriesResponse,
   CreateProductCategoryPayload,
+  GetProductCategoriesPayload,
+  CreateProductPayload,
+  GetProductsResponse,
+  GetProductsPayload,
+  ProductCategory,
+  Product,
 } from "./interfaces";
-import { Order, SessionPayload } from "../interfaces";
-import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
 
 interface GetProductsProps extends GetProductsPayload {
   abortController?: AbortController;
@@ -26,7 +27,7 @@ const getProducts = async ({
   limit,
   order,
   q,
-}: GetProductsProps = {}): Promise<Product[]> => {
+}: GetProductsProps = {}): Promise<GetProductsResponse> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
@@ -113,6 +114,7 @@ const getProductCategories = async ({
   orderByField,
   offset = 0,
   limit = 5,
+  q = "",
 }: GetProductCategoriesPayload = {}): Promise<GetProductCategoriesResponse> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
@@ -136,6 +138,10 @@ const getProductCategories = async ({
     searchParams.append("order", order);
   }
 
+  if (q) {
+    searchParams.append("q", q);
+  }
+
   url.search = searchParams.toString();
 
   const res = await fetch(url, {
@@ -155,7 +161,6 @@ const getProductCategories = async ({
   if (!res.ok) {
     throw new Error(resBody.error?.message || "Failed to fetch product categories");
   }
-
   return resBody;
 };
 

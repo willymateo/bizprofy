@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { NoProductsFound } from "./components/NotProductsFound";
+import { NoProductsFound } from "./components/NoProductsFound";
 import { ProductCard } from "./components/ProductCard";
 import { getProducts } from "@/services/products";
 
@@ -31,9 +31,9 @@ const Products = async () => {
         </Link>
       </div>
 
-      {products.length === 0 && <NoProductsFound />}
+      {!products?.length && <NoProductsFound />}
 
-      {products.length > 0 && (
+      {products?.length > 0 && (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-stretch gap-5">
           {products?.map(product => <ProductCard key={product.id} {...product} />)}
         </div>

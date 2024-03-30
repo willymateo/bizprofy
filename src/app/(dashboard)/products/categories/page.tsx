@@ -3,9 +3,9 @@ import Button from "@mui/material/Button";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { getProductCategories } from "@/services/products";
+import { NoProductCategoriesFound } from "./components/NoProductCategoriesFound";
 import { ProductCategoryCard } from "./components/ProductCategoryCard";
-import { NoProductCategoriesFound } from "./components/NotProductCategoriesFound";
+import { getProductCategories } from "@/services/products";
 
 const metadata: Metadata = {
   description: "Business management system",
@@ -31,9 +31,9 @@ const ProductCategories = async () => {
         </Link>
       </div>
 
-      {rows.length === 0 && <NoProductCategoriesFound />}
+      {!rows?.length && <NoProductCategoriesFound />}
 
-      {rows.length > 0 && (
+      {rows?.length > 0 && (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-stretch gap-5">
           {rows?.map(product => <ProductCategoryCard key={product.id} {...product} />)}
         </div>

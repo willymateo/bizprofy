@@ -1,3 +1,4 @@
+import Tooltip from "@mui/material/Tooltip";
 import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
 import Card from "@mui/material/Card";
@@ -5,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Product } from "@/services/products/interfaces";
-import { Tooltip } from "@mui/material";
 
 const ProductCard = ({
   description = "",
@@ -16,7 +16,7 @@ const ProductCard = ({
   name = "",
   id = "",
 }: Product) => (
-  <Tooltip title={description} placement="top" arrow>
+  <Tooltip title={description} arrow followCursor>
     <Card className="flex flex-col">
       <Link
         className="flex flex-row items-center justify-center pt-full relative text-black"

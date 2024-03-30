@@ -53,7 +53,7 @@ const NewWarehouseForm = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Icon icon="solar:user-hands-bold-duotone" width={24} height={24} />
+              <Icon icon="solar:code-scan-line-duotone" width={24} height={24} />
             </InputAdornment>
           ),
         }}

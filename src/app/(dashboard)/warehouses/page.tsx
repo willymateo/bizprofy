@@ -5,9 +5,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { GetWarehousesPayload } from "@/services/warehouses/interfaces";
-import { PAGE_SIZE_OPTIONS } from "./components/Table/constants";
+import { NoWarehousesFound } from "./components/NoWarehousesFound";
+import { WarehouseCard } from "./components/WarehouseCard";
 import { getWarehouses } from "@/services/warehouses";
-import { Table } from "./components/Table";
+import { PAGE_SIZE_OPTIONS } from "./constants";
 
 const metadata: Metadata = {
   description: "Business management system",
@@ -34,13 +35,13 @@ const WarehousesPage = async ({
     );
   }
 
-  const response = await getWarehouses({
+  const { rows = [] } = await getWarehouses({
     offset,
     limit,
   });
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 h-full">
       <div className="flex flex-row gap-5 items-center justify-between">
         <h1>Warehouses</h1>
 
@@ -55,7 +56,13 @@ const WarehousesPage = async ({
         </Link>
       </div>
 
-      <Table {...response} />
+      {!rows?.length && <NoWarehousesFound />}
+
+      {rows?.length > 0 && (
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-stretch gap-5">
+          {rows?.map(warehouse => <WarehouseCard key={warehouse.id} {...warehouse} />)}
+        </div>
+      )}
     </div>
   );
 };

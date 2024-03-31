@@ -10,20 +10,19 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateWarehousePayload } from "@/services/warehouses/interfaces";
-import { createWarehouse } from "@/services/warehouses";
+import { CreateProductCategoryPayload } from "@/services/products/interfaces";
+import { createProductCategory } from "@/services/products";
 import { useActive } from "@/hooks/useActive";
 
-const NewWarehouseForm = () => {
+const NewProductCategoryForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
     formState: { errors: formError },
     handleSubmit,
     register,
-  } = useForm<CreateWarehousePayload>({
+  } = useForm<CreateProductCategoryPayload>({
     values: {
-      code: "",
       name: "",
     },
   });
@@ -34,13 +33,13 @@ const NewWarehouseForm = () => {
     setError("");
 
     try {
-      await createWarehouse(data);
+      await createProductCategory(data);
 
       stopLoading();
-      router.push("/warehouses");
+      router.push("/products/categories");
       router.refresh();
     } catch (err) {
-      console.error("Error creating warehouse", err);
+      console.error("Error creating product category", err);
 
       setError((err as Error).message);
       stopLoading();
@@ -53,32 +52,16 @@ const NewWarehouseForm = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Icon icon="solar:code-scan-line-duotone" width={24} height={24} />
+              <Icon icon="solar:bag-smile-bold-duotone" width={24} height={24} />
             </InputAdornment>
           ),
         }}
-        helperText={formError?.code?.message}
-        error={Boolean(formError?.code)}
-        placeholder="warehouse-001"
-        {...register("code", {})}
-        label="Warehouse code"
-      />
-
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon icon="solar:user-hands-bold-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-        }}
-        helperText={formError?.name?.message}
         {...register("name", {
-          required: "Warehouse name is required",
+          required: "Product category name is required",
         })}
+        helperText={formError?.name?.message}
         error={Boolean(formError?.name)}
-        placeholder="Downtown warehouse"
-        label="Warehouse name"
+        label="Product category name"
         required
       />
 
@@ -91,7 +74,7 @@ const NewWarehouseForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create warehouse
+          Create product category
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -99,4 +82,4 @@ const NewWarehouseForm = () => {
   );
 };
 
-export { NewWarehouseForm };
+export { NewProductCategoryForm };

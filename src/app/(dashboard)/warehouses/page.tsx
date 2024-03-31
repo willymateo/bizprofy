@@ -5,42 +5,42 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { GetWarehousesPayload } from "@/services/warehouses/interfaces";
-import { PAGE_SIZE_OPTIONS } from "./components/Table/constants";
+import { NoWarehousesFound } from "./components/NoWarehousesFound";
+import { WarehouseCard } from "./components/WarehouseCard";
 import { getWarehouses } from "@/services/warehouses";
-import { Table } from "./components/Table";
 
 const metadata: Metadata = {
   description: "Business management system",
   title: "Warehouses | Bizprofy",
 };
 
+const PAGE_SIZE = 10;
+
 type Props = {
   searchParams: GetWarehousesPayload;
   params: {};
 };
 
-const WarehousesPage = async ({
-  searchParams: { limit = PAGE_SIZE_OPTIONS[0], offset = 0 },
-}: Props) => {
+const WarehousesPage = async ({ searchParams: { limit = PAGE_SIZE, offset = 0 } }: Props) => {
   offset = parseInt(offset.toString(), 10);
   limit = parseInt(limit.toString(), 10);
 
   if (isNaN(offset) || isNaN(limit)) {
     redirect(
       `/warehouses?${new URLSearchParams({
-        limit: PAGE_SIZE_OPTIONS[0].toString(),
+        limit: PAGE_SIZE.toString(),
         offset: "0",
-      }).toString()}`,
+      })}`,
     );
   }
 
-  const response = await getWarehouses({
+  const { rows = [] } = await getWarehouses({
     offset,
     limit,
   });
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 h-full">
       <div className="flex flex-row gap-5 items-center justify-between">
         <h1>Warehouses</h1>
 
@@ -55,7 +55,13 @@ const WarehousesPage = async ({
         </Link>
       </div>
 
-      <Table {...response} />
+      {!rows?.length && <NoWarehousesFound />}
+
+      {rows?.length > 0 && (
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-stretch gap-5">
+          {rows?.map(warehouse => <WarehouseCard key={warehouse.id} {...warehouse} />)}
+        </div>
+      )}
     </div>
   );
 };

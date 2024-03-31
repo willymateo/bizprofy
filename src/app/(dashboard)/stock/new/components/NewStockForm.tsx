@@ -22,7 +22,7 @@ import { useActive } from "@/hooks/useActive";
 
 const NOW_DAYJS = dayjs();
 
-interface StockFormProps {
+interface FormInputs {
   product: Product | null;
   transactionDate: Dayjs;
   quantity: number;
@@ -44,7 +44,7 @@ const NewStockForm = ({
     handleSubmit,
     register,
     control,
-  } = useForm<StockFormProps>({
+  } = useForm<FormInputs>({
     values: {
       transactionDate: NOW_DAYJS,
       product: null,

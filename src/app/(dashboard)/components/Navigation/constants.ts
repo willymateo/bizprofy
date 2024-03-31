@@ -10,6 +10,11 @@ const MENU_OPTIONS: MenuOption[] = [
   { label: "Warehouses", path: "/warehouses", icon: "solar:buildings-bold-duotone" },
   { label: "Products", path: "/products", icon: "solar:bag-heart-bold-duotone" },
   {
+    label: "Product categories",
+    path: "/products/categories",
+    icon: "solar:bag-smile-bold-duotone",
+  },
+  {
     label: "Openning Stock",
     path: `/stock/${STOCK_ROUTES_BY_TYPE[ExtraStockTypes.openingStock]}`,
     icon: "solar:box-bold-duotone",

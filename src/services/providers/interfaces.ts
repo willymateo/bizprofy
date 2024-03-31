@@ -14,6 +14,7 @@ export interface GetProvidersPayload {
   offset?: number;
   limit?: number;
   order?: Order;
+  q?: string;
 }
 
 export interface GetProvidersResponse {

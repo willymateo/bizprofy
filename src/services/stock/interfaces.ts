@@ -40,7 +40,6 @@ export enum CreatableStockTypes {
 }
 
 export enum ExtraStockTypes {
-  openingStock = "opening_stock",
   currentStock = "current_stock",
 }
 

@@ -15,11 +15,6 @@ const MENU_OPTIONS: MenuOption[] = [
     icon: "solar:bag-smile-bold-duotone",
   },
   {
-    label: "Openning Stock",
-    path: `/stock/${STOCK_ROUTES_BY_TYPE[ExtraStockTypes.openingStock]}`,
-    icon: "solar:box-bold-duotone",
-  },
-  {
     label: "Stock In",
     path: `/stock/${STOCK_ROUTES_BY_TYPE[CreatableStockTypes.stockIn]}`,
     icon: "fluent:cube-arrow-curve-down-20-filled",

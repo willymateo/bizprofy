@@ -30,8 +30,8 @@ const WarehouseCard = (warehouse: Warehouse) => (
           <Chip
             icon={<Icon icon="solar:code-scan-line-duotone" className="pl-3" />}
             className="w-fit max-w-full overflow-hidden text-ellipsis"
+            color={warehouse?.deletedAt ? "default" : "info"}
             label={warehouse?.code ?? ""}
-            color="info"
           />
         )}
       </div>

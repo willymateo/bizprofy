@@ -50,8 +50,8 @@ const UserRow = ({
           {username && (
             <Chip
               icon={<Icon icon="solar:user-bold-duotone" className="pl-3" />}
+              color={deletedAt ? "default" : "info"}
               label={username ?? ""}
-              color="info"
             />
           )}
         </TableCell>

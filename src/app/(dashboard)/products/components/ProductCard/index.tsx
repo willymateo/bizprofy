@@ -44,8 +44,8 @@ const ProductCard = (product: Product) => (
               <Chip
                 icon={<Icon icon="solar:code-scan-line-duotone" className="pl-3" />}
                 className="w-fit max-w-full overflow-hidden text-ellipsis"
+                color={product?.deletedAt ? "default" : "info"}
                 label={product?.code ?? ""}
-                color="info"
               />
             </div>
           )}
@@ -56,6 +56,7 @@ const ProductCard = (product: Product) => (
 
               <Chip
                 className="w-fit max-w-full overflow-hidden text-ellipsis"
+                color={product?.deletedAt ? "default" : "secondary"}
                 label={product?.productCategory?.name ?? ""}
                 icon={
                   <Icon
@@ -65,7 +66,6 @@ const ProductCard = (product: Product) => (
                     width={16}
                   />
                 }
-                color="secondary"
               />
             </div>
           )}

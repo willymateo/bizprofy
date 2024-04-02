@@ -79,11 +79,11 @@ const ProductCard = (product: Product) => (
 
         <div className="flex flex-row gap-5 items-center justify-between">
           <p>
-            Unit price: <span className="font-bold">${product?.unitPrice ?? 0}</span>
+            Unit cost: <span className="font-bold">${product?.unitCost ?? 0}</span>
           </p>
 
           <p>
-            Unit cost: <span className="font-bold">${product?.unitCost ?? 0}</span>
+            Unit price: <span className="font-bold">${product?.unitPrice ?? 0}</span>
           </p>
         </div>
       </div>

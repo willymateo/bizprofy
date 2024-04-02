@@ -60,7 +60,7 @@ const StockOut = async ({
             className="rounded-lg normal-case"
             variant="contained"
           >
-            Register new purchase
+            Register new sale
           </Button>
         </Link>
       </div>

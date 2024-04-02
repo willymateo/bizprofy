@@ -5,7 +5,7 @@ import { Return as ReturnButton } from "@/app/components/Buttons/Return";
 
 const metadata: Metadata = {
   description: "Business management system",
-  title: "New stock | Bizprofy",
+  title: "New stock out | Bizprofy",
 };
 interface Props {
   children: ReactNode;

@@ -25,6 +25,7 @@ const StockRow = ({
   unitPrice = 0,
   quantity = 0,
   warehouse,
+  customer,
   product,
   onClick,
 }: Props) => {
@@ -71,13 +72,36 @@ const StockRow = ({
             href={`/providers/${product?.provider?.id}`}
             className="no-underline text-slate-800"
           >
+            {product?.provider?.idCard ?? ""}
+          </Link>
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link
+            href={`/providers/${product?.provider?.id}`}
+            className="no-underline text-slate-800"
+          >
             {`${product?.provider?.firstNames ?? ""} ${product?.provider?.lastNames ?? ""}`.trim()}
+          </Link>
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link href={`mailto:${product?.provider?.email}`} target="_blank">
+            {product?.provider?.email}
           </Link>
         </TableCell>
 
         <TableCell className="whitespace-nowrap">
-          <Link href={`mailto:${product?.provider?.email}`} target="_blank">
-            {product?.provider?.email}
+          <Link href={`/customers/${customer?.id}`} className="no-underline text-slate-800">
+            {customer?.idCard ?? ""}
+          </Link>
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link href={`/customers/${customer?.id}`} className="no-underline text-slate-800">
+            {`${customer?.firstNames ?? ""} ${customer?.lastNames ?? ""}`.trim()}
+          </Link>
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link href={`mailto:${customer?.email}`} target="_blank">
+            {customer?.email}
           </Link>
         </TableCell>
 

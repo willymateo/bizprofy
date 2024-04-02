@@ -20,14 +20,18 @@ const Footer = ({ totalQuantity = 0, totalPriceSum = 0 }: FooterData) => (
       <TableCell />
       <TableCell />
       <TableCell />
+      <TableCell />
+      <TableCell />
+      <TableCell />
+      <TableCell />
 
       <TableCell className="font-bold text-right whitespace-nowrap text-lg">
         {totalQuantity}
       </TableCell>
-
       <TableCell className="font-bold text-right whitespace-nowrap text-lg">
         ${totalPriceSum.toFixed(NUM_DECIMALS)}
       </TableCell>
+
       <TableCell />
     </TableRow>
   </TableFooter>

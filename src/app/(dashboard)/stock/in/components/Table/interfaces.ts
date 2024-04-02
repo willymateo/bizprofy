@@ -12,6 +12,7 @@ export enum HeaderColumnTypes {
   warehouseName,
   productCode,
   productName,
+  prividerIdCard,
   providerName,
   providerEmail,
   unitCost,

@@ -43,7 +43,7 @@ const NewStockInForm = () => {
       transactionDate: NOW_DAYJS,
       warehouse: null,
       product: null,
-      quantity: 0,
+      quantity: 1,
       unitCost: 0,
     },
   });
@@ -146,7 +146,7 @@ const NewStockInForm = () => {
         {...register("quantity", {
           required: "Product quantity is required",
           valueAsNumber: true,
-          min: 0,
+          min: 1,
         })}
         helperText={formError?.quantity?.message}
         error={Boolean(formError?.quantity)}

@@ -14,22 +14,28 @@ import { DateTimePickerHookForm } from "@/app/components/inputs/DateTimePickerHo
 import { WarehousesHookForm } from "@/app/components/inputs/WarehousesHookForm";
 import { ProductsHookForm } from "@/app/components/inputs/ProductsHookForm";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
-import { CreateStockInPayload } from "@/services/stockIn/interfaces";
+import { CreateStockOutPayload } from "@/services/stockOut/interfaces";
 import { Warehouse } from "@/services/warehouses/interfaces";
+import { Customer } from "@/services/customers/interfaces";
 import { Product } from "@/services/products/interfaces";
-import { createStockIn } from "@/services/stockIn";
+import { createStockOut } from "@/services/stockOut";
 import { useActive } from "@/hooks/useActive";
+import { CustomersHookForm } from "@/app/components/inputs/CustomersHookForm";
 
 const NOW_DAYJS = dayjs();
 
 interface FormInputs
-  extends Omit<CreateStockInPayload, "transactionDate" | "warehouseId" | "productId"> {
+  extends Omit<
+    CreateStockOutPayload,
+    "transactionDate" | "warehouseId" | "productId" | "customerId"
+  > {
   warehouse: Warehouse | null;
+  customer: Customer | null;
   product: Product | null;
   transactionDate: Dayjs;
 }
 
-const NewStockInForm = () => {
+const NewStockOutForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -42,42 +48,46 @@ const NewStockInForm = () => {
     values: {
       transactionDate: NOW_DAYJS,
       warehouse: null,
+      customer: null,
       product: null,
-      quantity: 0,
-      unitCost: 0,
+      unitPrice: 0,
+      quantity: 1,
     },
   });
   const router = useRouter();
 
-  const handleCreate = handleSubmit(async ({ product, warehouse, transactionDate, ...data }) => {
-    startLoading();
-    setError("");
+  const handleCreate = handleSubmit(
+    async ({ product, warehouse, transactionDate, customer, ...data }) => {
+      startLoading();
+      setError("");
 
-    try {
-      await createStockIn({
-        ...data,
-        transactionDate: transactionDate.toISOString(),
-        warehouseId: warehouse?.id as string,
-        productId: product?.id as string,
-      });
+      try {
+        await createStockOut({
+          ...data,
+          transactionDate: transactionDate.toISOString(),
+          warehouseId: warehouse?.id as string,
+          customerId: customer?.id as string,
+          productId: product?.id as string,
+        });
 
-      stopLoading();
-      router.push("/stock/in");
-      router.refresh();
-    } catch (err) {
-      console.error("Error creating stock in", err);
+        stopLoading();
+        router.push("/stock/out");
+        router.refresh();
+      } catch (err) {
+        console.error("Error creating stock out", err);
 
-      setError((err as Error).message);
-      stopLoading();
-    }
-  });
+        setError((err as Error).message);
+        stopLoading();
+      }
+    },
+  );
 
-  const setDefaultUnitCost = (newProduct: Product | Product[] | null) => {
+  const setDefaultUnitPrice = (newProduct: Product | Product[] | null) => {
     if (!newProduct || Array.isArray(newProduct)) {
       return;
     }
 
-    setValue("unitCost", newProduct.unitCost);
+    setValue("unitPrice", newProduct.unitPrice);
   };
 
   return (
@@ -110,7 +120,7 @@ const NewStockInForm = () => {
             return Boolean(product?.id) || "Product is required";
           },
         }}
-        onChange={setDefaultUnitCost}
+        onChange={setDefaultUnitPrice}
         control={control}
         name="product"
       />
@@ -124,14 +134,14 @@ const NewStockInForm = () => {
           ),
           startAdornment: <InputAdornment position="start">$</InputAdornment>,
         }}
-        helperText={formError?.unitCost?.message}
-        error={Boolean(formError?.unitCost)}
-        {...register("unitCost", {
-          required: "Unit cost is required",
+        helperText={formError?.unitPrice?.message}
+        error={Boolean(formError?.unitPrice)}
+        {...register("unitPrice", {
+          required: "Unit price is required",
           valueAsNumber: true,
           min: 0,
         })}
-        label="Unit cost"
+        label="Unit price"
         required
       />
 
@@ -146,7 +156,7 @@ const NewStockInForm = () => {
         {...register("quantity", {
           required: "Product quantity is required",
           valueAsNumber: true,
-          min: 0,
+          min: 1,
         })}
         helperText={formError?.quantity?.message}
         error={Boolean(formError?.quantity)}
@@ -154,6 +164,8 @@ const NewStockInForm = () => {
         isInteger
         required
       />
+
+      <CustomersHookForm control={control} name="customer" />
 
       {error && <Alert severity="error">{error}</Alert>}
 
@@ -164,7 +176,7 @@ const NewStockInForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Register purchase
+          Register sale
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -172,4 +184,4 @@ const NewStockInForm = () => {
   );
 };
 
-export { NewStockInForm };
+export { NewStockOutForm };

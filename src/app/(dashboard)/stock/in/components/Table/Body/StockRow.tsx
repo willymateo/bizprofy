@@ -71,10 +71,17 @@ const StockRow = ({
             href={`/providers/${product?.provider?.id}`}
             className="no-underline text-slate-800"
           >
+            {product?.provider?.idCard ?? ""}
+          </Link>
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link
+            href={`/providers/${product?.provider?.id}`}
+            className="no-underline text-slate-800"
+          >
             {`${product?.provider?.firstNames ?? ""} ${product?.provider?.lastNames ?? ""}`.trim()}
           </Link>
         </TableCell>
-
         <TableCell className="whitespace-nowrap">
           <Link href={`mailto:${product?.provider?.email}`} target="_blank">
             {product?.provider?.email}

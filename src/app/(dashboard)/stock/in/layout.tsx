@@ -4,8 +4,6 @@ import type { Metadata } from "next";
 import { ReactNode } from "react";
 import Link from "next/link";
 
-import { CreatableStockTypes } from "@/services/stock/interfaces";
-
 const metadata: Metadata = {
   description: "Business management system",
   title: "Stock in | Bizprofy",
@@ -20,10 +18,7 @@ const StockInLayout = ({ children }: Readonly<Props>) => (
     <div className="flex flex-row gap-5 items-center justify-between">
       <h1>Stock in</h1>
 
-      <Link
-        href={`/stock/new?${new URLSearchParams({ type: CreatableStockTypes.stockIn }).toString()}`}
-        className="no-underline"
-      >
+      <Link href="/stock/in/new" className="no-underline">
         <Button
           startIcon={<Icon icon="eva:plus-fill" />}
           className="rounded-lg normal-case"

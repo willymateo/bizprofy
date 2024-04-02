@@ -3,22 +3,20 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { Dispatch } from "react";
 
-import { GetStockResponse, Stock } from "@/services/stock/interfaces";
+import { GetStockInResponse, StockIn } from "@/services/stockIn/interfaces";
 import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
-import { HeaderColumnTypes } from "../interfaces";
+import { HEADER_COLUMNS } from "../constants";
 import { NotFound } from "./NotFound";
 import { StockRow } from "./StockRow";
 
-interface Props extends GetStockResponse {
-  setSelectedRows: Dispatch<Record<string, Stock>>;
-  selectedRows: Record<string, Stock>;
-  columns?: HeaderColumnTypes[];
+interface Props extends GetStockInResponse {
+  setSelectedRows: Dispatch<Record<string, StockIn>>;
+  selectedRows: Record<string, StockIn>;
   currentPageNumber: number;
   pageSize: number;
 }
 
 const Body = ({
-  columns = Object.values(HeaderColumnTypes),
   currentPageNumber = 0,
   selectedRows = {},
   setSelectedRows,
@@ -52,32 +50,24 @@ const Body = ({
 
   return (
     <TableBody>
-      {rows.map((stockElement: Stock) => (
+      {rows.map((stockElement: StockIn) => (
         <StockRow
           isSelected={Boolean(selectedRows[stockElement.id])}
           onClick={() => selectRow(stockElement.id)}
           key={stockElement.id}
-          columns={columns}
           {...stockElement}
         />
       ))}
 
       {[...Array(numRowsToCompletePageSize)].map((_, rowIndex) => (
         <TableRow key={rowIndex} className="h-[75px]">
-          <TableCell />
-          {columns.includes(HeaderColumnTypes.productId) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.productCode) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.productName) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.unitCost) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.unitPrice) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.quantity) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.totalCost) && <TableCell />}
-          {columns.includes(HeaderColumnTypes.totalPrice) && <TableCell />}
-          <TableCell />
+          {[...Array(HEADER_COLUMNS.length + 2)].map((_, index) => (
+            <TableCell key={index} />
+          ))}
         </TableRow>
       ))}
 
-      {!rows.length ? <NotFound numColumns={columns.length + 2} /> : null}
+      {!rows.length ? <NotFound /> : null}
     </TableBody>
   );
 };

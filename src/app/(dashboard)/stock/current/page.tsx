@@ -1,10 +1,7 @@
 import { redirect } from "next/navigation";
 import dayjs from "dayjs";
 
-import { CreatableStockTypes, ExtraStockTypes, GetStockPayload } from "@/services/stock/interfaces";
-import { STOCK_ROUTES_BY_TYPE, STOCK_TYPE_IDS } from "../constants";
 import { getTableData } from "./Table/utils";
-import { getStock } from "@/services/stock";
 import { Table } from "./Table";
 
 type Props = {

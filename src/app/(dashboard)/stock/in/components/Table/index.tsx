@@ -4,27 +4,25 @@ import TablePagination from "@mui/material/TablePagination";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import TableContainer from "@mui/material/TableContainer";
 import { useRouter } from "next/navigation";
-import Table from "@mui/material/Table";
+import MuiTable from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
-import { GetStockPayload, Stock } from "@/services/stock/interfaces";
-import { HeaderColumnTypes, Order, TableData } from "./interfaces";
+import { GetStockInPayload, StockIn } from "@/services/stockIn/interfaces";
+import { Order, TableData } from "./interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
 import { ToolBar } from "./ToolBar";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Body } from "./Body";
 
-interface Props extends TableData, GetStockPayload {
+interface Props extends TableData, GetStockInPayload {
   transactionDateGreaterThanOrEqualTo: string;
   transactionDateLessThanOrEqualTo: string;
-  columns?: HeaderColumnTypes[];
   className?: string;
   href: string;
 }
 
-const SimpleTable = ({
-  columns = Object.values(HeaderColumnTypes),
+const Table = ({
   transactionDateGreaterThanOrEqualTo,
   transactionDateLessThanOrEqualTo,
   limit = PAGE_SIZE_OPTIONS[0],
@@ -35,7 +33,7 @@ const SimpleTable = ({
   bodyData,
   href,
 }: Props) => {
-  const [selectedRows, setSelectedRows] = useState<Record<string, Stock>>({});
+  const [selectedRows, setSelectedRows] = useState<Record<string, StockIn>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
   const [orderBy, setOrderBy] = useState<string>("");
   const [query, setQuery] = useState<string>("");
@@ -83,20 +81,17 @@ const SimpleTable = ({
         transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
         transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
         numRowsSelected={Object.keys(selectedRows).length}
-        offset={offset}
-        limit={limit}
         href={href}
       />
 
       <TableContainer className="max-h-[35rem]">
-        <Table stickyHeader>
+        <MuiTable stickyHeader>
           <Header
             numRowsSelected={Object.keys(selectedRows).length}
             setSelectedRows={setSelectedRows}
             orderDirection={orderDirection}
             handleSort={handleSort}
             numTotalRows={count}
-            columns={columns}
             orderBy={orderBy}
             rows={bodyData}
           />
@@ -106,13 +101,12 @@ const SimpleTable = ({
             currentPageNumber={offset / limit}
             selectedRows={selectedRows}
             pageSize={limit}
-            columns={columns}
             rows={bodyData}
             count={count}
           />
 
-          {bodyData.length ? <Footer {...footerData} columns={columns} /> : null}
-        </Table>
+          {bodyData.length ? <Footer {...footerData} /> : null}
+        </MuiTable>
       </TableContainer>
 
       <TablePagination
@@ -128,4 +122,4 @@ const SimpleTable = ({
   );
 };
 
-export { SimpleTable };
+export { Table };

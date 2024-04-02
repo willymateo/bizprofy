@@ -1,13 +1,11 @@
 import { redirect } from "next/navigation";
 import dayjs from "dayjs";
 
-import { CreatableStockTypes, GetStockPayload } from "@/services/stock/interfaces";
 import { getTableData } from "../components/Table/SimpleTable/utils";
-import { STOCK_ROUTES_BY_TYPE, STOCK_TYPE_IDS } from "../constants";
 import { PAGE_SIZE_OPTIONS } from "../current/Table/constants";
 import { SimpleTable } from "../components/Table/SimpleTable";
+import { getStockOut } from "@/services/stockOut";
 import { COLUMNS_TO_SHOW } from "./constants";
-import { getStock } from "@/services/stock";
 
 type Props = {
   searchParams: GetStockPayload;
@@ -44,8 +42,7 @@ const StockOut = async ({
     );
   }
 
-  const result = await getStock({
-    stockTypeIds: [STOCK_TYPE_IDS[CreatableStockTypes.stockOut]],
+  const result = await getStockOut({
     transactionDateGreaterThanOrEqualTo,
     transactionDateLessThanOrEqualTo,
     offset,

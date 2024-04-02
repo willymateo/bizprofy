@@ -14,9 +14,9 @@ import {
   DATE_TIME_PICKER_VIEWS,
   DATE_FORMAT,
 } from "@/app/components/inputs/DateTimePickerHookForm/constants";
-import { GetStockPayload } from "@/services/stock/interfaces";
+import { GetStockInPayload } from "@/services/stockIn/interfaces";
 
-interface Props extends GetStockPayload {
+interface Props extends GetStockInPayload {
   transactionDateGreaterThanOrEqualTo: string;
   transactionDateLessThanOrEqualTo: string;
   numRowsSelected?: number;
@@ -27,8 +27,6 @@ const ToolBar = ({
   transactionDateGreaterThanOrEqualTo,
   transactionDateLessThanOrEqualTo,
   numRowsSelected = 0,
-  offset,
-  limit,
   href,
 }: Props) => {
   const router = useRouter();
@@ -47,8 +45,6 @@ const ToolBar = ({
       `${href}?${new URLSearchParams({
         transactionDateGreaterThanOrEqualTo: newMinDateTime.toISOString(),
         transactionDateLessThanOrEqualTo,
-        offset: offset?.toString() ?? "",
-        limit: limit?.toString() ?? "",
       })}`,
     );
   };
@@ -65,8 +61,6 @@ const ToolBar = ({
       `${href}?${new URLSearchParams({
         transactionDateLessThanOrEqualTo: newMaxDateTime.toISOString(),
         transactionDateGreaterThanOrEqualTo,
-        offset: offset?.toString() ?? "",
-        limit: limit?.toString() ?? "",
       })}`,
     );
   };

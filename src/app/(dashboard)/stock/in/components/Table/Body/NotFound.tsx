@@ -3,13 +3,11 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-interface Props {
-  numColumns: number;
-}
+import { HEADER_COLUMNS } from "../constants";
 
-const NotFound = ({ numColumns }: Props) => (
+const NotFound = () => (
   <TableRow>
-    <TableCell align="center" colSpan={numColumns} className="h-[375px]">
+    <TableCell align="center" colSpan={HEADER_COLUMNS.length + 2} className="h-[375px]">
       <Paper sx={{ textAlign: "center" }}>
         <Typography variant="h6" paragraph>
           No results found

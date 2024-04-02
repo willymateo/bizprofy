@@ -27,11 +27,6 @@ const HEADER_COLUMNS: HeaderColumns[] = [
     className: "text-center whitespace-nowrap font-bold",
   },
   {
-    id: HeaderColumnTypes.unitPrice,
-    label: "Unit Price",
-    className: "text-center whitespace-nowrap font-bold",
-  },
-  {
     id: HeaderColumnTypes.quantity,
     label: "Quantity",
     className: "text-center whitespace-nowrap",
@@ -39,11 +34,6 @@ const HEADER_COLUMNS: HeaderColumns[] = [
   {
     id: HeaderColumnTypes.totalCost,
     label: "Total Cost",
-    className: "text-center whitespace-nowrap font-bold",
-  },
-  {
-    id: HeaderColumnTypes.totalPrice,
-    label: "Total Price",
     className: "text-center whitespace-nowrap font-bold",
   },
 ];

@@ -1,10 +1,19 @@
 import { redirect } from "next/navigation";
+import { Icon } from "@iconify-icon/react";
+import Button from "@mui/material/Button";
+import type { Metadata } from "next";
+import Link from "next/link";
 import dayjs from "dayjs";
 
 import { GetStockInPayload } from "@/services/stockIn/interfaces";
 import { getTableData } from "./components/Table/utils";
 import { getStockIn } from "@/services/stockIn";
 import { Table } from "./components/Table";
+
+const metadata: Metadata = {
+  description: "Business management system",
+  title: "Stock in | Bizprofy",
+};
 
 type Props = {
   searchParams: GetStockInPayload;
@@ -41,13 +50,30 @@ const StockIn = async ({
   const tableData = getTableData(result);
 
   return (
-    <Table
-      {...tableData}
-      transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
-      transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
-      href="/stock/in"
-    />
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-row gap-5 items-center justify-between">
+        <h1>Stock in</h1>
+
+        <Link href="/stock/in/new" className="no-underline">
+          <Button
+            startIcon={<Icon icon="eva:plus-fill" />}
+            className="rounded-lg normal-case"
+            variant="contained"
+          >
+            Register new purchase
+          </Button>
+        </Link>
+      </div>
+
+      <Table
+        {...tableData}
+        transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
+        transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
+        href="/stock/in"
+      />
+    </div>
   );
 };
 
 export default StockIn;
+export { metadata };

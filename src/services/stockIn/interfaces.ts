@@ -1,5 +1,4 @@
 import { Warehouse } from "../warehouses/interfaces";
-import { Provider } from "../providers/interfaces";
 import { AuditFields, Order } from "../interfaces";
 import { Product } from "../products/interfaces";
 
@@ -23,14 +22,12 @@ export interface GetStockInResponse {
 export interface CreateStockInPayload {
   transactionDate?: string;
   warehouseId: string;
-  providerId?: string;
   productId: string;
   quantity: number;
   unitCost: number;
 }
 
 export interface StockIn extends AuditFields {
-  provider: Provider | null;
   transactionDate: string;
   warehouse: Warehouse;
   quantity: number;

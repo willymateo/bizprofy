@@ -16,6 +16,7 @@ const getWarehouses = async ({
   orderByField,
   offset = 0,
   limit = 5,
+  q = "",
 }: GetWarehousesPayload = {}): Promise<GetWarehousesResponse> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
@@ -37,6 +38,10 @@ const getWarehouses = async ({
 
   if (order) {
     searchParams.append("order", order);
+  }
+
+  if (q) {
+    searchParams.append("q", q);
   }
 
   url.search = searchParams.toString();

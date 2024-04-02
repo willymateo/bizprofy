@@ -7,6 +7,7 @@ import { MouseEvent, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
+import Link from "next/link";
 import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "@/app/components/inputs/DateTimePickerHookForm/constants";
@@ -23,6 +24,7 @@ const StockRow = ({
   transactionDate,
   unitCost = 0,
   quantity = 0,
+  warehouse,
   product,
   onClick,
 }: Props) => {
@@ -46,11 +48,38 @@ const StockRow = ({
           {dayjs(transactionDate)?.format(DATE_FORMAT)}
         </TableCell>
 
-        <TableCell className="whitespace-nowrap">{product?.id}</TableCell>
+        <TableCell className="whitespace-nowrap">
+          {warehouse?.code && <Chip label={warehouse?.code} color="info" />}
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link href={`/warehouses/${warehouse?.id}`} className="no-underline text-slate-800">
+            {warehouse?.name}
+          </Link>
+        </TableCell>
 
-        <TableCell>{product?.code && <Chip label={product?.code} color="info" />}</TableCell>
+        <TableCell className="whitespace-nowrap">
+          {product?.code && <Chip label={product?.code} color="info" />}
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link href={`/products/${product?.id}`} className="no-underline text-slate-800">
+            {product?.name}
+          </Link>
+        </TableCell>
 
-        <TableCell>{product?.name}</TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link
+            href={`/providers/${product?.provider?.id}`}
+            className="no-underline text-slate-800"
+          >
+            {`${product?.provider?.firstNames ?? ""} ${product?.provider?.lastNames ?? ""}`.trim()}
+          </Link>
+        </TableCell>
+
+        <TableCell className="whitespace-nowrap">
+          <Link href={`mailto:${product?.provider?.email}`} target="_blank">
+            {product?.provider?.email}
+          </Link>
+        </TableCell>
 
         <TableCell className="font-bold text-right">
           <p>
@@ -58,10 +87,8 @@ const StockRow = ({
             {unitCost.toFixed(NUM_DECIMALS)}
           </p>
         </TableCell>
-
-        <TableCell className="text-right">{quantity}</TableCell>
-
-        <TableCell className="font-bold text-right">
+        <TableCell className="text-right whitespace-nowrap">{quantity}</TableCell>
+        <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
             {totalCost.toFixed(NUM_DECIMALS)}

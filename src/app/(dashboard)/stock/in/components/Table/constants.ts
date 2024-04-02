@@ -7,8 +7,13 @@ const HEADER_COLUMNS: HeaderColumns[] = [
     className: "text-center whitespace-nowrap",
   },
   {
-    id: HeaderColumnTypes.productId,
-    label: "Product ID",
+    id: HeaderColumnTypes.warehouseCode,
+    label: "Warehouse Code",
+    className: "text-center whitespace-nowrap",
+  },
+  {
+    id: HeaderColumnTypes.warehouseName,
+    label: "Warehouse Name",
     className: "text-center whitespace-nowrap",
   },
   {
@@ -19,6 +24,16 @@ const HEADER_COLUMNS: HeaderColumns[] = [
   {
     id: HeaderColumnTypes.productName,
     label: "Product Name",
+    className: "text-center whitespace-nowrap",
+  },
+  {
+    id: HeaderColumnTypes.providerName,
+    label: "Provider Name",
+    className: "text-center whitespace-nowrap",
+  },
+  {
+    id: HeaderColumnTypes.providerEmail,
+    label: "Provider Email",
     className: "text-center whitespace-nowrap",
   },
   {

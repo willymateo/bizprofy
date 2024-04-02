@@ -3,90 +3,105 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import dayjs, { Dayjs } from "dayjs";
+import { useState } from "react";
 
 import { DateTimePickerHookForm } from "@/app/components/inputs/DateTimePickerHookForm";
+import { WarehousesHookForm } from "@/app/components/inputs/WarehousesHookForm";
 import { ProductsHookForm } from "@/app/components/inputs/ProductsHookForm";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
-import { STOCK_ROUTES_BY_TYPE, STOCK_TYPE_IDS } from "../../constants";
-import { CreatableStockTypes } from "@/services/stock/interfaces";
-import { CREATE_BUTTON_LABEL_BY_STOCK_TYPE } from "../constants";
+import { CreateStockInPayload } from "@/services/stockIn/interfaces";
+import { Warehouse } from "@/services/warehouses/interfaces";
 import { Product } from "@/services/products/interfaces";
-import { createStock } from "@/services/stock";
+import { createStockIn } from "@/services/stockIn";
 import { useActive } from "@/hooks/useActive";
 
 const NOW_DAYJS = dayjs();
 
-interface FormInputs {
+interface FormInputs
+  extends Omit<CreateStockInPayload, "transactionDate" | "warehouseId" | "productId"> {
+  warehouse: Warehouse | null;
   product: Product | null;
   transactionDate: Dayjs;
-  quantity: number;
 }
 
-interface Props {
-  stockType: CreatableStockTypes;
-  stockTypeId: number;
-}
-
-const NewStockForm = ({
-  stockTypeId = STOCK_TYPE_IDS[CreatableStockTypes.stockIn],
-  stockType = CreatableStockTypes.stockIn,
-}: Props) => {
+const NewStockInForm = () => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
     formState: { errors: formError },
     handleSubmit,
     register,
+    setValue,
     control,
   } = useForm<FormInputs>({
     values: {
       transactionDate: NOW_DAYJS,
+      warehouse: null,
       product: null,
       quantity: 0,
+      unitCost: 0,
     },
   });
   const router = useRouter();
 
-  // change this logic to server side
-  useEffect(() => {
-    if (!Object.values(CreatableStockTypes).includes(stockType)) {
-      router.push("/stock/in");
-    }
-  }, [router, stockType]);
-
-  const handleCreate = handleSubmit(async ({ product, quantity = 0, transactionDate }) => {
+  const handleCreate = handleSubmit(async ({ product, warehouse, transactionDate, ...data }) => {
     startLoading();
     setError("");
 
     try {
-      const newRoute = `/stock/${STOCK_ROUTES_BY_TYPE[stockType]}`;
-
-      await createStock({
+      await createStockIn({
+        ...data,
         transactionDate: transactionDate.toISOString(),
+        warehouseId: warehouse?.id as string,
         productId: product?.id as string,
-        stockTypeId,
-        quantity,
       });
 
       stopLoading();
-      router.push(newRoute);
+      router.push("/stock/in");
       router.refresh();
     } catch (err) {
-      console.error("Error creating stock", err);
+      console.error("Error creating stock in", err);
 
       setError((err as Error).message);
       stopLoading();
     }
   });
 
+  const setDefaultUnitCost = (newProduct: Product | Product[] | null) => {
+    if (!newProduct || Array.isArray(newProduct)) {
+      return;
+    }
+
+    setValue("unitCost", newProduct.unitCost);
+  };
+
   return (
     <form className="flex flex-col gap-5 justify-center">
+      <DateTimePickerHookForm
+        rules={{ required: "Transaction date is required" }}
+        label="Transaction date"
+        name="transactionDate"
+        control={control}
+        closeOnSelect
+      />
+
+      <WarehousesHookForm
+        rules={{
+          validate: value => {
+            const warehouse = value as Warehouse;
+
+            return Boolean(warehouse?.id) || "Warehouse is required";
+          },
+        }}
+        control={control}
+        name="warehouse"
+      />
+
       <ProductsHookForm
         rules={{
           validate: value => {
@@ -95,8 +110,29 @@ const NewStockForm = ({
             return Boolean(product?.id) || "Product is required";
           },
         }}
+        onChange={setDefaultUnitCost}
         control={control}
         name="product"
+      />
+
+      <NumberHookForm
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <Icon icon="solar:tag-price-line-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+          startAdornment: <InputAdornment position="start">$</InputAdornment>,
+        }}
+        helperText={formError?.unitCost?.message}
+        error={Boolean(formError?.unitCost)}
+        {...register("unitCost", {
+          required: "Unit cost is required",
+          valueAsNumber: true,
+          min: 0,
+        })}
+        label="Unit cost"
+        required
       />
 
       <NumberHookForm
@@ -119,14 +155,6 @@ const NewStockForm = ({
         required
       />
 
-      <DateTimePickerHookForm
-        rules={{ required: "Transaction date is required" }}
-        label="Transaction date"
-        name="transactionDate"
-        control={control}
-        closeOnSelect
-      />
-
       {error && <Alert severity="error">{error}</Alert>}
 
       <div className="flex flex-row items-center justify-center">
@@ -136,7 +164,7 @@ const NewStockForm = ({
           disabled={isLoading}
           variant="contained"
         >
-          {CREATE_BUTTON_LABEL_BY_STOCK_TYPE[stockType] ?? "Create"}
+          Register purchase
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -144,4 +172,4 @@ const NewStockForm = ({
   );
 };
 
-export { NewStockForm };
+export { NewStockInForm };

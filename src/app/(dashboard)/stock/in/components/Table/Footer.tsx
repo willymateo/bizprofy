@@ -17,6 +17,9 @@ const Footer = ({ totalQuantity = 0, totalCostSum = 0 }: FooterData) => (
       <TableCell />
       <TableCell />
       <TableCell />
+      <TableCell />
+      <TableCell />
+      <TableCell />
 
       <TableCell className="font-bold text-right whitespace-nowrap text-lg">
         {totalQuantity}

@@ -3,28 +3,24 @@ import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import { ChangeEvent, useRef, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
-import { getProducts } from "@/services/products";
 import TextField from "@mui/material/TextField";
 import { Icon } from "@iconify-icon/react";
 
 import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
-import { Product } from "@/services/products/interfaces";
+import { Warehouse } from "@/services/warehouses/interfaces";
+import { getWarehouses } from "@/services/warehouses";
 import { useActive } from "@/hooks/useActive";
 
-type Props<T extends FieldValues> = UseControllerProps<T> & {
-  onChange?: (value: Product | Product[] | null) => void;
-};
-
-const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
+const WarehousesHookForm = <T extends FieldValues>(props: UseControllerProps<T>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const abortControllerRef = useRef<AbortController | null>(null);
-  const [options, setOptions] = useState<Product[]>([]);
+  const [options, setOptions] = useState<Warehouse[]>([]);
   const {
-    field: { value, onChange: hookFormOnChange, onBlur },
+    field: { value, onChange, onBlur },
     fieldState: { error },
   } = useController(props);
 
-  const fetchProducts = async ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
+  const fetchWarehouses = async ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
     if (value?.length < MIN_CHARACTERS_TO_SEARCH) {
       return;
     }
@@ -36,7 +32,7 @@ const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
       const newAbortController = new AbortController();
       abortControllerRef.current = newAbortController;
 
-      const { rows = [] } = await getProducts({
+      const { rows = [] } = await getWarehouses({
         limit: Number.MAX_SAFE_INTEGER,
         offset: 0,
         q: value,
@@ -44,7 +40,7 @@ const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
 
       setOptions(rows);
     } catch (err) {
-      console.error("Error fetching products", err);
+      console.error("Error fetching warehouses", err);
     }
 
     stopLoading();
@@ -60,7 +56,7 @@ const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
             ...params.InputProps,
             startAdornment: (
               <InputAdornment position="start">
-                <Icon icon="solar:bag-4-bold-duotone" width={24} height={24} />
+                <Icon icon="solar:buildings-bold-duotone" width={24} height={24} />
               </InputAdornment>
             ),
             endAdornment: isLoading ? (
@@ -71,18 +67,15 @@ const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
               params.InputProps?.endAdornment
             ),
           }}
-          placeholder="Type code, name or description of a product"
+          placeholder="Type code or name of a warehouse"
           helperText={error?.message}
-          onChange={fetchProducts}
+          onChange={fetchWarehouses}
           error={Boolean(error)}
-          label="Product"
+          label="Warehouse"
         />
       )}
+      onChange={(_, newValue) => onChange(newValue)}
       filterOptions={option => option}
-      onChange={(_, newValue) => {
-        hookFormOnChange(newValue);
-        props?.onChange?.(newValue);
-      }}
       loading={isLoading}
       options={options}
       onBlur={onBlur}
@@ -92,4 +85,4 @@ const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
   );
 };
 
-export { ProductsHookForm };
+export { WarehousesHookForm };

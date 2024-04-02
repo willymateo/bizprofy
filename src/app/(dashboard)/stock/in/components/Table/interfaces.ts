@@ -7,13 +7,16 @@ export interface HeaderColumns {
 }
 
 export enum HeaderColumnTypes {
-  transactionDate = "transactionDate",
-  productId = "productId",
-  productCode = "productCode",
-  productName = "productName",
-  unitCost = "unitCost",
-  quantity = "quantity",
-  totalCost = "totalCost",
+  transactionDate,
+  warehouseCode,
+  warehouseName,
+  productCode,
+  productName,
+  providerName,
+  providerEmail,
+  unitCost,
+  quantity,
+  totalCost,
 }
 
 export interface FooterData {

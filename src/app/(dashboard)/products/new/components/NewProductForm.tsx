@@ -96,7 +96,7 @@ const NewProductForm = () => {
         }}
         helperText={formError?.unitCost?.message}
         {...register("unitCost", {
-          required: "Unit const is required",
+          required: "Unit cost is required",
           valueAsNumber: true,
           min: 0,
         })}

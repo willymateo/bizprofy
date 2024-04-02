@@ -2,26 +2,30 @@
 
 import { getServerSession } from "next-auth";
 
-import { CreateStockPayload, GetStockResponse, GetStockPayload, Stock } from "./interfaces";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
 import { Order, SessionPayload } from "../interfaces";
+import {
+  CreateStockOutPayload,
+  GetStockOutResponse,
+  GetStockOutPayload,
+  StockOut,
+} from "./interfaces";
 
-const getStock = async ({
+const getStockOut = async ({
   transactionDateGreaterThanOrEqualTo,
   transactionDateLessThanOrEqualTo,
   quantityGreaterThanOrEqualTo = 0,
   quantityLessThanOrEqualTo,
   order = Order.desc,
-  stockTypeIds = [],
   productIds = [],
   orderByField,
   offset = 0,
   limit = 5,
-}: GetStockPayload = {}): Promise<GetStockResponse> => {
+}: GetStockOutPayload = {}): Promise<GetStockOutResponse> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const url = new URL("stock", process.env.BIZPROFY_API_URL);
+  const url = new URL("stock/in", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
 
   if (transactionDateGreaterThanOrEqualTo) {
@@ -38,10 +42,6 @@ const getStock = async ({
 
   if (quantityLessThanOrEqualTo) {
     searchParams.append("quantityLessThanOrEqualTo", quantityLessThanOrEqualTo.toString());
-  }
-
-  if (stockTypeIds?.length) {
-    searchParams.append("stockTypeIds", stockTypeIds.join(","));
   }
 
   if (productIds?.length) {
@@ -81,17 +81,17 @@ const getStock = async ({
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch stock");
+    throw new Error(resBody.error?.message || "Failed to fetch stock out");
   }
 
   return resBody;
 };
 
-const createStock = async (payload: CreateStockPayload): Promise<Stock> => {
+const createStockOut = async (payload: CreateStockOutPayload): Promise<StockOut> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/stock`, {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/stock/in`, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
@@ -107,10 +107,10 @@ const createStock = async (payload: CreateStockPayload): Promise<Stock> => {
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to create stock");
+    throw new Error(resBody.error?.message || "Failed to create stock out");
   }
 
   return resBody;
 };
 
-export { getStock, createStock };
+export { getStockOut, createStockOut };

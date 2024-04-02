@@ -1,12 +1,13 @@
+import { Warehouse } from "../warehouses/interfaces";
+import { Customer } from "../customers/interfaces";
 import { AuditFields, Order } from "../interfaces";
 import { Product } from "../products/interfaces";
 
-export interface GetStockPayload {
+export interface GetStockOutPayload {
   transactionDateGreaterThanOrEqualTo?: string;
   transactionDateLessThanOrEqualTo?: string;
   quantityGreaterThanOrEqualTo?: number;
   quantityLessThanOrEqualTo?: number;
-  stockTypeIds?: number[];
   orderByField?: string;
   productIds?: string[];
   offset?: number;
@@ -14,38 +15,26 @@ export interface GetStockPayload {
   order?: Order;
 }
 
-export interface GetStockResponse {
-  rows: Stock[];
+export interface GetStockOutResponse {
+  rows: StockOut[];
   count: number;
 }
 
-export interface CreateStockPayload {
+export interface CreateStockOutPayload {
   transactionDate?: string;
-  stockTypeId: number;
+  warehouseId: string;
+  customerId?: string;
   productId: string;
+  unitPrice: number;
   quantity: number;
 }
 
-export interface Stock extends AuditFields {
+export interface StockOut extends AuditFields {
+  customer: Customer | null;
   transactionDate: string;
-  stockType: StockType;
+  warehouse: Warehouse;
+  unitPrice: number;
   quantity: number;
   product: Product;
   id: string;
-}
-
-export enum CreatableStockTypes {
-  stockIn = "stock_in",
-  stockOut = "stock_out",
-}
-
-export enum ExtraStockTypes {
-  currentStock = "current_stock",
-}
-
-export type StockTypes = CreatableStockTypes | ExtraStockTypes;
-
-export interface StockType extends AuditFields {
-  type: StockTypes;
-  id: number;
 }

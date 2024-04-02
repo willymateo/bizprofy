@@ -1,14 +1,22 @@
 import { redirect } from "next/navigation";
+import { Icon } from "@iconify-icon/react";
+import Button from "@mui/material/Button";
+import type { Metadata } from "next";
+import Link from "next/link";
 import dayjs from "dayjs";
 
-import { getTableData } from "../components/Table/SimpleTable/utils";
-import { PAGE_SIZE_OPTIONS } from "../current/Table/constants";
-import { SimpleTable } from "../components/Table/SimpleTable";
+import { GetStockOutPayload } from "@/services/stockOut/interfaces";
+import { getTableData } from "./components/Table/utils";
 import { getStockOut } from "@/services/stockOut";
-import { COLUMNS_TO_SHOW } from "./constants";
+import { Table } from "./components/Table";
+
+const metadata: Metadata = {
+  description: "Business management system",
+  title: "Stock out | Bizprofy",
+};
 
 type Props = {
-  searchParams: GetStockPayload;
+  searchParams: GetStockOutPayload;
   params: {};
 };
 
@@ -16,28 +24,20 @@ const StockOut = async ({
   searchParams: {
     transactionDateGreaterThanOrEqualTo = dayjs().startOf("day").toISOString(),
     transactionDateLessThanOrEqualTo = dayjs().endOf("day").toISOString(),
-    limit = PAGE_SIZE_OPTIONS[0],
-    offset = 0,
   },
 }: Props) => {
   const transactionDateGreaterThanOrEqualToDate = dayjs(transactionDateGreaterThanOrEqualTo);
   const transactionDateLessThanOrEqualToDate = dayjs(transactionDateLessThanOrEqualTo);
-  offset = parseInt(offset.toString(), 10);
-  limit = parseInt(limit.toString(), 10);
 
   if (
     !transactionDateGreaterThanOrEqualToDate.isValid() ||
     !transactionDateLessThanOrEqualToDate.isValid() ||
-    transactionDateGreaterThanOrEqualToDate.isAfter(transactionDateLessThanOrEqualToDate) ||
-    isNaN(offset) ||
-    isNaN(limit)
+    transactionDateGreaterThanOrEqualToDate.isAfter(transactionDateLessThanOrEqualToDate)
   ) {
     redirect(
-      `/stock/${STOCK_ROUTES_BY_TYPE[CreatableStockTypes.stockOut]}?${new URLSearchParams({
+      `/stock/out?${new URLSearchParams({
         transactionDateGreaterThanOrEqualTo: dayjs().startOf("day").toISOString(),
         transactionDateLessThanOrEqualTo: dayjs().endOf("day").toISOString(),
-        limit: PAGE_SIZE_OPTIONS[0].toString(),
-        offset: "0",
       })}`,
     );
   }
@@ -45,23 +45,35 @@ const StockOut = async ({
   const result = await getStockOut({
     transactionDateGreaterThanOrEqualTo,
     transactionDateLessThanOrEqualTo,
-    offset,
-    limit,
   });
 
   const tableData = getTableData(result);
 
   return (
-    <SimpleTable
-      {...tableData}
-      transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
-      href={`/stock/${STOCK_ROUTES_BY_TYPE[CreatableStockTypes.stockOut]}`}
-      transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
-      columns={COLUMNS_TO_SHOW}
-      offset={offset}
-      limit={limit}
-    />
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-row gap-5 items-center justify-between">
+        <h1>Stock out</h1>
+
+        <Link href="/stock/out/new" className="no-underline">
+          <Button
+            startIcon={<Icon icon="eva:plus-fill" />}
+            className="rounded-lg normal-case"
+            variant="contained"
+          >
+            Register new purchase
+          </Button>
+        </Link>
+      </div>
+
+      <Table
+        {...tableData}
+        transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
+        transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
+        href="/stock/out"
+      />
+    </div>
   );
 };
 
 export default StockOut;
+export { metadata };

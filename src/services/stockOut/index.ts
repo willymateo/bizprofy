@@ -25,7 +25,7 @@ const getStockOut = async ({
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const url = new URL("stock/in", process.env.BIZPROFY_API_URL);
+  const url = new URL("stock/out", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
 
   if (transactionDateGreaterThanOrEqualTo) {
@@ -91,7 +91,7 @@ const createStockOut = async (payload: CreateStockOutPayload): Promise<StockOut>
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/stock/in`, {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/stock/out`, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",

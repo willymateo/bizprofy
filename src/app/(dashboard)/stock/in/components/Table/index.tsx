@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import MuiTable from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
-import { GetStockInPayload, StockIn } from "@/services/stockIn/interfaces";
+import { GetStockInPayload, StockIn } from "@/services/stock/in/interfaces";
 import { Order, TableData } from "./interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
 import { ToolBar } from "./ToolBar";

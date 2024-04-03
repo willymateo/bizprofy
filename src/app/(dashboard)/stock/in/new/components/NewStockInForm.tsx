@@ -14,10 +14,10 @@ import { DateTimePickerHookForm } from "@/app/components/inputs/DateTimePickerHo
 import { WarehousesHookForm } from "@/app/components/inputs/WarehousesHookForm";
 import { ProductsHookForm } from "@/app/components/inputs/ProductsHookForm";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
-import { CreateStockInPayload } from "@/services/stockIn/interfaces";
+import { CreateStockInPayload } from "@/services/stock/in/interfaces";
 import { Warehouse } from "@/services/warehouses/interfaces";
 import { Product } from "@/services/products/interfaces";
-import { createStockIn } from "@/services/stockIn";
+import { createStockIn } from "@/services/stock/in";
 import { useActive } from "@/hooks/useActive";
 
 const NOW_DAYJS = dayjs();

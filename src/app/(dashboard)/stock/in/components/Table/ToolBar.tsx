@@ -9,12 +9,12 @@ import { Icon } from "@iconify-icon/react";
 import { TextField } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 
+import { GetStockInPayload } from "@/services/stock/in/interfaces";
 import {
   DATE_TIME_PICKER_TIME_STEPS,
   DATE_TIME_PICKER_VIEWS,
   DATE_FORMAT,
 } from "@/app/components/inputs/DateTimePickerHookForm/constants";
-import { GetStockInPayload } from "@/services/stockIn/interfaces";
 
 interface Props extends GetStockInPayload {
   transactionDateGreaterThanOrEqualTo: string;

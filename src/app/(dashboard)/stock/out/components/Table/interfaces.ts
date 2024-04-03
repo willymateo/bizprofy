@@ -1,4 +1,4 @@
-import { StockOut } from "@/services/stockOut/interfaces";
+import { StockOut } from "@/services/stock/out/interfaces";
 
 export interface HeaderColumns {
   id: HeaderColumnTypes;

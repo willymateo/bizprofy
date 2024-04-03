@@ -1,4 +1,4 @@
-import { GetStockInResponse } from "@/services/stockIn/interfaces";
+import { GetStockInResponse } from "@/services/stock/in/interfaces";
 import { TableData } from "./interfaces";
 
 const getTableData = ({ rows = [], count }: GetStockInResponse): TableData => {

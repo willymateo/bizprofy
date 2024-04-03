@@ -3,7 +3,7 @@
 import { getServerSession } from "next-auth";
 
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { Order, SessionPayload } from "../interfaces";
+import { Order, SessionPayload } from "../../interfaces";
 import {
   CreateStockOutPayload,
   GetStockOutResponse,

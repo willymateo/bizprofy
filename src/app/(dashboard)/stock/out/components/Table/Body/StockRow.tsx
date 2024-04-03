@@ -11,7 +11,7 @@ import Link from "next/link";
 import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "@/app/components/inputs/DateTimePickerHookForm/constants";
-import { StockOut } from "@/services/stockOut/interfaces";
+import { StockOut } from "@/services/stock/out/interfaces";
 import { NUM_DECIMALS } from "@/shared/constants";
 
 interface Props extends StockOut {

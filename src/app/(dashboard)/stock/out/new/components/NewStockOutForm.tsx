@@ -12,15 +12,15 @@ import { useState } from "react";
 
 import { DateTimePickerHookForm } from "@/app/components/inputs/DateTimePickerHookForm";
 import { WarehousesHookForm } from "@/app/components/inputs/WarehousesHookForm";
+import { CustomersHookForm } from "@/app/components/inputs/CustomersHookForm";
 import { ProductsHookForm } from "@/app/components/inputs/ProductsHookForm";
+import { CreateStockOutPayload } from "@/services/stock/out/interfaces";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
-import { CreateStockOutPayload } from "@/services/stockOut/interfaces";
 import { Warehouse } from "@/services/warehouses/interfaces";
 import { Customer } from "@/services/customers/interfaces";
 import { Product } from "@/services/products/interfaces";
-import { createStockOut } from "@/services/stockOut";
+import { createStockOut } from "@/services/stock/out";
 import { useActive } from "@/hooks/useActive";
-import { CustomersHookForm } from "@/app/components/inputs/CustomersHookForm";
 
 const NOW_DAYJS = dayjs();
 

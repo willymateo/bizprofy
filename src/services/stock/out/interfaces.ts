@@ -1,8 +1,9 @@
-import { Warehouse } from "../warehouses/interfaces";
-import { AuditFields, Order } from "../interfaces";
-import { Product } from "../products/interfaces";
+import { Warehouse } from "../../warehouses/interfaces";
+import { Customer } from "../../customers/interfaces";
+import { AuditFields, Order } from "../../interfaces";
+import { Product } from "../../products/interfaces";
 
-export interface GetStockInPayload {
+export interface GetStockOutPayload {
   transactionDateGreaterThanOrEqualTo?: string;
   transactionDateLessThanOrEqualTo?: string;
   quantityGreaterThanOrEqualTo?: number;
@@ -14,24 +15,26 @@ export interface GetStockInPayload {
   order?: Order;
 }
 
-export interface GetStockInResponse {
-  rows: StockIn[];
+export interface GetStockOutResponse {
+  rows: StockOut[];
   count: number;
 }
 
-export interface CreateStockInPayload {
+export interface CreateStockOutPayload {
   transactionDate?: string;
   warehouseId: string;
+  customerId?: string;
   productId: string;
+  unitPrice: number;
   quantity: number;
-  unitCost: number;
 }
 
-export interface StockIn extends AuditFields {
+export interface StockOut extends AuditFields {
+  customer: Customer | null;
   transactionDate: string;
   warehouse: Warehouse;
+  unitPrice: number;
   quantity: number;
-  unitCost: number;
   product: Product;
   id: string;
 }

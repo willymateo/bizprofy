@@ -5,9 +5,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import dayjs from "dayjs";
 
-import { GetStockOutPayload } from "@/services/stockOut/interfaces";
+import { GetStockOutPayload } from "@/services/stock/out/interfaces";
 import { getTableData } from "./components/Table/utils";
-import { getStockOut } from "@/services/stockOut";
+import { getStockOut } from "@/services/stock/out";
 import { Table } from "./components/Table";
 
 const metadata: Metadata = {

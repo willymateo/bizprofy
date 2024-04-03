@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 
 import { CreateStockInPayload, GetStockInPayload, GetStockInResponse, StockIn } from "./interfaces";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { Order, SessionPayload } from "../interfaces";
+import { Order, SessionPayload } from "../../interfaces";
 
 const getStockIn = async ({
   transactionDateGreaterThanOrEqualTo,

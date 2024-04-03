@@ -9,7 +9,7 @@ import { Icon } from "@iconify-icon/react";
 import { TextField } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 
-import { GetStockOutPayload } from "@/services/stockOut/interfaces";
+import { GetStockOutPayload } from "@/services/stock/out/interfaces";
 import {
   DATE_TIME_PICKER_TIME_STEPS,
   DATE_TIME_PICKER_VIEWS,

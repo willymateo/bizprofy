@@ -3,7 +3,7 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { Dispatch } from "react";
 
-import { GetStockInResponse, StockIn } from "@/services/stockIn/interfaces";
+import { GetStockInResponse, StockIn } from "@/services/stock/in/interfaces";
 import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
 import { HEADER_COLUMNS } from "../constants";
 import { NotFound } from "./NotFound";

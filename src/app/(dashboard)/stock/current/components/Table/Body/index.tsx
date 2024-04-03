@@ -3,11 +3,11 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { Dispatch } from "react";
 
-import { NotFound } from "../../../components/Table/SimpleTable/Body/NotFound";
 import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
+import { CurrentStockRow } from "./CurrentStockRow";
 import { HEADER_COLUMNS } from "../constants";
 import { BodyRowData } from "../interfaces";
-import { StockRow } from "./StockRow";
+import { NotFound } from "./NotFound";
 
 interface Props {
   setSelectedRows: Dispatch<Record<string, BodyRowData>>;
@@ -55,7 +55,7 @@ const Body = ({
       {rows
         .slice(currentPageNumber * pageSize, currentPageNumber * pageSize + pageSize)
         .map((stockElement: BodyRowData) => (
-          <StockRow
+          <CurrentStockRow
             isSelected={Boolean(selectedRows[stockElement?.product?.id])}
             onClick={() => selectRow(stockElement?.product?.id)}
             key={stockElement?.product?.id}
@@ -71,7 +71,7 @@ const Body = ({
         </TableRow>
       ))}
 
-      {!rows.length ? <NotFound numColumns={HEADER_COLUMNS.length + 2} /> : null}
+      {!rows.length ? <NotFound /> : null}
     </TableBody>
   );
 };

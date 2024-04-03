@@ -6,8 +6,8 @@ import { Dispatch } from "react";
 import { GetStockOutResponse, StockOut } from "@/services/stock/out/interfaces";
 import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
 import { HEADER_COLUMNS } from "../constants";
+import { StockOutRow } from "./StockOutRow";
 import { NotFound } from "./NotFound";
-import { StockRow } from "./StockRow";
 
 interface Props extends GetStockOutResponse {
   setSelectedRows: Dispatch<Record<string, StockOut>>;
@@ -51,7 +51,7 @@ const Body = ({
   return (
     <TableBody>
       {rows.map((stockElement: StockOut) => (
-        <StockRow
+        <StockOutRow
           isSelected={Boolean(selectedRows[stockElement.id])}
           onClick={() => selectRow(stockElement.id)}
           key={stockElement.id}

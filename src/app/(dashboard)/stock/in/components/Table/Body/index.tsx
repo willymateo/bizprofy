@@ -6,8 +6,8 @@ import { Dispatch } from "react";
 import { GetStockInResponse, StockIn } from "@/services/stock/in/interfaces";
 import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
 import { HEADER_COLUMNS } from "../constants";
+import { StockInRow } from "./StockInRow";
 import { NotFound } from "./NotFound";
-import { StockRow } from "./StockRow";
 
 interface Props extends GetStockInResponse {
   setSelectedRows: Dispatch<Record<string, StockIn>>;
@@ -51,7 +51,7 @@ const Body = ({
   return (
     <TableBody>
       {rows.map((stockElement: StockIn) => (
-        <StockRow
+        <StockInRow
           isSelected={Boolean(selectedRows[stockElement.id])}
           onClick={() => selectRow(stockElement.id)}
           key={stockElement.id}

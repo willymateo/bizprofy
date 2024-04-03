@@ -7,15 +7,15 @@ export interface HeaderColumns {
 }
 
 export enum HeaderColumnTypes {
-  productId = "productId",
-  productCode = "productCode",
-  productName = "productName",
-  unitCost = "unitCost",
-  unitPrice = "unitPrice",
-  purchasesNumber = "purchasesNumber",
-  salesNumber = "salesNumber",
-  totalCost = "totalCost",
-  totalPrice = "totalPrice",
+  productId,
+  productCode,
+  productName,
+  unitCost,
+  unitPrice,
+  purchasesNumber,
+  salesNumber,
+  totalCost,
+  totalPrice,
 }
 
 export interface BodyRowData {
@@ -37,4 +37,9 @@ export interface FooterData {
 export interface TableData {
   bodyRowData: BodyRowData[];
   footerData: FooterData;
+}
+
+export enum Order {
+  desc = "desc",
+  asc = "asc",
 }

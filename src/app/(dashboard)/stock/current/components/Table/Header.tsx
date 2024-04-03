@@ -5,9 +5,8 @@ import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import { ChangeEvent, Dispatch } from "react";
 
-import { Order } from "../../components/Table/SimpleTable/interfaces";
+import { BodyRowData, Order } from "./interfaces";
 import { HEADER_COLUMNS } from "./constants";
-import { BodyRowData } from "./interfaces";
 
 interface Props {
   setSelectedRows: Dispatch<Record<string, BodyRowData>>;
@@ -53,16 +52,16 @@ const Header = ({
           />
         </TableCell>
 
-        {HEADER_COLUMNS.map(({ className = "", id = "", label = "" }) => (
+        {HEADER_COLUMNS.map(({ className = "", id, label = "" }) => (
           <TableCell
-            sortDirection={orderBy === id ? orderDirection : false}
+            sortDirection={orderBy === id.toString() ? orderDirection : false}
             className={className}
             key={id}
           >
             <TableSortLabel
-              direction={orderBy === id ? orderDirection : "asc"}
-              onClick={() => handleSort(id)}
-              active={orderBy === id}
+              direction={orderBy === id.toString() ? orderDirection : "asc"}
+              onClick={() => handleSort(id.toString())}
+              active={orderBy === id.toString()}
               hideSortIcon
             >
               {label}

@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 
 import { GetStockInPayload } from "@/services/stock/in/interfaces";
 import { getTableData } from "./components/Table/utils";
+import { getWarehouses } from "@/services/warehouses";
 import { getStockIn } from "@/services/stock/in";
 import { Table } from "./components/Table";
 
@@ -42,9 +43,18 @@ const StockIn = async ({
     );
   }
 
+  const warehouses = await getWarehouses({
+    limit: Number.MAX_SAFE_INTEGER,
+    offset: 0,
+  });
+
   const result = await getStockIn({
     transactionDateGreaterThanOrEqualTo,
     transactionDateLessThanOrEqualTo,
+  });
+
+  console.log({
+    warehouses,
   });
 
   const tableData = getTableData(result);

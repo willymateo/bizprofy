@@ -36,7 +36,6 @@ const Table = ({
   const [selectedRows, setSelectedRows] = useState<Record<string, StockIn>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
   const [orderBy, setOrderBy] = useState<string>("");
-  const [query, setQuery] = useState<string>("");
   const router = useRouter();
 
   const handleSort = (id: string = "") => {
@@ -69,11 +68,6 @@ const Table = ({
         offset: "0",
       }).toString()}`,
     );
-
-  const handleChangeQuery = ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
-    // setCurrentPageNumber(0);
-    setQuery(value);
-  };
 
   return (
     <Card className={`flex flex-col ${className}`}>

@@ -16,7 +16,7 @@ interface Props extends BodyRowData {
   isSelected?: boolean;
 }
 
-const StockRow = ({
+const CurrentStockRow = ({
   purchasesNumber = 0,
   isSelected = false,
   salesNumber = 0,
@@ -106,4 +106,4 @@ const StockRow = ({
   );
 };
 
-export { StockRow };
+export { CurrentStockRow };

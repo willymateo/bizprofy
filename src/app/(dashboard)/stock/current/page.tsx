@@ -1,11 +1,13 @@
 import { redirect } from "next/navigation";
 import dayjs from "dayjs";
 
-import { getTableData } from "./Table/utils";
-import { Table } from "./Table";
+import { GetCurrentStockPayload } from "@/services/stock/current/interfaces";
+import { getCurrentStock } from "@/services/stock/current";
+import { getTableData } from "./components/Table/utils";
+import { Table } from "./components/Table";
 
 type Props = {
-  searchParams: GetStockPayload;
+  searchParams: GetCurrentStockPayload;
   params: {};
 };
 
@@ -24,18 +26,14 @@ const CurrentStock = async ({
     transactionDateGreaterThanOrEqualToDate.isAfter(transactionDateLessThanOrEqualToDate)
   ) {
     redirect(
-      `/stock/${STOCK_ROUTES_BY_TYPE[ExtraStockTypes.currentStock]}?${new URLSearchParams({
+      `/stock/current?${new URLSearchParams({
         transactionDateGreaterThanOrEqualTo: dayjs().startOf("day").toISOString(),
         transactionDateLessThanOrEqualTo: dayjs().endOf("day").toISOString(),
       })}`,
     );
   }
 
-  const { rows } = await getStock({
-    stockTypeIds: [
-      STOCK_TYPE_IDS[CreatableStockTypes.stockOut],
-      STOCK_TYPE_IDS[CreatableStockTypes.stockIn],
-    ],
+  const { rows } = await getCurrentStock({
     transactionDateGreaterThanOrEqualTo,
     transactionDateLessThanOrEqualTo,
     limit: Number.MAX_SAFE_INTEGER,
@@ -49,6 +47,7 @@ const CurrentStock = async ({
       transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
       transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
       tableData={newTableData}
+      href="/stock/current"
     />
   );
 };

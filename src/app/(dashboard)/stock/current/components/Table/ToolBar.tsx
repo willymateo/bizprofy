@@ -6,14 +6,14 @@ import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import dayjs, { Dayjs } from "dayjs";
 
-import { GetStockOutPayload } from "@/services/stock/out/interfaces";
+import { GetCurrentStockPayload } from "@/services/stock/current/interfaces";
 import {
   DATE_TIME_PICKER_TIME_STEPS,
   DATE_TIME_PICKER_VIEWS,
   DATE_FORMAT,
 } from "@/app/components/inputs/DateTimePickerHookForm/constants";
 
-interface Props extends GetStockOutPayload {
+interface Props extends GetCurrentStockPayload {
   transactionDateGreaterThanOrEqualTo: string;
   transactionDateLessThanOrEqualTo: string;
   numRowsSelected?: number;

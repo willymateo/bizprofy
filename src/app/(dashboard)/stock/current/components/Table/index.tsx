@@ -6,12 +6,9 @@ import TableContainer from "@mui/material/TableContainer";
 import MuiTable from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
-import { Order } from "../../components/Table/SimpleTable/interfaces";
-import { ToolBar } from "../../components/Table/SimpleTable/ToolBar";
-import { ExtraStockTypes } from "@/services/stock/interfaces";
-import { STOCK_ROUTES_BY_TYPE } from "../../constants";
-import { BodyRowData, TableData } from "./interfaces";
+import { BodyRowData, Order, TableData } from "./interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
+import { ToolBar } from "./ToolBar";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Body } from "./Body";
@@ -20,19 +17,20 @@ interface Props {
   transactionDateGreaterThanOrEqualTo: string;
   transactionDateLessThanOrEqualTo: string;
   tableData: TableData;
+  href: string;
 }
 
 const Table = ({
   transactionDateGreaterThanOrEqualTo,
   transactionDateLessThanOrEqualTo,
   tableData,
+  href,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<Record<string, BodyRowData>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
   const [pageSize, setPageSize] = useState<number>(PAGE_SIZE_OPTIONS[0]);
   const [currentPageNumber, setCurrentPageNumber] = useState<number>(0);
   const [orderBy, setOrderBy] = useState<string>("");
-  const [query, setQuery] = useState<string>("");
 
   const handleSort = (id: string = "") => {
     const isAsc = orderBy === id && orderDirection === Order.asc;
@@ -53,18 +51,13 @@ const Table = ({
   const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) =>
     setCurrentPageNumber(newPage);
 
-  const handleChangeQuery = ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
-    setCurrentPageNumber(0);
-    setQuery(value);
-  };
-
   return (
     <Card className="flex flex-col">
       <ToolBar
         transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
-        href={`/stock/${STOCK_ROUTES_BY_TYPE[ExtraStockTypes.currentStock]}`}
         transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
         numRowsSelected={Object.keys(selectedRows).length}
+        href={href}
       />
 
       <TableContainer className="max-h-[31rem]">

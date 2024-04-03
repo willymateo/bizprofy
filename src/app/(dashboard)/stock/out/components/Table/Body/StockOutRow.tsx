@@ -11,27 +11,28 @@ import Link from "next/link";
 import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "@/app/components/inputs/DateTimePickerHookForm/constants";
-import { StockIn } from "@/services/stock/in/interfaces";
+import { StockOut } from "@/services/stock/out/interfaces";
 import { NUM_DECIMALS } from "@/shared/constants";
 
-interface Props extends StockIn {
+interface Props extends StockOut {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isSelected?: boolean;
 }
 
-const StockRow = ({
+const StockOutRow = ({
   isSelected = false,
   transactionDate,
-  unitCost = 0,
+  unitPrice = 0,
   quantity = 0,
   warehouse,
+  customer,
   product,
   onClick,
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const isMenuOpen = Boolean(anchorEl);
 
-  const totalCost = unitCost * quantity;
+  const totalPrice = unitPrice * quantity;
 
   const handleOpenMenu = ({ currentTarget }: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(currentTarget);
@@ -88,17 +89,33 @@ const StockRow = ({
           </Link>
         </TableCell>
 
+        <TableCell className="whitespace-nowrap">
+          <Link href={`/customers/${customer?.id}`} className="no-underline text-slate-800">
+            {customer?.idCard ?? ""}
+          </Link>
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link href={`/customers/${customer?.id}`} className="no-underline text-slate-800">
+            {`${customer?.firstNames ?? ""} ${customer?.lastNames ?? ""}`.trim()}
+          </Link>
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link href={`mailto:${customer?.email}`} target="_blank">
+            {customer?.email}
+          </Link>
+        </TableCell>
+
         <TableCell className="font-bold text-right">
           <p>
             <span>$</span>
-            {unitCost.toFixed(NUM_DECIMALS)}
+            {unitPrice.toFixed(NUM_DECIMALS)}
           </p>
         </TableCell>
         <TableCell className="text-right whitespace-nowrap">{quantity}</TableCell>
         <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
-            {totalCost.toFixed(NUM_DECIMALS)}
+            {totalPrice.toFixed(NUM_DECIMALS)}
           </p>
         </TableCell>
 
@@ -130,4 +147,4 @@ const StockRow = ({
   );
 };
 
-export { StockRow };
+export { StockOutRow };

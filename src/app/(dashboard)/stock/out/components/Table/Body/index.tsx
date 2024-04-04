@@ -9,7 +9,7 @@ import { HEADER_COLUMNS } from "../constants";
 import { StockOutRow } from "./StockOutRow";
 import { NotFound } from "./NotFound";
 
-interface Props extends GetStockOutResponse {
+interface Props extends Omit<GetStockOutResponse, "summarizedData"> {
   setSelectedRows: Dispatch<Record<string, StockOut>>;
   selectedRows: Record<string, StockOut>;
   currentPageNumber: number;

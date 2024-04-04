@@ -14,9 +14,8 @@ import {
 const getStockOut = async ({
   transactionDateGreaterThanOrEqualTo,
   transactionDateLessThanOrEqualTo,
-  quantityGreaterThanOrEqualTo = 0,
-  quantityLessThanOrEqualTo,
   order = Order.desc,
+  warehouseIds = [],
   productIds = [],
   orderByField,
   offset = 0,
@@ -32,16 +31,12 @@ const getStockOut = async ({
     searchParams.append("transactionDateGreaterThanOrEqualTo", transactionDateGreaterThanOrEqualTo);
   }
 
-  if (quantityGreaterThanOrEqualTo) {
-    searchParams.append("quantityGreaterThanOrEqualTo", quantityGreaterThanOrEqualTo.toString());
-  }
-
   if (transactionDateLessThanOrEqualTo) {
     searchParams.append("transactionDateLessThanOrEqualTo", transactionDateLessThanOrEqualTo);
   }
 
-  if (quantityLessThanOrEqualTo) {
-    searchParams.append("quantityLessThanOrEqualTo", quantityLessThanOrEqualTo.toString());
+  if (warehouseIds?.length) {
+    searchParams.append("warehouseIds", warehouseIds.join(","));
   }
 
   if (productIds?.length) {

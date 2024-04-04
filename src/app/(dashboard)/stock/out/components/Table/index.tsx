@@ -7,15 +7,15 @@ import { useRouter } from "next/navigation";
 import MuiTable from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
-import { GetStockOutPayload, StockOut } from "@/services/stock/out/interfaces";
-import { Order, TableData } from "./interfaces";
+import { GetStockOutPayload, GetStockOutResponse, StockOut } from "@/services/stock/out/interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
+import { Order } from "./interfaces";
 import { ToolBar } from "./ToolBar";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Body } from "./Body";
 
-interface Props extends TableData, GetStockOutPayload {
+interface Props extends GetStockOutPayload, GetStockOutResponse {
   transactionDateGreaterThanOrEqualTo: string;
   transactionDateLessThanOrEqualTo: string;
   className?: string;
@@ -27,10 +27,10 @@ const Table = ({
   transactionDateLessThanOrEqualTo,
   limit = PAGE_SIZE_OPTIONS[0],
   className = "",
-  footerData,
+  summarizedData,
   offset = 0,
   count = 0,
-  bodyData,
+  rows = [],
   href,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<Record<string, StockOut>>({});
@@ -87,19 +87,19 @@ const Table = ({
             handleSort={handleSort}
             numTotalRows={count}
             orderBy={orderBy}
-            rows={bodyData}
+            rows={rows}
           />
 
           <Body
-            setSelectedRows={setSelectedRows}
             currentPageNumber={offset / limit}
+            setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
             pageSize={limit}
-            rows={bodyData}
             count={count}
+            rows={rows}
           />
 
-          {bodyData.length ? <Footer {...footerData} /> : null}
+          {rows.length ? <Footer {...summarizedData} /> : null}
         </MuiTable>
       </TableContainer>
 

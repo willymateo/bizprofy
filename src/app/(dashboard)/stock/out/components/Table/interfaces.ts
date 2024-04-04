@@ -1,5 +1,3 @@
-import { StockOut } from "@/services/stock/out/interfaces";
-
 export interface HeaderColumns {
   id: HeaderColumnTypes;
   className?: string;
@@ -21,17 +19,6 @@ export enum HeaderColumnTypes {
   unitPrice,
   quantity,
   totalPrice,
-}
-
-export interface FooterData {
-  totalQuantity: number;
-  totalPriceSum: number;
-}
-
-export interface TableData {
-  footerData: FooterData;
-  bodyData: StockOut[];
-  count: number;
 }
 
 export enum Order {

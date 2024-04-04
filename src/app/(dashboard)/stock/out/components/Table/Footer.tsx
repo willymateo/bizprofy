@@ -2,10 +2,10 @@ import TableFooter from "@mui/material/TableFooter";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 
+import { SummarizedStockOutData } from "@/services/stock/out/interfaces";
 import { NUM_DECIMALS } from "@/shared/constants";
-import { FooterData } from "./interfaces";
 
-const Footer = ({ totalQuantity = 0, totalPriceSum = 0 }: FooterData) => (
+const Footer = ({ totalQuantity = 0, totalPriceSum = 0 }: SummarizedStockOutData) => (
   <TableFooter className="sticky bottom-0 bg-white">
     <TableRow>
       <TableCell className="font-bold text-right whitespace-nowrap sticky left-0 text-lg">

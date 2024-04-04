@@ -6,8 +6,7 @@ import { Product } from "../../products/interfaces";
 export interface GetStockOutPayload {
   transactionDateGreaterThanOrEqualTo?: string;
   transactionDateLessThanOrEqualTo?: string;
-  quantityGreaterThanOrEqualTo?: number;
-  quantityLessThanOrEqualTo?: number;
+  warehouseIds?: string[];
   orderByField?: string;
   productIds?: string[];
   offset?: number;
@@ -16,6 +15,7 @@ export interface GetStockOutPayload {
 }
 
 export interface GetStockOutResponse {
+  summarizedData: SummarizedStockOutData;
   rows: StockOut[];
   count: number;
 }
@@ -37,4 +37,9 @@ export interface StockOut extends AuditFields {
   quantity: number;
   product: Product;
   id: string;
+}
+
+export interface SummarizedStockOutData {
+  totalQuantity: number;
+  totalPriceSum: number;
 }

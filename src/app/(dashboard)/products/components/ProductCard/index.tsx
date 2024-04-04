@@ -28,7 +28,7 @@ const ProductCard = (product: Product) => (
         )}
       </Link>
 
-      <div className="flex flex-col justify-between gap-5 h-full p-3">
+      <div className="flex flex-col gap-5 h-full p-3">
         <div className="flex flex-col justify-center gap-1">
           <Link
             className="font-bold text-black no-underline overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:1] hover:underline"

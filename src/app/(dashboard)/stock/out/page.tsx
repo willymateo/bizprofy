@@ -6,9 +6,9 @@ import Link from "next/link";
 import dayjs from "dayjs";
 
 import { GetStockOutPayload } from "@/services/stock/out/interfaces";
-import { getTableData } from "./components/Table/utils";
 import { getStockOut } from "@/services/stock/out";
 import { Table } from "./components/Table";
+import { getWarehouses } from "@/services/warehouses";
 
 const metadata: Metadata = {
   description: "Business management system",
@@ -42,12 +42,20 @@ const StockOut = async ({
     );
   }
 
-  const result = await getStockOut({
-    transactionDateGreaterThanOrEqualTo,
-    transactionDateLessThanOrEqualTo,
+  const { rows: warehouses } = await getWarehouses({
+    limit: Number.MAX_SAFE_INTEGER,
+    offset: 0,
   });
 
-  const tableData = getTableData(result);
+  const stockByWarehouses = await Promise.all(
+    warehouses?.map(({ id }) =>
+      getStockOut({
+        transactionDateGreaterThanOrEqualTo,
+        transactionDateLessThanOrEqualTo,
+        warehouseIds: [id],
+      }),
+    ) ?? [],
+  );
 
   return (
     <div className="flex flex-col gap-5">
@@ -65,12 +73,17 @@ const StockOut = async ({
         </Link>
       </div>
 
-      <Table
-        {...tableData}
-        transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
-        transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
-        href="/stock/out"
-      />
+      <div className="flex flex-col gap-20">
+        {stockByWarehouses.map((stockData, index) => (
+          <Table
+            {...stockData}
+            transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
+            transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
+            key={warehouses[index].id}
+            href="/stock/out"
+          />
+        ))}
+      </div>
     </div>
   );
 };

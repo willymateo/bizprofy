@@ -24,7 +24,6 @@ const StockInRow = ({
   transactionDate,
   unitCost = 0,
   quantity = 0,
-  warehouse,
   product,
   onClick,
 }: Props) => {
@@ -46,15 +45,6 @@ const StockInRow = ({
         </TableCell>
         <TableCell className="whitespace-nowrap">
           {dayjs(transactionDate)?.format(DATE_FORMAT)}
-        </TableCell>
-
-        <TableCell className="whitespace-nowrap">
-          {warehouse?.code && <Chip label={warehouse?.code} color="info" />}
-        </TableCell>
-        <TableCell className="whitespace-nowrap">
-          <Link href={`/warehouses/${warehouse?.id}`} className="no-underline text-slate-800">
-            {warehouse?.name}
-          </Link>
         </TableCell>
 
         <TableCell className="whitespace-nowrap">

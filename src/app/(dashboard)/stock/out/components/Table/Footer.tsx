@@ -20,8 +20,6 @@ const Footer = ({ totalQuantity = 0, totalPriceSum = 0 }: SummarizedStockOutData
       <TableCell />
       <TableCell />
       <TableCell />
-      <TableCell />
-      <TableCell />
 
       <TableCell className="font-bold text-right whitespace-nowrap text-lg">
         {totalQuantity}

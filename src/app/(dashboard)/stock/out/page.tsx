@@ -42,7 +42,7 @@ const StockOut = async ({
     );
   }
 
-  const { rows: warehouses } = await getWarehouses({
+  const { rows: warehouses = [] } = await getWarehouses({
     limit: Number.MAX_SAFE_INTEGER,
     offset: 0,
   });
@@ -79,6 +79,7 @@ const StockOut = async ({
             {...stockData}
             transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
             transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
+            warehouse={warehouses[index]}
             key={warehouses[index].id}
             href="/stock/out"
           />

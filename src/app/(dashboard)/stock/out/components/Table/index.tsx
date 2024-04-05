@@ -8,6 +8,7 @@ import MuiTable from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
 import { GetStockOutPayload, GetStockOutResponse, StockOut } from "@/services/stock/out/interfaces";
+import { Warehouse } from "@/services/warehouses/interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
 import { Order } from "./interfaces";
 import { ToolBar } from "./ToolBar";
@@ -18,6 +19,7 @@ import { Body } from "./Body";
 interface Props extends GetStockOutPayload, GetStockOutResponse {
   transactionDateGreaterThanOrEqualTo: string;
   transactionDateLessThanOrEqualTo: string;
+  warehouse: Warehouse;
   className?: string;
   href: string;
 }
@@ -29,6 +31,7 @@ const Table = ({
   className = "",
   summarizedData,
   offset = 0,
+  warehouse,
   count = 0,
   rows = [],
   href,
@@ -75,6 +78,7 @@ const Table = ({
         transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
         transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
         numRowsSelected={Object.keys(selectedRows).length}
+        warehouse={warehouse}
         href={href}
       />
 

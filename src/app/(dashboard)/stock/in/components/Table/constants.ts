@@ -7,16 +7,6 @@ const HEADER_COLUMNS: HeaderColumns[] = [
     className: "text-center whitespace-nowrap",
   },
   {
-    id: HeaderColumnTypes.warehouseCode,
-    label: "Warehouse Code",
-    className: "text-center whitespace-nowrap",
-  },
-  {
-    id: HeaderColumnTypes.warehouseName,
-    label: "Warehouse Name",
-    className: "text-center whitespace-nowrap",
-  },
-  {
     id: HeaderColumnTypes.productCode,
     label: "Product Code",
     className: "text-center whitespace-nowrap",

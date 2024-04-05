@@ -6,8 +6,6 @@ export interface HeaderColumns {
 
 export enum HeaderColumnTypes {
   transactionDate,
-  warehouseCode,
-  warehouseName,
   productCode,
   productName,
   providerName,

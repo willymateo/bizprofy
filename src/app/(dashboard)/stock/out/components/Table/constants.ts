@@ -27,11 +27,6 @@ const HEADER_COLUMNS: HeaderColumns[] = [
     className: "text-center whitespace-nowrap",
   },
   {
-    id: HeaderColumnTypes.prividerIdCard,
-    label: "Provider ID Card",
-    className: "text-center whitespace-nowrap",
-  },
-  {
     id: HeaderColumnTypes.providerName,
     label: "Provider Name",
     className: "text-center whitespace-nowrap",
@@ -39,11 +34,6 @@ const HEADER_COLUMNS: HeaderColumns[] = [
   {
     id: HeaderColumnTypes.providerEmail,
     label: "Provider Email",
-    className: "text-center whitespace-nowrap",
-  },
-  {
-    id: HeaderColumnTypes.customerIdCard,
-    label: "Customer ID Card",
     className: "text-center whitespace-nowrap",
   },
   {

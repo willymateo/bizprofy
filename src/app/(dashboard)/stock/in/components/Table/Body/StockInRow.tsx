@@ -71,14 +71,6 @@ const StockInRow = ({
             href={`/providers/${product?.provider?.id}`}
             className="no-underline text-slate-800"
           >
-            {product?.provider?.idCard ?? ""}
-          </Link>
-        </TableCell>
-        <TableCell className="whitespace-nowrap">
-          <Link
-            href={`/providers/${product?.provider?.id}`}
-            className="no-underline text-slate-800"
-          >
             {`${product?.provider?.firstNames ?? ""} ${product?.provider?.lastNames ?? ""}`.trim()}
           </Link>
         </TableCell>

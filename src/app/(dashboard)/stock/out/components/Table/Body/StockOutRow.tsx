@@ -72,14 +72,6 @@ const StockOutRow = ({
             href={`/providers/${product?.provider?.id}`}
             className="no-underline text-slate-800"
           >
-            {product?.provider?.idCard ?? ""}
-          </Link>
-        </TableCell>
-        <TableCell className="whitespace-nowrap">
-          <Link
-            href={`/providers/${product?.provider?.id}`}
-            className="no-underline text-slate-800"
-          >
             {`${product?.provider?.firstNames ?? ""} ${product?.provider?.lastNames ?? ""}`.trim()}
           </Link>
         </TableCell>
@@ -89,11 +81,6 @@ const StockOutRow = ({
           </Link>
         </TableCell>
 
-        <TableCell className="whitespace-nowrap">
-          <Link href={`/customers/${customer?.id}`} className="no-underline text-slate-800">
-            {customer?.idCard ?? ""}
-          </Link>
-        </TableCell>
         <TableCell className="whitespace-nowrap">
           <Link href={`/customers/${customer?.id}`} className="no-underline text-slate-800">
             {`${customer?.firstNames ?? ""} ${customer?.lastNames ?? ""}`.trim()}

@@ -32,7 +32,7 @@ const UsersPage = async ({ searchParams: { limit = PAGE_SIZE_OPTIONS[0], offset 
     );
   }
 
-  const response = await getUsers({
+  const data = await getUsers({
     offset,
     limit,
   });
@@ -53,7 +53,7 @@ const UsersPage = async ({ searchParams: { limit = PAGE_SIZE_OPTIONS[0], offset 
         </Link>
       </div>
 
-      <Table {...response} />
+      <Table {...data} offset={offset} limit={limit} />
     </div>
   );
 };

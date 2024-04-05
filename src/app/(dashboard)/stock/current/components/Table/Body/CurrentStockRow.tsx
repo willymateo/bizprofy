@@ -9,9 +9,9 @@ import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
 
 import { NUM_DECIMALS } from "@/shared/constants";
-import { BodyRowData } from "../interfaces";
+import { CurrentStock } from "@/services/stock/current/interfaces";
 
-interface Props extends BodyRowData {
+interface Props extends CurrentStock {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isSelected?: boolean;
 }
@@ -40,38 +40,38 @@ const CurrentStockRow = ({
           <Checkbox disableRipple checked={isSelected} onChange={onClick} />
         </TableCell>
 
-        <TableCell className="whitespace-nowrap">{product?.id}</TableCell>
+        <TableCell className="whitespace-nowrap">
+          {product?.code && <Chip label={product?.code} color="info" />}
+        </TableCell>
 
-        <TableCell>{product?.code && <Chip label={product?.code} color="info" />}</TableCell>
+        <TableCell className="whitespace-nowrap">{product?.name}</TableCell>
 
-        <TableCell>{product?.name}</TableCell>
+        <TableCell className="text-right whitespace-nowrap">{purchasesNumber}</TableCell>
 
-        <TableCell className="text-right">{purchasesNumber}</TableCell>
-
-        <TableCell className="font-bold text-right">
+        <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
             {product?.unitCost.toFixed(NUM_DECIMALS)}
           </p>
         </TableCell>
 
-        <TableCell className="font-bold text-right">
+        <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
             {totalCost.toFixed(NUM_DECIMALS)}
           </p>
         </TableCell>
 
-        <TableCell className="text-right">{salesNumber}</TableCell>
+        <TableCell className="text-right whitespace-nowrap">{salesNumber}</TableCell>
 
-        <TableCell className="font-bold text-right">
+        <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
             {product?.unitPrice.toFixed(NUM_DECIMALS)}
           </p>
         </TableCell>
 
-        <TableCell className="font-bold text-right">
+        <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
             {totalPrice.toFixed(NUM_DECIMALS)}

@@ -4,16 +4,16 @@ import TableRow from "@mui/material/TableRow";
 import { Dispatch } from "react";
 
 import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
+import { CurrentStock } from "@/services/stock/current/interfaces";
 import { CurrentStockRow } from "./CurrentStockRow";
 import { HEADER_COLUMNS } from "../constants";
-import { BodyRowData } from "../interfaces";
 import { NotFound } from "./NotFound";
 
 interface Props {
-  setSelectedRows: Dispatch<Record<string, BodyRowData>>;
-  selectedRows: Record<string, BodyRowData>;
+  setSelectedRows: Dispatch<Record<string, CurrentStock>>;
+  selectedRows: Record<string, CurrentStock>;
   currentPageNumber: number;
-  rows: BodyRowData[];
+  rows: CurrentStock[];
   pageSize: number;
   count: number;
 }
@@ -54,7 +54,7 @@ const Body = ({
     <TableBody>
       {rows
         .slice(currentPageNumber * pageSize, currentPageNumber * pageSize + pageSize)
-        .map((stockElement: BodyRowData) => (
+        .map(stockElement => (
           <CurrentStockRow
             isSelected={Boolean(selectedRows[stockElement?.product?.id])}
             onClick={() => selectRow(stockElement?.product?.id)}

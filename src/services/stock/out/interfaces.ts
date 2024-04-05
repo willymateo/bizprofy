@@ -21,6 +21,7 @@ export interface GetStockOutResponse {
 }
 
 export interface CreateStockOutPayload {
+  currentStockAtMoment?: number;
   transactionDate?: string;
   warehouseId: string;
   customerId?: string;
@@ -30,6 +31,7 @@ export interface CreateStockOutPayload {
 }
 
 export interface StockOut extends AuditFields {
+  currentStockAtMoment: number;
   customer: Customer | null;
   transactionDate: string;
   warehouse: Warehouse;

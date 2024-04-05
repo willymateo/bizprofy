@@ -5,16 +5,17 @@ import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import { ChangeEvent, Dispatch } from "react";
 
-import { BodyRowData, Order } from "./interfaces";
+import { CurrentStock } from "@/services/stock/current/interfaces";
 import { HEADER_COLUMNS } from "./constants";
+import { Order } from "./interfaces";
 
 interface Props {
-  setSelectedRows: Dispatch<Record<string, BodyRowData>>;
+  setSelectedRows: Dispatch<Record<string, CurrentStock>>;
   handleSort: (propertyId: string) => void;
   numRowsSelected: number;
   orderDirection: Order;
   numTotalRows: number;
-  rows: BodyRowData[];
+  rows: CurrentStock[];
   orderBy: string;
 }
 
@@ -29,7 +30,7 @@ const Header = ({
 }: Props) => {
   const selectAll = ({ target: { checked = false } }: ChangeEvent<HTMLInputElement>) => {
     if (checked) {
-      const newSelectedRows: Record<string, BodyRowData> = {};
+      const newSelectedRows: Record<string, CurrentStock> = {};
 
       rows.forEach(row => {
         newSelectedRows[row?.product?.id] = row;

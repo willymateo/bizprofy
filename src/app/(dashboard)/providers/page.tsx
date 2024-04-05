@@ -34,7 +34,7 @@ const ProvidersPage = async ({
     );
   }
 
-  const response = await getProviders({
+  const data = await getProviders({
     offset,
     limit,
   });
@@ -55,7 +55,7 @@ const ProvidersPage = async ({
         </Link>
       </div>
 
-      <Table {...response} />
+      <Table {...data} limit={limit} offset={offset} />
     </div>
   );
 };

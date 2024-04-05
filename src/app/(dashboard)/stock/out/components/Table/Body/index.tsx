@@ -50,7 +50,7 @@ const Body = ({
 
   return (
     <TableBody>
-      {rows.map((stockElement: StockOut) => (
+      {rows.map(stockElement => (
         <StockOutRow
           isSelected={Boolean(selectedRows[stockElement.id])}
           onClick={() => selectRow(stockElement.id)}

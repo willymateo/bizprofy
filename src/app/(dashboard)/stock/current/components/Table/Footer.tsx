@@ -2,9 +2,9 @@ import TableFooter from "@mui/material/TableFooter";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 
+import { SummarizedCurrentStockData } from "@/services/stock/current/interfaces";
 import { NUM_DECIMALS } from "@/shared/constants";
 import { getProfitClassName } from "./utils";
-import { FooterData } from "./interfaces";
 
 const Footer = ({
   totalPurchasesNumber = 0,
@@ -12,7 +12,7 @@ const Footer = ({
   totalPriceSum = 0,
   totalCostSum = 0,
   profit = 0,
-}: Partial<FooterData>) => (
+}: Partial<SummarizedCurrentStockData>) => (
   <TableFooter className="sticky bottom-0 bg-white">
     <TableRow>
       <TableCell className="font-bold text-right whitespace-nowrap sticky left-0 text-lg bg-white">
@@ -20,9 +20,6 @@ const Footer = ({
       </TableCell>
 
       <TableCell />
-
-      <TableCell />
-
       <TableCell />
 
       <TableCell className="font-bold text-right whitespace-nowrap text-lg">
@@ -51,6 +48,7 @@ const Footer = ({
       <TableCell className="font-bold text-right whitespace-nowrap sticky left-0 text-lg bg-white">
         Profit
       </TableCell>
+
       <TableCell />
       <TableCell />
       <TableCell />
@@ -58,7 +56,7 @@ const Footer = ({
       <TableCell />
       <TableCell />
       <TableCell />
-      <TableCell />
+
       <TableCell
         className={`font-bold text-right whitespace-nowrap text-lg sticky right-0 ${getProfitClassName({ profit })}`}
       >

@@ -34,7 +34,7 @@ const CustomersPage = async ({
     );
   }
 
-  const response = await getCustomers({
+  const data = await getCustomers({
     offset,
     limit,
   });
@@ -55,7 +55,7 @@ const CustomersPage = async ({
         </Link>
       </div>
 
-      <Table {...response} />
+      <Table {...data} offset={offset} limit={limit} />
     </div>
   );
 };

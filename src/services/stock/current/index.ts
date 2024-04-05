@@ -9,9 +9,8 @@ import { Order, SessionPayload } from "../../interfaces";
 const getCurrentStock = async ({
   transactionDateGreaterThanOrEqualTo,
   transactionDateLessThanOrEqualTo,
-  quantityGreaterThanOrEqualTo = 0,
-  quantityLessThanOrEqualTo,
   order = Order.desc,
+  warehouseIds = [],
   productIds = [],
   orderByField,
   offset = 0,
@@ -20,23 +19,19 @@ const getCurrentStock = async ({
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const url = new URL("stock/in", process.env.BIZPROFY_API_URL);
+  const url = new URL("stock/current", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
 
   if (transactionDateGreaterThanOrEqualTo) {
     searchParams.append("transactionDateGreaterThanOrEqualTo", transactionDateGreaterThanOrEqualTo);
   }
 
-  if (quantityGreaterThanOrEqualTo) {
-    searchParams.append("quantityGreaterThanOrEqualTo", quantityGreaterThanOrEqualTo.toString());
-  }
-
   if (transactionDateLessThanOrEqualTo) {
     searchParams.append("transactionDateLessThanOrEqualTo", transactionDateLessThanOrEqualTo);
   }
 
-  if (quantityLessThanOrEqualTo) {
-    searchParams.append("quantityLessThanOrEqualTo", quantityLessThanOrEqualTo.toString());
+  if (warehouseIds?.length) {
+    searchParams.append("warehouseIds", warehouseIds.join(","));
   }
 
   if (productIds?.length) {

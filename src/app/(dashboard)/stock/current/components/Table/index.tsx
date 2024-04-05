@@ -3,34 +3,47 @@
 import TablePagination from "@mui/material/TablePagination";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import TableContainer from "@mui/material/TableContainer";
+import { useRouter } from "next/navigation";
 import MuiTable from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
-import { BodyRowData, Order, TableData } from "./interfaces";
+import { Warehouse } from "@/services/warehouses/interfaces";
 import { PAGE_SIZE_OPTIONS } from "./constants";
+import {
+  GetCurrentStockResponse,
+  GetCurrentStockPayload,
+  CurrentStock,
+} from "@/services/stock/current/interfaces";
+import { Order } from "./interfaces";
 import { ToolBar } from "./ToolBar";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Body } from "./Body";
 
-interface Props {
+interface Props extends GetCurrentStockPayload, GetCurrentStockResponse {
   transactionDateGreaterThanOrEqualTo: string;
   transactionDateLessThanOrEqualTo: string;
-  tableData: TableData;
+  warehouse: Warehouse;
+  className?: string;
   href: string;
 }
 
 const Table = ({
   transactionDateGreaterThanOrEqualTo,
   transactionDateLessThanOrEqualTo,
-  tableData,
+  limit = PAGE_SIZE_OPTIONS[0],
+  summarizedData,
+  offset = 0,
+  className = "",
+  warehouse,
+  count = 0,
+  rows = [],
   href,
 }: Props) => {
-  const [selectedRows, setSelectedRows] = useState<Record<string, BodyRowData>>({});
+  const [selectedRows, setSelectedRows] = useState<Record<string, CurrentStock>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
-  const [pageSize, setPageSize] = useState<number>(PAGE_SIZE_OPTIONS[0]);
-  const [currentPageNumber, setCurrentPageNumber] = useState<number>(0);
   const [orderBy, setOrderBy] = useState<string>("");
+  const router = useRouter();
 
   const handleSort = (id: string = "") => {
     const isAsc = orderBy === id && orderDirection === Order.asc;
@@ -41,58 +54,71 @@ const Table = ({
     }
   };
 
+  const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) =>
+    router.replace(
+      `${href}?${new URLSearchParams({
+        offset: (newPage * limit).toString(),
+        transactionDateGreaterThanOrEqualTo,
+        transactionDateLessThanOrEqualTo,
+        limit: limit.toString(),
+      }).toString()}`,
+    );
+
   const handleChangePageSize = ({
     target: { value },
-  }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setPageSize(parseInt(value, 10));
-    setCurrentPageNumber(0);
-  };
-
-  const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) =>
-    setCurrentPageNumber(newPage);
+  }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    router.replace(
+      `${href}?${new URLSearchParams({
+        transactionDateGreaterThanOrEqualTo,
+        transactionDateLessThanOrEqualTo,
+        limit: value,
+        offset: "0",
+      }).toString()}`,
+    );
 
   return (
-    <Card className="flex flex-col">
+    <Card className={`flex flex-col ${className}`}>
       <ToolBar
         transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
         transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
         numRowsSelected={Object.keys(selectedRows).length}
+        warehouse={warehouse}
         href={href}
       />
 
-      <TableContainer className="max-h-[31rem]">
+      <TableContainer className="max-h-[580px]">
         <MuiTable stickyHeader>
           <Header
-            numTotalRows={tableData?.bodyRowData?.length ?? 0}
             numRowsSelected={Object.keys(selectedRows).length}
-            rows={tableData?.bodyRowData ?? []}
             setSelectedRows={setSelectedRows}
             orderDirection={orderDirection}
             handleSort={handleSort}
+            numTotalRows={count}
             orderBy={orderBy}
+            rows={rows}
           />
 
           <Body
-            count={tableData?.bodyRowData?.length ?? 0}
-            currentPageNumber={currentPageNumber}
-            rows={tableData?.bodyRowData ?? []}
+            currentPageNumber={offset / limit}
             setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
-            pageSize={pageSize}
+            pageSize={limit}
+            count={count}
+            rows={rows}
           />
 
-          {tableData?.bodyRowData?.length ? <Footer {...(tableData?.footerData ?? {})} /> : null}
+          {rows.length ? <Footer {...summarizedData} /> : null}
         </MuiTable>
       </TableContainer>
 
       <TablePagination
-        count={tableData?.bodyRowData?.length ?? 0}
         onRowsPerPageChange={handleChangePageSize}
         rowsPerPageOptions={PAGE_SIZE_OPTIONS}
         onPageChange={handleChangePage}
-        page={currentPageNumber}
-        rowsPerPage={pageSize}
+        page={offset / limit}
+        rowsPerPage={limit}
         component="div"
+        count={count}
       />
     </Card>
   );

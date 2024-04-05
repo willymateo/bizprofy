@@ -43,6 +43,7 @@ const StockInRow = ({
         <TableCell>
           <Checkbox disableRipple checked={isSelected} onChange={onClick} />
         </TableCell>
+
         <TableCell className="whitespace-nowrap">
           {dayjs(transactionDate)?.format(DATE_FORMAT)}
         </TableCell>

@@ -20,6 +20,7 @@ export interface GetStockInResponse {
 }
 
 export interface CreateStockInPayload {
+  currentStockAtMoment?: number;
   transactionDate?: string;
   warehouseId: string;
   productId: string;
@@ -28,6 +29,7 @@ export interface CreateStockInPayload {
 }
 
 export interface StockIn extends AuditFields {
+  currentStockAtMoment: number;
   transactionDate: string;
   warehouse: Warehouse;
   quantity: number;

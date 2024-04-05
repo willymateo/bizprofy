@@ -1,12 +1,10 @@
-import { Warehouse } from "../../warehouses/interfaces";
-import { AuditFields, Order } from "../../interfaces";
 import { Product } from "../../products/interfaces";
+import { Order } from "../../interfaces";
 
 export interface GetCurrentStockPayload {
   transactionDateGreaterThanOrEqualTo?: string;
   transactionDateLessThanOrEqualTo?: string;
-  quantityGreaterThanOrEqualTo?: number;
-  quantityLessThanOrEqualTo?: number;
+  warehouseIds?: string[];
   orderByField?: string;
   productIds?: string[];
   offset?: number;
@@ -15,15 +13,23 @@ export interface GetCurrentStockPayload {
 }
 
 export interface GetCurrentStockResponse {
+  summarizedData: SummarizedCurrentStockData;
   rows: CurrentStock[];
   count: number;
 }
 
-export interface CurrentStock extends AuditFields {
-  transactionDate: string;
-  warehouse: Warehouse;
-  quantity: number;
-  unitCost: number;
+export interface CurrentStock {
+  purchasesNumber: number;
+  salesNumber: number;
+  totalPrice: number;
+  totalCost: number;
   product: Product;
-  id: string;
+}
+
+export interface SummarizedCurrentStockData {
+  totalPurchasesNumber: number;
+  totalSalesNumber: number;
+  totalPriceSum: number;
+  totalCostSum: number;
+  profit: number;
 }

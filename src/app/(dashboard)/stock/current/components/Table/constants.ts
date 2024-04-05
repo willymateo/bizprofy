@@ -2,11 +2,6 @@ import { HeaderColumnTypes, HeaderColumns } from "./interfaces";
 
 const HEADER_COLUMNS: HeaderColumns[] = [
   {
-    id: HeaderColumnTypes.productId,
-    label: "Product ID",
-    className: "text-center whitespace-nowrap",
-  },
-  {
     id: HeaderColumnTypes.productCode,
     label: "Product Code",
     className: "text-center whitespace-nowrap",

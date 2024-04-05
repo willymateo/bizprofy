@@ -82,7 +82,7 @@ const Table = ({
         href={href}
       />
 
-      <TableContainer className="max-h-[35rem]">
+      <TableContainer className="max-h-[519px]">
         <MuiTable stickyHeader>
           <Header
             numRowsSelected={Object.keys(selectedRows).length}

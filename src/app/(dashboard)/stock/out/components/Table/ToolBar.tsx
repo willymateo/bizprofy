@@ -1,70 +1,67 @@
-import { DateTimePicker } from "@mui/x-date-pickers";
 import MaterialToolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useRouter } from "next/navigation";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import dayjs, { Dayjs } from "dayjs";
 
+import { DateTimePickerHookForm } from "@/app/components/inputs/DateTimePickerHookForm";
 import { GetStockOutPayload } from "@/services/stock/out/interfaces";
-import {
-  DATE_TIME_PICKER_TIME_STEPS,
-  DATE_TIME_PICKER_VIEWS,
-  DATE_FORMAT,
-} from "@/app/components/inputs/DateTimePickerHookForm/constants";
+import { setFiltersByWarehoseId } from "@/redux/states/stock/out";
 import { Warehouse } from "@/services/warehouses/interfaces";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { Store } from "@/redux/types";
 
-interface Props extends GetStockOutPayload {
-  transactionDateGreaterThanOrEqualTo: string;
-  transactionDateLessThanOrEqualTo: string;
+type FormInputs = Omit<
+  GetStockOutPayload,
+  "transactionDateLessThanOrEqualTo" | "transactionDateGreaterThanOrEqualTo"
+> & {
+  transactionDateGreaterThanOrEqualTo: Dayjs;
+  transactionDateLessThanOrEqualTo: Dayjs;
+};
+
+type Props = {
   numRowsSelected?: number;
   warehouse: Warehouse;
-  href: string;
-}
+};
 
-const ToolBar = ({
-  transactionDateGreaterThanOrEqualTo,
-  transactionDateLessThanOrEqualTo,
-  numRowsSelected = 0,
-  warehouse,
-  href,
-}: Props) => {
-  const router = useRouter();
-  const transactionDateGreaterThanOrEqualToDayJs = dayjs(transactionDateGreaterThanOrEqualTo);
-  const transactionDateLessThanOrEqualToDateDayJs = dayjs(transactionDateLessThanOrEqualTo);
+const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
+  const transactionDateGreaterThanOrEqualToStore = useSelector(
+    (state: Store) =>
+      state?.stockOut?.filters?.[warehouse?.id ?? ""]?.transactionDateGreaterThanOrEqualTo ||
+      dayjs().startOf("day").toISOString(),
+  );
 
-  const onAcceptMinDateTime = (newMinDateTime: Dayjs | null) => {
-    if (
-      !newMinDateTime?.isValid() ||
-      newMinDateTime.isSame(transactionDateGreaterThanOrEqualToDayJs, "minute")
-    ) {
-      return;
-    }
+  const transactionDateLessThanOrEqualToStore = useSelector(
+    (state: Store) =>
+      state?.stockOut?.filters?.[warehouse?.id ?? ""]?.transactionDateLessThanOrEqualTo ||
+      dayjs().endOf("day").toISOString(),
+  );
+  const { handleSubmit, control, watch } = useForm<FormInputs>({
+    values: {
+      transactionDateGreaterThanOrEqualTo: dayjs(transactionDateGreaterThanOrEqualToStore),
+      transactionDateLessThanOrEqualTo: dayjs(transactionDateLessThanOrEqualToStore),
+      offset: 0,
+    },
+  });
+  const transactionDateGreaterThanOrEqualTo = watch("transactionDateGreaterThanOrEqualTo");
+  const transactionDateLessThanOrEqualTo = watch("transactionDateLessThanOrEqualTo");
+  const dispatch = useDispatch();
 
-    router.replace(
-      `${href}?${new URLSearchParams({
-        transactionDateGreaterThanOrEqualTo: newMinDateTime.toISOString(),
-        transactionDateLessThanOrEqualTo,
-      })}`,
-    );
-  };
-
-  const onAcceptMaxDateTime = (newMaxDateTime: Dayjs | null) => {
-    if (
-      !newMaxDateTime?.isValid() ||
-      newMaxDateTime.isSame(transactionDateLessThanOrEqualToDateDayJs, "minute")
-    ) {
-      return;
-    }
-
-    router.replace(
-      `${href}?${new URLSearchParams({
-        transactionDateLessThanOrEqualTo: newMaxDateTime.toISOString(),
-        transactionDateGreaterThanOrEqualTo,
-      })}`,
-    );
-  };
+  const applyFilters = handleSubmit(data =>
+    dispatch(
+      setFiltersByWarehoseId({
+        warehouseId: warehouse.id,
+        filters: {
+          transactionDateLessThanOrEqualTo: data?.transactionDateLessThanOrEqualTo?.toISOString(),
+          transactionDateGreaterThanOrEqualTo:
+            data?.transactionDateGreaterThanOrEqualTo?.toISOString(),
+          offset: 0,
+        },
+      }),
+    ),
+  );
 
   return (
     <MaterialToolbar
@@ -89,28 +86,22 @@ const ToolBar = ({
           </Typography>
         ) : (
           <>
-            <DateTimePicker
-              maxDateTime={transactionDateLessThanOrEqualToDateDayJs}
-              value={transactionDateGreaterThanOrEqualToDayJs}
+            <DateTimePickerHookForm
+              rules={{ required: "This field is required" }}
+              maxDateTime={transactionDateLessThanOrEqualTo}
               name="transactionDateGreaterThanOrEqualTo"
-              timeSteps={DATE_TIME_PICKER_TIME_STEPS}
-              onAccept={onAcceptMinDateTime}
-              views={DATE_TIME_PICKER_VIEWS}
               label="Start transaction date"
-              format={DATE_FORMAT}
+              control={control}
               className="grow"
               closeOnSelect
             />
 
-            <DateTimePicker
-              minDateTime={transactionDateGreaterThanOrEqualToDayJs}
-              value={transactionDateLessThanOrEqualToDateDayJs}
+            <DateTimePickerHookForm
+              minDateTime={transactionDateGreaterThanOrEqualTo}
+              rules={{ required: "This field is required" }}
               name="transactionDateLessThanOrEqualTo"
-              timeSteps={DATE_TIME_PICKER_TIME_STEPS}
-              onAccept={onAcceptMaxDateTime}
-              views={DATE_TIME_PICKER_VIEWS}
               label="End transaction date"
-              format={DATE_FORMAT}
+              control={control}
               className="grow"
               closeOnSelect
             />

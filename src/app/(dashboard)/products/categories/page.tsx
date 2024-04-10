@@ -1,11 +1,9 @@
-import { Icon } from "@iconify-icon/react";
-import Button from "@mui/material/Button";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { NoProductCategoriesFound } from "./components/NoProductCategoriesFound";
 import { ProductCategoryCard } from "./components/ProductCategoryCard";
 import { getProductCategories } from "@/services/products";
+import { Layout } from "../components/Layout";
 
 const metadata: Metadata = {
   description: "Business management system",
@@ -16,21 +14,7 @@ const ProductCategories = async () => {
   const { rows } = await getProductCategories();
 
   return (
-    <div className="flex flex-col gap-5 h-full">
-      <div className="flex flex-row gap-5 items-center justify-between">
-        <h1>Product categories</h1>
-
-        <Link href="/products/categories/new" className="no-underline">
-          <Button
-            className="rounded-lg normal-case"
-            startIcon={<Icon icon="eva:plus-fill" />}
-            variant="contained"
-          >
-            Add product category
-          </Button>
-        </Link>
-      </div>
-
+    <Layout>
       {!rows?.length && <NoProductCategoriesFound />}
 
       {rows?.length > 0 && (
@@ -38,7 +22,7 @@ const ProductCategories = async () => {
           {rows?.map(product => <ProductCategoryCard key={product.id} {...product} />)}
         </div>
       )}
-    </div>
+    </Layout>
   );
 };
 

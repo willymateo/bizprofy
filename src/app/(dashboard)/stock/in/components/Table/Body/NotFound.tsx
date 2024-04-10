@@ -1,22 +1,24 @@
 import Typography from "@mui/material/Typography";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import { Icon } from "@iconify-icon/react";
 
 import { HEADER_COLUMNS } from "../constants";
 
 const NotFound = () => (
   <TableRow>
-    <TableCell align="center" colSpan={HEADER_COLUMNS.length + 2} className="h-[375px]">
-      <Paper sx={{ textAlign: "center" }}>
-        <Typography variant="h6" paragraph>
-          No results found
-        </Typography>
+    <TableCell align="center" colSpan={HEADER_COLUMNS.length + 2} className="h-[436px]">
+      <div className="flex flex-col justify-center items-center gap-5">
+        <Icon icon="solar:box-line-duotone" height={150} width={150} />
 
-        <Typography variant="body2">
-          We couldn't find any results matching your search criteria.
-        </Typography>
-      </Paper>
+        <div className="flex flex-col justify-center items-center">
+          <Typography variant="h6">No results found</Typography>
+
+          <Typography variant="body2">
+            We couldn't find any results matching your search criteria.
+          </Typography>
+        </div>
+      </div>
     </TableCell>
   </TableRow>
 );

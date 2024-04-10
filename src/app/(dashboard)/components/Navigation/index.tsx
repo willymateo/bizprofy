@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Drawer from "@mui/material/Drawer";
 
 import { closeDrawer } from "@/redux/states/navigation";
-import { Store } from "@/redux/interfaces";
 import { Content } from "./Content";
+import { Store } from "@/redux/types";
 
 const Navigation = () => {
   const isDrawerOpen = useSelector((state: Store) => state.navigation.isDrawerOpen);

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { Language } from "../interfaces";
 import { LANGUAGES_DATA, LANGUAGE_CODES } from "@/shared/constants";
+import { Language } from "./types";
 
 const emptyState: Language = LANGUAGES_DATA[LANGUAGE_CODES.ENGLISH];
 
@@ -17,9 +17,7 @@ const LanguageSlice = createSlice({
   },
 });
 
-const {
+export const {
   actions: { setLanguage, resetLanguage },
   reducer: LanguageReducer,
 } = LanguageSlice;
-
-export { setLanguage, resetLanguage, LanguageReducer };

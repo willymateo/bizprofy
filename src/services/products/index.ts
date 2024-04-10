@@ -161,6 +161,7 @@ const getProductCategories = async ({
   if (!res.ok) {
     throw new Error(resBody.error?.message || "Failed to fetch product categories");
   }
+
   return resBody;
 };
 

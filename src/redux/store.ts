@@ -1,15 +1,17 @@
 import { EnhancedStore, configureStore } from "@reduxjs/toolkit";
 
-import { UserSessionReducer } from "./states/userSession";
 import { NavigationReducer } from "./states/navigation";
+import { StockOutReducer } from "./states/stock/out";
 import { LanguageReducer } from "./states/language";
-import { Store } from "./interfaces";
+import { StockInReducer } from "./states/stock/in";
+import { Store } from "./types";
 
 const reduxStore: EnhancedStore<Store> = configureStore({
   reducer: {
-    userSession: UserSessionReducer,
     navigation: NavigationReducer,
     language: LanguageReducer,
+    stockOut: StockOutReducer,
+    stockIn: StockInReducer,
   },
 });
 

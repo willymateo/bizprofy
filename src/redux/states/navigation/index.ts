@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { Navigation } from "../interfaces";
+import { Navigation } from "./types";
 
 const emptyState: Navigation = {
   isDrawerOpen: false,
@@ -16,9 +16,7 @@ const NavigationSlice = createSlice({
   },
 });
 
-const {
+export const {
   actions: { openDrawer, closeDrawer, resetDrawer },
   reducer: NavigationReducer,
 } = NavigationSlice;
-
-export { openDrawer, closeDrawer, resetDrawer, NavigationReducer };

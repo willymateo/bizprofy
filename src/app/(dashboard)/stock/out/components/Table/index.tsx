@@ -1,45 +1,116 @@
 "use client";
 
+import { ChangeEvent, MouseEvent, useCallback, useEffect, useState } from "react";
 import TablePagination from "@mui/material/TablePagination";
-import { ChangeEvent, MouseEvent, useState } from "react";
 import TableContainer from "@mui/material/TableContainer";
-import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 import MuiTable from "@mui/material/Table";
 import Card from "@mui/material/Card";
 
-import { GetStockOutPayload, GetStockOutResponse, StockOut } from "@/services/stock/out/interfaces";
+import { GetStockOutResponse, StockOut } from "@/services/stock/out/interfaces";
+import { setFiltersByWarehoseId } from "@/redux/states/stock/out";
 import { Warehouse } from "@/services/warehouses/interfaces";
+import { getStockOut } from "@/services/stock/out";
 import { PAGE_SIZE_OPTIONS } from "./constants";
+import { useActive } from "@/hooks/useActive";
+import { Store } from "@/redux/types";
 import { Order } from "./interfaces";
 import { ToolBar } from "./ToolBar";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Body } from "./Body";
+import dayjs from "dayjs";
 
-interface Props extends GetStockOutPayload, GetStockOutResponse {
-  transactionDateGreaterThanOrEqualTo: string;
-  transactionDateLessThanOrEqualTo: string;
+interface Props {
   warehouse: Warehouse;
   className?: string;
-  href: string;
 }
 
-const Table = ({
-  transactionDateGreaterThanOrEqualTo,
-  transactionDateLessThanOrEqualTo,
-  limit = PAGE_SIZE_OPTIONS[0],
-  className = "",
-  summarizedData,
-  offset = 0,
-  warehouse,
-  count = 0,
-  rows = [],
-  href,
-}: Props) => {
+const Table = ({ className = "", warehouse }: Props) => {
+  const limit = useSelector(
+    (state: Store) =>
+      state?.stockOut?.filters?.[warehouse?.id ?? ""]?.limit ?? PAGE_SIZE_OPTIONS[0],
+  );
+  const transactionDateGreaterThanOrEqualTo = useSelector(
+    (state: Store) =>
+      state?.stockOut?.filters?.[warehouse?.id ?? ""]?.transactionDateGreaterThanOrEqualTo ||
+      dayjs().startOf("day").toISOString(),
+  );
+  const transactionDateLessThanOrEqualTo = useSelector(
+    (state: Store) =>
+      state?.stockOut?.filters?.[warehouse?.id ?? ""]?.transactionDateLessThanOrEqualTo ||
+      dayjs().endOf("day").toISOString(),
+  );
+  const offset = useSelector(
+    (state: Store) => state?.stockOut?.filters?.[warehouse?.id ?? ""]?.offset ?? 0,
+  );
+
+  const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [selectedRows, setSelectedRows] = useState<Record<string, StockOut>>({});
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
+  const [error, setError] = useState<Error | null>(null);
+  const [data, setData] = useState<GetStockOutResponse>({
+    summarizedData: {
+      totalPriceSum: 0,
+      totalQuantity: 0,
+    },
+    count: 0,
+    rows: [],
+  });
   const [orderBy, setOrderBy] = useState<string>("");
-  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const fetchData = useCallback(async () => {
+    setError(null);
+    startLoading();
+
+    try {
+      const transactionDateGreaterThanOrEqualToDate = dayjs(transactionDateGreaterThanOrEqualTo);
+      const transactionDateLessThanOrEqualToDate = dayjs(transactionDateLessThanOrEqualTo);
+
+      if (
+        !transactionDateGreaterThanOrEqualToDate?.isValid() ||
+        !transactionDateLessThanOrEqualToDate?.isValid() ||
+        transactionDateGreaterThanOrEqualToDate.isAfter(transactionDateLessThanOrEqualToDate)
+      ) {
+        return dispatch(
+          setFiltersByWarehoseId({
+            warehouseId: warehouse.id,
+            filters: {
+              transactionDateGreaterThanOrEqualTo: dayjs().startOf("day").toISOString(),
+              transactionDateLessThanOrEqualTo: dayjs().endOf("day").toISOString(),
+            },
+          }),
+        );
+      }
+
+      const stockData = await getStockOut({
+        transactionDateGreaterThanOrEqualTo,
+        transactionDateLessThanOrEqualTo,
+        warehouseIds: [warehouse.id],
+        offset,
+        limit,
+      });
+
+      setData(stockData);
+    } catch (err) {
+      console.error("Error fetching stock in data", err);
+
+      setError(err as Error);
+    }
+
+    stopLoading();
+  }, [
+    transactionDateGreaterThanOrEqualTo,
+    transactionDateLessThanOrEqualTo,
+    warehouse.id,
+    offset,
+    limit,
+  ]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleSort = (id: string = "") => {
     const isAsc = orderBy === id && orderDirection === Order.asc;
@@ -50,60 +121,60 @@ const Table = ({
     }
   };
 
-  const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) =>
-    router.replace(
-      `${href}?${new URLSearchParams({
-        offset: (newPage * limit).toString(),
-        transactionDateGreaterThanOrEqualTo,
-        transactionDateLessThanOrEqualTo,
-        limit: limit.toString(),
-      }).toString()}`,
+  const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number) =>
+    dispatch(
+      setFiltersByWarehoseId({
+        warehouseId: warehouse.id,
+        filters: {
+          offset: newPage * limit,
+          limit,
+        },
+      }),
     );
 
   const handleChangePageSize = ({
     target: { value },
   }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    router.replace(
-      `${href}?${new URLSearchParams({
-        transactionDateGreaterThanOrEqualTo,
-        transactionDateLessThanOrEqualTo,
-        limit: value,
-        offset: "0",
-      }).toString()}`,
+    dispatch(
+      setFiltersByWarehoseId({
+        warehouseId: warehouse.id,
+        filters: {
+          limit: value,
+          offset: 0,
+        },
+      }),
     );
 
   return (
     <Card className={`flex flex-col ${className}`}>
-      <ToolBar
-        transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
-        transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
-        numRowsSelected={Object.keys(selectedRows).length}
-        warehouse={warehouse}
-        href={href}
-      />
+      <ToolBar numRowsSelected={Object.keys(selectedRows).length} warehouse={warehouse} />
 
       <TableContainer className="max-h-[519px]">
         <MuiTable stickyHeader>
           <Header
-            numRowsSelected={Object.keys(selectedRows).length}
+            numRowsSelected={Object.keys(selectedRows ?? {}).length ?? 0}
             setSelectedRows={setSelectedRows}
             orderDirection={orderDirection}
+            numTotalRows={data?.count ?? 0}
             handleSort={handleSort}
-            numTotalRows={count}
+            rows={data?.rows ?? []}
             orderBy={orderBy}
-            rows={rows}
           />
 
           <Body
             currentPageNumber={offset / limit}
             setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
+            count={data?.count ?? 0}
+            rows={data?.rows ?? []}
+            isLoading={isLoading}
             pageSize={limit}
-            count={count}
-            rows={rows}
+            error={error}
           />
 
-          {rows.length ? <Footer {...summarizedData} /> : null}
+          {isLoading || data?.rows?.length ? (
+            <Footer {...(data?.summarizedData ?? {})} isLoading={isLoading} />
+          ) : null}
         </MuiTable>
       </TableContainer>
 
@@ -111,10 +182,10 @@ const Table = ({
         onRowsPerPageChange={handleChangePageSize}
         rowsPerPageOptions={PAGE_SIZE_OPTIONS}
         onPageChange={handleChangePage}
+        count={data?.count ?? 0}
         page={offset / limit}
         rowsPerPage={limit}
         component="div"
-        count={count}
       />
     </Card>
   );

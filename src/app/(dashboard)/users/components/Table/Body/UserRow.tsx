@@ -7,6 +7,7 @@ import { MouseEvent, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
+import Link from "next/link";
 import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "@/app/components/inputs/DateTimePickerHookForm/constants";
@@ -22,7 +23,6 @@ const UserRow = ({
   firstNames = "",
   lastNames = "",
   username = "",
-  photoUrl = "",
   email = "",
   createdAt,
   updatedAt,
@@ -45,20 +45,27 @@ const UserRow = ({
           <Checkbox disableRipple checked={isSelected} onChange={onClick} />
         </TableCell>
 
-        <TableCell className="whitespace-nowrap">{id ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link href={`/users/${id ?? ""}`} className="no-underline text-slate-800">
+            {id ?? ""}
+          </Link>
+        </TableCell>
         <TableCell className="whitespace-nowrap">
           {username && (
             <Chip
               icon={<Icon icon="solar:user-bold-duotone" className="pl-3" />}
+              color={deletedAt ? "default" : "info"}
               label={username ?? ""}
-              color="info"
             />
           )}
         </TableCell>
         <TableCell className="whitespace-nowrap">{firstNames ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{lastNames ?? ""}</TableCell>
-        <TableCell className="whitespace-nowrap">{email ?? ""}</TableCell>
-        <TableCell className="whitespace-nowrap">{photoUrl ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">
+          <Link href={`mailto:${email ?? ""}`} target="_blank">
+            {email ?? ""}
+          </Link>
+        </TableCell>
         <TableCell className="whitespace-nowrap">
           {deletedAt ? <Chip label="Inactive" /> : <Chip label="Active" color="success" />}
         </TableCell>

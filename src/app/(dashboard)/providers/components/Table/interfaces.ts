@@ -5,16 +5,16 @@ export interface HeaderColumns {
 }
 
 export enum HeaderColumnTypes {
-  phoneNumber = "phoneNumber",
-  firstNames = "firstNames",
-  createdAt = "createdAt",
-  updatedAt = "updatedAt",
-  lastNames = "lastNames",
-  isActive = "isActive",
-  address = "address",
-  idCard = "idCard",
-  email = "email",
-  id = "id",
+  phoneNumber,
+  firstNames,
+  createdAt,
+  updatedAt,
+  lastNames,
+  isActive,
+  address,
+  idCard,
+  email,
+  id,
 }
 
 export enum Order {

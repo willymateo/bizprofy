@@ -9,7 +9,7 @@ import Image from "next/image";
 
 import { LANGUAGES_DATA, LANGUAGE_CODES } from "@/shared/constants";
 import { setLanguage } from "@/redux/states/language";
-import { Store } from "@/redux/interfaces";
+import { Store } from "@/redux/types";
 
 const LanguagePopover = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);

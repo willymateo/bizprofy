@@ -28,7 +28,7 @@ const ProductCard = (product: Product) => (
         )}
       </Link>
 
-      <div className="flex flex-col justify-between gap-5 h-full p-3">
+      <div className="flex flex-col gap-5 h-full p-3">
         <div className="flex flex-col justify-center gap-1">
           <Link
             className="font-bold text-black no-underline overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:1] hover:underline"
@@ -44,8 +44,8 @@ const ProductCard = (product: Product) => (
               <Chip
                 icon={<Icon icon="solar:code-scan-line-duotone" className="pl-3" />}
                 className="w-fit max-w-full overflow-hidden text-ellipsis"
+                color={product?.deletedAt ? "default" : "info"}
                 label={product?.code ?? ""}
-                color="info"
               />
             </div>
           )}
@@ -56,6 +56,7 @@ const ProductCard = (product: Product) => (
 
               <Chip
                 className="w-fit max-w-full overflow-hidden text-ellipsis"
+                color={product?.deletedAt ? "default" : "secondary"}
                 label={product?.productCategory?.name ?? ""}
                 icon={
                   <Icon
@@ -65,7 +66,6 @@ const ProductCard = (product: Product) => (
                     width={16}
                   />
                 }
-                color="secondary"
               />
             </div>
           )}
@@ -79,11 +79,11 @@ const ProductCard = (product: Product) => (
 
         <div className="flex flex-row gap-5 items-center justify-between">
           <p>
-            Unit price: <span className="font-bold">${product?.unitPrice ?? 0}</span>
+            Unit cost: <span className="font-bold">${product?.unitCost ?? 0}</span>
           </p>
 
           <p>
-            Unit cost: <span className="font-bold">${product?.unitCost ?? 0}</span>
+            Unit price: <span className="font-bold">${product?.unitPrice ?? 0}</span>
           </p>
         </div>
       </div>

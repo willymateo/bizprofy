@@ -27,11 +27,6 @@ const HEADER_COLUMNS: HeaderColumns[] = [
     className: "text-center whitespace-nowrap font-bold",
   },
   {
-    id: HeaderColumnTypes.photoUrl,
-    label: "Photo URL",
-    className: "text-center whitespace-nowrap font-bold",
-  },
-  {
     id: HeaderColumnTypes.isActive,
     label: "Active",
     className: "text-center whitespace-nowrap font-bold",

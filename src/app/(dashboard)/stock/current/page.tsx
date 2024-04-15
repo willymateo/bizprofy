@@ -1,14 +1,13 @@
 import { redirect } from "next/navigation";
 import dayjs from "dayjs";
 
-import { CreatableStockTypes, ExtraStockTypes, GetStockPayload } from "@/services/stock/interfaces";
-import { STOCK_ROUTES_BY_TYPE, STOCK_TYPE_IDS } from "../constants";
-import { getTableData } from "./Table/utils";
-import { getStock } from "@/services/stock";
-import { Table } from "./Table";
+import { GetCurrentStockPayload } from "@/services/stock/current/interfaces";
+import { getCurrentStock } from "@/services/stock/current";
+import { getWarehouses } from "@/services/warehouses";
+import { Table } from "./components/Table";
 
 type Props = {
-  searchParams: GetStockPayload;
+  searchParams: GetCurrentStockPayload;
   params: {};
 };
 
@@ -27,32 +26,52 @@ const CurrentStock = async ({
     transactionDateGreaterThanOrEqualToDate.isAfter(transactionDateLessThanOrEqualToDate)
   ) {
     redirect(
-      `/stock/${STOCK_ROUTES_BY_TYPE[ExtraStockTypes.currentStock]}?${new URLSearchParams({
+      `/stock/current?${new URLSearchParams({
         transactionDateGreaterThanOrEqualTo: dayjs().startOf("day").toISOString(),
         transactionDateLessThanOrEqualTo: dayjs().endOf("day").toISOString(),
       })}`,
     );
   }
 
-  const { rows } = await getStock({
-    stockTypeIds: [
-      STOCK_TYPE_IDS[CreatableStockTypes.stockOut],
-      STOCK_TYPE_IDS[CreatableStockTypes.stockIn],
-    ],
-    transactionDateGreaterThanOrEqualTo,
-    transactionDateLessThanOrEqualTo,
+  const { rows: warehouses = [] } = await getWarehouses({
     limit: Number.MAX_SAFE_INTEGER,
     offset: 0,
   });
 
-  const newTableData = getTableData({ rows });
+  const stockByWarehouses = await Promise.all(
+    warehouses?.map(({ id }) =>
+      getCurrentStock({
+        transactionDateGreaterThanOrEqualTo,
+        transactionDateLessThanOrEqualTo,
+        warehouseIds: [id],
+      }),
+    ) ?? [],
+  );
+
+  console.log(
+    JSON.stringify(
+      {
+        warehouses,
+        stockByWarehouses,
+      },
+      null,
+      2,
+    ),
+  );
 
   return (
-    <Table
-      transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
-      transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
-      tableData={newTableData}
-    />
+    <div className="flex flex-col gap-20">
+      {stockByWarehouses.map((stockData, index) => (
+        <Table
+          {...stockData}
+          transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
+          transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
+          warehouse={warehouses[index]}
+          key={warehouses[index].id}
+          href="/stock/current"
+        />
+      ))}
+    </div>
   );
 };
 

@@ -1,70 +1,29 @@
-import { redirect } from "next/navigation";
-import dayjs from "dayjs";
+import type { Metadata } from "next";
 
-import { CreatableStockTypes, GetStockPayload } from "@/services/stock/interfaces";
-import { getTableData } from "../components/Table/SimpleTable/utils";
-import { STOCK_ROUTES_BY_TYPE, STOCK_TYPE_IDS } from "../constants";
-import { PAGE_SIZE_OPTIONS } from "../current/Table/constants";
-import { SimpleTable } from "../components/Table/SimpleTable";
-import { COLUMNS_TO_SHOW } from "./constants";
-import { getStock } from "@/services/stock";
+import { getWarehouses } from "@/services/warehouses";
+import { Layout } from "./components/Layout";
+import { Table } from "./components/Table";
 
-type Props = {
-  searchParams: GetStockPayload;
-  params: {};
+const metadata: Metadata = {
+  description: "Business management system",
+  title: "Stock out | Bizprofy",
 };
 
-const StockOut = async ({
-  searchParams: {
-    transactionDateGreaterThanOrEqualTo = dayjs().startOf("day").toISOString(),
-    transactionDateLessThanOrEqualTo = dayjs().endOf("day").toISOString(),
-    limit = PAGE_SIZE_OPTIONS[0],
-    offset = 0,
-  },
-}: Props) => {
-  const transactionDateGreaterThanOrEqualToDate = dayjs(transactionDateGreaterThanOrEqualTo);
-  const transactionDateLessThanOrEqualToDate = dayjs(transactionDateLessThanOrEqualTo);
-  offset = parseInt(offset.toString(), 10);
-  limit = parseInt(limit.toString(), 10);
-
-  if (
-    !transactionDateGreaterThanOrEqualToDate.isValid() ||
-    !transactionDateLessThanOrEqualToDate.isValid() ||
-    transactionDateGreaterThanOrEqualToDate.isAfter(transactionDateLessThanOrEqualToDate) ||
-    isNaN(offset) ||
-    isNaN(limit)
-  ) {
-    redirect(
-      `/stock/${STOCK_ROUTES_BY_TYPE[CreatableStockTypes.stockOut]}?${new URLSearchParams({
-        transactionDateGreaterThanOrEqualTo: dayjs().startOf("day").toISOString(),
-        transactionDateLessThanOrEqualTo: dayjs().endOf("day").toISOString(),
-        limit: PAGE_SIZE_OPTIONS[0].toString(),
-        offset: "0",
-      })}`,
-    );
-  }
-
-  const result = await getStock({
-    stockTypeIds: [STOCK_TYPE_IDS[CreatableStockTypes.stockOut]],
-    transactionDateGreaterThanOrEqualTo,
-    transactionDateLessThanOrEqualTo,
-    offset,
-    limit,
-  });
-
-  const tableData = getTableData(result);
+const StockOut = async () => {
+  const { rows: warehouses = [] } =
+    (await getWarehouses({
+      limit: Number.MAX_SAFE_INTEGER,
+      offset: 0,
+    })) ?? {};
 
   return (
-    <SimpleTable
-      {...tableData}
-      transactionDateGreaterThanOrEqualTo={transactionDateGreaterThanOrEqualTo}
-      href={`/stock/${STOCK_ROUTES_BY_TYPE[CreatableStockTypes.stockOut]}`}
-      transactionDateLessThanOrEqualTo={transactionDateLessThanOrEqualTo}
-      columns={COLUMNS_TO_SHOW}
-      offset={offset}
-      limit={limit}
-    />
+    <Layout>
+      <div className="flex flex-col gap-20">
+        {warehouses?.map(warehouse => <Table warehouse={warehouse} key={warehouse.id} />)}
+      </div>
+    </Layout>
   );
 };
 
 export default StockOut;
+export { metadata };

@@ -1,13 +1,11 @@
-import { Icon } from "@iconify-icon/react";
 import { redirect } from "next/navigation";
-import Button from "@mui/material/Button";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { PAGE_SIZE_OPTIONS } from "./components/Table/constants";
 import { GetUsersPayload } from "@/services/users/interfaces";
 import { getUsers } from "@/services/users";
 import { Table } from "./components/Table";
+import { Layout } from "./components/Layout";
 
 const metadata: Metadata = {
   description: "Business management system",
@@ -32,29 +30,15 @@ const UsersPage = async ({ searchParams: { limit = PAGE_SIZE_OPTIONS[0], offset 
     );
   }
 
-  const response = await getUsers({
+  const data = await getUsers({
     offset,
     limit,
   });
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-row gap-5 items-center justify-between">
-        <h1>Users</h1>
-
-        <Link href="/users/new" className="no-underline">
-          <Button
-            startIcon={<Icon icon="eva:plus-fill" />}
-            className="rounded-lg normal-case"
-            variant="contained"
-          >
-            Add user
-          </Button>
-        </Link>
-      </div>
-
-      <Table {...response} />
-    </div>
+    <Layout>
+      <Table {...data} offset={offset} limit={limit} />
+    </Layout>
   );
 };
 

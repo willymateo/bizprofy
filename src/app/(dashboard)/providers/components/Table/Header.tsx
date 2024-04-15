@@ -53,16 +53,16 @@ const Header = ({
           />
         </TableCell>
 
-        {HEADER_COLUMNS.map(({ className = "", id = "", label = "" }) => (
+        {HEADER_COLUMNS.map(({ className = "", id, label = "" }) => (
           <TableCell
-            sortDirection={orderBy === id ? orderDirection : false}
+            sortDirection={orderBy === id.toString() ? orderDirection : false}
             className={className}
             key={id}
           >
             <TableSortLabel
-              direction={orderBy === id ? orderDirection : Order.asc}
-              onClick={() => handleSort(id)}
-              active={orderBy === id}
+              direction={orderBy === id.toString() ? orderDirection : Order.asc}
+              onClick={() => handleSort(id.toString())}
+              active={orderBy === id.toString()}
               hideSortIcon
             >
               {label}

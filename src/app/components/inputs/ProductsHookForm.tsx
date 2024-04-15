@@ -11,12 +11,16 @@ import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
 import { Product } from "@/services/products/interfaces";
 import { useActive } from "@/hooks/useActive";
 
-const ProductsHookForm = <T extends FieldValues>(props: UseControllerProps<T>) => {
+type Props<T extends FieldValues> = UseControllerProps<T> & {
+  onChange?: (value: Product | Product[] | null) => void;
+};
+
+const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const abortControllerRef = useRef<AbortController | null>(null);
   const [options, setOptions] = useState<Product[]>([]);
   const {
-    field: { value, onChange, onBlur },
+    field: { value, onChange: hookFormOnChange, onBlur },
     fieldState: { error },
   } = useController(props);
 
@@ -74,8 +78,11 @@ const ProductsHookForm = <T extends FieldValues>(props: UseControllerProps<T>) =
           label="Product"
         />
       )}
-      onChange={(_, newValue) => onChange(newValue)}
       filterOptions={option => option}
+      onChange={(_, newValue) => {
+        hookFormOnChange(newValue);
+        props?.onChange?.(newValue);
+      }}
       loading={isLoading}
       options={options}
       onBlur={onBlur}

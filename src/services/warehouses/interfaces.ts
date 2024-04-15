@@ -10,6 +10,7 @@ export interface GetWarehousesPayload {
   offset?: number;
   limit?: number;
   order?: Order;
+  q?: string;
 }
 
 export interface GetWarehousesResponse {

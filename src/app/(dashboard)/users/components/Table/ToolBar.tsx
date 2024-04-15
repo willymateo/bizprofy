@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import { Icon } from "@iconify-icon/react";
 import { TextField } from "@mui/material";
+import Button from "@mui/material/Button";
 
 import { GetUsersPayload } from "@/services/users/interfaces";
 
@@ -29,27 +30,29 @@ const ToolBar = ({ numRowsSelected = 0 }: Props) => {
           {numRowsSelected} selected
         </Typography>
       ) : (
-        <div className="flex flex-col justify-center gap-5 grow">
-          <div className="flex flex-row flex-wrap items-center justify-center gap-5">
-            <TextField
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Icon icon="eva:search-fill" />
-                  </InputAdornment>
-                ),
-              }}
-              placeholder="Search..."
-              className="grow"
-            />
+        <>
+          <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon icon="eva:search-fill" />
+                </InputAdornment>
+              ),
+            }}
+            placeholder="Search..."
+            className="grow"
+          />
 
-            <Tooltip title="Filter list">
-              <IconButton>
-                <Icon icon="ic:round-filter-list" />
-              </IconButton>
-            </Tooltip>
-          </div>
-        </div>
+          <Button variant="contained" endIcon={<Icon icon="icon-park-outline:search" />}>
+            Search
+          </Button>
+
+          <Tooltip title="Filter list">
+            <IconButton>
+              <Icon icon="ic:round-filter-list" />
+            </IconButton>
+          </Tooltip>
+        </>
       )}
     </MaterialToolbar>
   );

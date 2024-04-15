@@ -1,13 +1,11 @@
-import { Icon } from "@iconify-icon/react";
 import { redirect } from "next/navigation";
-import Button from "@mui/material/Button";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { GetWarehousesPayload } from "@/services/warehouses/interfaces";
 import { NoWarehousesFound } from "./components/NoWarehousesFound";
 import { WarehouseCard } from "./components/WarehouseCard";
 import { getWarehouses } from "@/services/warehouses";
+import { Layout } from "./components/Layout";
 
 const metadata: Metadata = {
   description: "Business management system",
@@ -40,21 +38,7 @@ const WarehousesPage = async ({ searchParams: { limit = PAGE_SIZE, offset = 0 } 
   });
 
   return (
-    <div className="flex flex-col gap-5 h-full">
-      <div className="flex flex-row gap-5 items-center justify-between">
-        <h1>Warehouses</h1>
-
-        <Link href="/warehouses/new" className="no-underline">
-          <Button
-            startIcon={<Icon icon="eva:plus-fill" />}
-            className="rounded-lg normal-case"
-            variant="contained"
-          >
-            Add warehouse
-          </Button>
-        </Link>
-      </div>
-
+    <Layout>
       {!rows?.length && <NoWarehousesFound />}
 
       {rows?.length > 0 && (
@@ -62,7 +46,7 @@ const WarehousesPage = async ({ searchParams: { limit = PAGE_SIZE, offset = 0 } 
           {rows?.map(warehouse => <WarehouseCard key={warehouse.id} {...warehouse} />)}
         </div>
       )}
-    </div>
+    </Layout>
   );
 };
 

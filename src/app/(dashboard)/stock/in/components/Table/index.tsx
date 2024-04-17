@@ -21,10 +21,10 @@ import { Header } from "./Header";
 import { Body } from "./Body";
 import dayjs from "dayjs";
 
-interface Props {
+type Props = {
   warehouse: Warehouse;
   className?: string;
-}
+};
 
 const Table = ({ className = "", warehouse }: Props) => {
   const limit = useSelector(

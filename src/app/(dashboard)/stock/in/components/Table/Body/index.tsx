@@ -62,7 +62,7 @@ const Body = ({
 
       {!isLoading && !error ? (
         <>
-          {rows.map(stockElement => (
+          {rows?.map(stockElement => (
             <StockInRow
               isSelected={Boolean(selectedRows[stockElement.id])}
               onClick={() => selectRow(stockElement.id)}

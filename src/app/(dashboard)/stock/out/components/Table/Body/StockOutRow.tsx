@@ -86,14 +86,14 @@ const StockOutRow = ({
         <TableCell className="font-bold text-right">
           <p>
             <span>$</span>
-            {unitPrice.toFixed(NUM_DECIMALS)}
+            {unitPrice?.toFixed(NUM_DECIMALS) ?? "0.00"}
           </p>
         </TableCell>
         <TableCell className="text-right whitespace-nowrap">{quantity}</TableCell>
         <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
-            {totalPrice.toFixed(NUM_DECIMALS)}
+            {totalPrice?.toFixed(NUM_DECIMALS) ?? "0.00"}
           </p>
         </TableCell>
 

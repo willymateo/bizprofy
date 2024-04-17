@@ -20,6 +20,7 @@ export interface GetCurrentStockResponse {
 
 export interface CurrentStock {
   purchasesNumber: number;
+  currentStock: number;
   salesNumber: number;
   totalPrice: number;
   totalCost: number;
@@ -28,6 +29,7 @@ export interface CurrentStock {
 
 export interface SummarizedCurrentStockData {
   totalPurchasesNumber: number;
+  totalCurrentStock: number;
   totalSalesNumber: number;
   totalPriceSum: number;
   totalCostSum: number;

@@ -44,7 +44,7 @@ const Footer = ({ totalQuantity = 0, totalPriceSum = 0, isLoading = false }: Pro
           {totalQuantity}
         </TableCell>
         <TableCell className="font-bold text-right whitespace-nowrap text-lg">
-          ${totalPriceSum.toFixed(NUM_DECIMALS)}
+          ${totalPriceSum?.toFixed(NUM_DECIMALS) ?? "0.00"}
         </TableCell>
 
         <TableCell />

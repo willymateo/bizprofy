@@ -5,14 +5,15 @@ export interface HeaderColumns {
 }
 
 export enum HeaderColumnTypes {
+  purchasesNumber,
+  currentStock,
   productCode,
   productName,
-  unitCost,
-  unitPrice,
-  purchasesNumber,
   salesNumber,
-  totalCost,
   totalPrice,
+  totalCost,
+  unitPrice,
+  unitCost,
 }
 
 export enum Order {

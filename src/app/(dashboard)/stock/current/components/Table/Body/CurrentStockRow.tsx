@@ -8,8 +8,8 @@ import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
 
-import { NUM_DECIMALS } from "@/shared/constants";
 import { CurrentStock } from "@/services/stock/current/interfaces";
+import { NUM_DECIMALS } from "@/shared/constants";
 
 interface Props extends CurrentStock {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,6 +19,7 @@ interface Props extends CurrentStock {
 const CurrentStockRow = ({
   purchasesNumber = 0,
   isSelected = false,
+  currentStock = 0,
   salesNumber = 0,
   totalPrice = 0,
   totalCost = 0,
@@ -46,35 +47,37 @@ const CurrentStockRow = ({
 
         <TableCell className="whitespace-nowrap">{product?.name}</TableCell>
 
-        <TableCell className="text-right whitespace-nowrap">{purchasesNumber}</TableCell>
+        <TableCell className="whitespace-nowrap text-right">{currentStock ?? 0}</TableCell>
 
         <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
-            {product?.unitCost.toFixed(NUM_DECIMALS)}
+            {product?.unitCost?.toFixed(NUM_DECIMALS) ?? "0.00"}
+          </p>
+        </TableCell>
+
+        <TableCell className="whitespace-nowrap text-right">{purchasesNumber ?? 0}</TableCell>
+
+        <TableCell className="font-bold text-right whitespace-nowrap">
+          <p>
+            <span>$</span>
+            {totalCost?.toFixed(NUM_DECIMALS) ?? "0.00"}
           </p>
         </TableCell>
 
         <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
-            {totalCost.toFixed(NUM_DECIMALS)}
+            {product?.unitPrice?.toFixed(NUM_DECIMALS) ?? "0.00"}
           </p>
         </TableCell>
 
-        <TableCell className="text-right whitespace-nowrap">{salesNumber}</TableCell>
+        <TableCell className="text-right whitespace-nowrap">{salesNumber ?? 0}</TableCell>
 
         <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
-            {product?.unitPrice.toFixed(NUM_DECIMALS)}
-          </p>
-        </TableCell>
-
-        <TableCell className="font-bold text-right whitespace-nowrap">
-          <p>
-            <span>$</span>
-            {totalPrice.toFixed(NUM_DECIMALS)}
+            {totalPrice?.toFixed(NUM_DECIMALS) ?? "0.00"}
           </p>
         </TableCell>
 

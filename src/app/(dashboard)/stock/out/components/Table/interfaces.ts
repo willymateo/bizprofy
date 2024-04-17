@@ -6,15 +6,15 @@ export interface HeaderColumns {
 
 export enum HeaderColumnTypes {
   transactionDate,
+  providerEmail,
+  customerEmail,
+  providerName,
+  customerName,
   productCode,
   productName,
-  providerName,
-  providerEmail,
-  customerName,
-  customerEmail,
+  totalPrice,
   unitPrice,
   quantity,
-  totalPrice,
 }
 
 export enum Order {

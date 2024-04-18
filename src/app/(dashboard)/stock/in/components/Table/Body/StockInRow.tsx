@@ -74,14 +74,14 @@ const StockInRow = ({
         <TableCell className="font-bold text-right">
           <p>
             <span>$</span>
-            {unitCost.toFixed(NUM_DECIMALS)}
+            {unitCost?.toFixed(NUM_DECIMALS) ?? "0.00"}
           </p>
         </TableCell>
         <TableCell className="text-right whitespace-nowrap">{quantity}</TableCell>
         <TableCell className="font-bold text-right whitespace-nowrap">
           <p>
             <span>$</span>
-            {totalCost.toFixed(NUM_DECIMALS)}
+            {totalCost?.toFixed(NUM_DECIMALS) ?? "0.00"}
           </p>
         </TableCell>
 

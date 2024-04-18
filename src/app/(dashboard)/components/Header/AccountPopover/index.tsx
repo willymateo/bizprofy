@@ -5,9 +5,13 @@ import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, useState } from "react";
 import Divider from "@mui/material/Divider";
+import { useDispatch } from "react-redux";
 import { signOut } from "next-auth/react";
 import Menu from "@mui/material/Menu";
 
+import { resetAllFilters as resetAllCurrentStockFilters } from "@/redux/states/stock/current";
+import { resetAllFilters as resetAllStockOutFilters } from "@/redux/states/stock/out";
+import { resetAllFilters as resetAllStockInFilters } from "@/redux/states/stock/in";
 import { UserSessionInformation } from "./UserSessionInformation";
 import { UserSessionAvatar } from "../../UserSessionAvatar";
 import { useActive } from "@/hooks/useActive";
@@ -21,6 +25,7 @@ const AccountPopover = () => {
     enable: startLogingOut,
     disable: stopLogingOut,
   } = useActive();
+  const dispatch = useDispatch();
 
   const handleOpen = ({ currentTarget }: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(currentTarget);
@@ -32,6 +37,9 @@ const AccountPopover = () => {
 
     try {
       await signOut();
+      dispatch(resetAllCurrentStockFilters());
+      dispatch(resetAllStockOutFilters());
+      dispatch(resetAllStockInFilters());
     } catch (err) {
       console.log("Error signing out", err);
     }

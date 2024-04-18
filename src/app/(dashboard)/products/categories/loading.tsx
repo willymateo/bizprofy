@@ -1,6 +1,6 @@
 import Skeleton from "@mui/material/Skeleton";
 
-import { Layout } from "../components/Layout";
+import { Layout } from "./components/Layout";
 
 const Loading = () => (
   <Layout>

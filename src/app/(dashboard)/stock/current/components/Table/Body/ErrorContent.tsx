@@ -5,17 +5,17 @@ import { Icon } from "@iconify-icon/react";
 
 import { HEADER_COLUMNS } from "../constants";
 
-const NotFound = () => (
+const ErrorContent = () => (
   <TableRow>
     <TableCell align="center" colSpan={HEADER_COLUMNS.length + 2} className="h-[497px]">
       <div className="flex flex-col justify-center items-center gap-5">
-        <Icon icon="solar:box-line-duotone" height={150} width={150} />
+        <Icon icon="solar:cloud-cross-line-duotone" height={150} width={150} />
 
         <div className="flex flex-col justify-center items-center">
-          <Typography variant="h6">No results found</Typography>
+          <Typography variant="h6">This is unexpected for us</Typography>
 
           <Typography variant="body2">
-            We couldn't find any results matching your search criteria.
+            We couldn't load the data. Please try again later.
           </Typography>
         </div>
       </div>
@@ -23,4 +23,4 @@ const NotFound = () => (
   </TableRow>
 );
 
-export { NotFound };
+export { ErrorContent };

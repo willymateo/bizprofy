@@ -3,25 +3,29 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { Dispatch } from "react";
 
+import { CurrentStock, GetCurrentStockResponse } from "@/services/stock/current/interfaces";
 import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
-import { CurrentStock } from "@/services/stock/current/interfaces";
 import { CurrentStockRow } from "./CurrentStockRow";
 import { HEADER_COLUMNS } from "../constants";
+import { ErrorContent } from "./ErrorContent";
 import { NotFound } from "./NotFound";
+import { Loading } from "./Loading";
 
-interface Props {
+interface Props extends Omit<GetCurrentStockResponse, "summarizedData"> {
   setSelectedRows: Dispatch<Record<string, CurrentStock>>;
   selectedRows: Record<string, CurrentStock>;
   currentPageNumber: number;
-  rows: CurrentStock[];
+  error: Error | null;
+  isLoading: boolean;
   pageSize: number;
-  count: number;
 }
 
 const Body = ({
   currentPageNumber = 0,
   selectedRows = {},
+  isLoading = false,
   setSelectedRows,
+  error = null,
   pageSize = 0,
   count = 0,
   rows = [],
@@ -52,26 +56,32 @@ const Body = ({
 
   return (
     <TableBody>
-      {rows
-        .slice(currentPageNumber * pageSize, currentPageNumber * pageSize + pageSize)
-        .map(stockElement => (
-          <CurrentStockRow
-            isSelected={Boolean(selectedRows[stockElement?.product?.id])}
-            onClick={() => selectRow(stockElement?.product?.id)}
-            key={stockElement?.product?.id}
-            {...stockElement}
-          />
-        ))}
+      {isLoading ? <Loading /> : null}
 
-      {[...Array(numRowsToCompletePageSize)].map((_, rowIndex) => (
-        <TableRow key={rowIndex} className="h-[75px]">
-          {[...Array(HEADER_COLUMNS.length + 2)].map((_, index) => (
-            <TableCell key={index} />
+      {error ? <ErrorContent /> : null}
+
+      {!isLoading && !error ? (
+        <>
+          {rows?.map(stockElement => (
+            <CurrentStockRow
+              isSelected={Boolean(selectedRows[stockElement?.product?.id])}
+              onClick={() => selectRow(stockElement?.product?.id)}
+              key={stockElement?.product?.id}
+              {...stockElement}
+            />
           ))}
-        </TableRow>
-      ))}
 
-      {!rows.length ? <NotFound /> : null}
+          {[...Array(numRowsToCompletePageSize)].map((_, rowIndex) => (
+            <TableRow key={rowIndex} className="h-[75px]">
+              {[...Array(HEADER_COLUMNS.length + 2)].map((_, index) => (
+                <TableCell key={index} />
+              ))}
+            </TableRow>
+          ))}
+
+          {!rows.length ? <NotFound /> : null}
+        </>
+      ) : null}
     </TableBody>
   );
 };

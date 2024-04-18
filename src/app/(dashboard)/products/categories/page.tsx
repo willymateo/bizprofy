@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { NoProductCategoriesFound } from "./components/NoProductCategoriesFound";
 import { ProductCategoryCard } from "./components/ProductCategoryCard";
 import { getProductCategories } from "@/services/products";
-import { Layout } from "../components/Layout";
+import { Layout } from "./components/Layout";
 
 const metadata: Metadata = {
   description: "Business management system",

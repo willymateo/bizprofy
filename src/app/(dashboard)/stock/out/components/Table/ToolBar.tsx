@@ -106,7 +106,11 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
               closeOnSelect
             />
 
-            <Button variant="contained" endIcon={<Icon icon="icon-park-outline:search" />}>
+            <Button
+              endIcon={<Icon icon="icon-park-outline:search" />}
+              onClick={applyFilters}
+              variant="contained"
+            >
               Search
             </Button>
           </>

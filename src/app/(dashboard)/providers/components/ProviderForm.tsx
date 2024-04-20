@@ -10,12 +10,16 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateProviderPayload } from "@/services/providers/interfaces";
-import { createProvider } from "@/services/providers";
+import { CreateProviderPayload, Provider } from "@/services/providers/interfaces";
 import { EMAIL_REGEX } from "@/shared/constants";
 import { useActive } from "@/hooks/useActive";
 
-const NewProviderForm = () => {
+type Props<T, U> = {
+  onSave: (data: T) => Promise<U>;
+  saveButtonLabel?: string;
+} & Partial<Provider>;
+
+const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -24,13 +28,13 @@ const NewProviderForm = () => {
     register,
   } = useForm<CreateProviderPayload>({
     values: {
-      companyName: "",
-      phoneNumber: "",
-      firstNames: "",
-      lastNames: "",
-      address: "",
-      idCard: "",
-      email: "",
+      companyName: props.companyName || "",
+      phoneNumber: props.phoneNumber || "",
+      firstNames: props.firstNames || "",
+      lastNames: props.lastNames || "",
+      address: props.address || "",
+      idCard: props.idCard || "",
+      email: props.email || "",
     },
   });
   const router = useRouter();
@@ -40,7 +44,7 @@ const NewProviderForm = () => {
     setError("");
 
     try {
-      await createProvider(data);
+      await onSave(data as T);
 
       stopLoading();
       router.push("/providers");
@@ -183,7 +187,7 @@ const NewProviderForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create provider
+          {saveButtonLabel}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -191,4 +195,4 @@ const NewProviderForm = () => {
   );
 };
 
-export { NewProviderForm };
+export { ProviderForm };

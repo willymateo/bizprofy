@@ -10,6 +10,8 @@ export interface CreateProviderPayload {
   email: string;
 }
 
+export type EditProviderPayload = Partial<CreateProviderPayload>;
+
 export interface GetProvidersPayload {
   orderByField?: string;
   offset?: number;

@@ -27,7 +27,6 @@ const UserRow = ({
   createdAt,
   updatedAt,
   deletedAt,
-  id = "",
   onClick,
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);

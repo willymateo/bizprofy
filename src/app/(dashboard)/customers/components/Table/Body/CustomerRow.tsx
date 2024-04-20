@@ -62,7 +62,7 @@ const CustomerRow = ({
         <TableCell className="whitespace-nowrap">{dayjs(createdAt).format(DATE_FORMAT)}</TableCell>
         <TableCell className="whitespace-nowrap">{dayjs(updatedAt).format(DATE_FORMAT)}</TableCell>
 
-        <TableCell>
+        <TableCell className="sticky right-0 bg-white">
           <IconButton onClick={handleOpenMenu}>
             <Icon icon="eva:more-vertical-fill" />
           </IconButton>

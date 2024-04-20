@@ -14,7 +14,6 @@ export enum HeaderColumnTypes {
   address,
   idCard,
   email,
-  id,
 }
 
 export enum Order {

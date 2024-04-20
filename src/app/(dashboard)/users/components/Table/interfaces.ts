@@ -12,7 +12,6 @@ export enum HeaderColumnTypes {
   isActive,
   username,
   email,
-  id,
 }
 
 export enum Order {

@@ -81,7 +81,7 @@ const CurrentStockRow = ({
           </p>
         </TableCell>
 
-        <TableCell>
+        <TableCell className="sticky right-0 bg-white">
           <IconButton onClick={handleOpenMenu}>
             <Icon icon="eva:more-vertical-fill" />
           </IconButton>

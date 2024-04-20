@@ -1,6 +1,7 @@
 import { AuditFields, Order } from "../interfaces";
 
 export interface CreateProviderPayload {
+  companyName: string;
   phoneNumber: string;
   firstNames: string;
   lastNames: string;
@@ -25,6 +26,7 @@ export interface GetProvidersResponse {
 export interface Provider extends AuditFields {
   idCard: string | null;
   email: string | null;
+  companyName: string;
   phoneNumber: string;
   firstNames: string;
   lastNames: string;

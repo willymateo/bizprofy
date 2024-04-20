@@ -21,6 +21,7 @@ interface Props extends Provider {
 
 const ProviderRow = ({
   isSelected = false,
+  companyName = "",
   phoneNumber = "",
   firstNames = "",
   lastNames = "",
@@ -30,7 +31,6 @@ const ProviderRow = ({
   createdAt,
   updatedAt,
   deletedAt,
-  id = "",
   onClick,
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -48,14 +48,10 @@ const ProviderRow = ({
           <Checkbox disableRipple checked={isSelected} onChange={onClick} />
         </TableCell>
 
-        <TableCell className="whitespace-nowrap">
-          <Link href={`/providers/${id ?? ""}`} className="no-underline text-slate-800">
-            {id ?? ""}
-          </Link>
-        </TableCell>
-        <TableCell className="whitespace-nowrap">{idCard ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{firstNames ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{lastNames ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">{companyName ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">{idCard ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">
           <Link href={`mailto:${email ?? ""}`} target="_blank">
             {email ?? ""}

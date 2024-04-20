@@ -5,6 +5,7 @@ export interface HeaderColumns {
 }
 
 export enum HeaderColumnTypes {
+  companyName,
   phoneNumber,
   firstNames,
   createdAt,
@@ -14,7 +15,6 @@ export enum HeaderColumnTypes {
   address,
   idCard,
   email,
-  id,
 }
 
 export enum Order {

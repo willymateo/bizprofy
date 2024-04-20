@@ -24,6 +24,7 @@ const NewProviderForm = () => {
     register,
   } = useForm<CreateProviderPayload>({
     values: {
+      companyName: "",
       phoneNumber: "",
       firstNames: "",
       lastNames: "",
@@ -54,6 +55,24 @@ const NewProviderForm = () => {
 
   return (
     <form className="flex flex-col gap-5 justify-center">
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:buildings-3-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.companyName?.message}
+        {...register("companyName", {
+          required: "Company name is required",
+        })}
+        error={Boolean(formError?.companyName)}
+        placeholder="Company Inc."
+        label="Company name"
+        required
+      />
+
       <TextField
         InputProps={{
           startAdornment: (

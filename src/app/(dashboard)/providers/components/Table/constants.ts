@@ -2,16 +2,6 @@ import { HeaderColumnTypes, HeaderColumns } from "./interfaces";
 
 const HEADER_COLUMNS: HeaderColumns[] = [
   {
-    id: HeaderColumnTypes.id,
-    label: "ID",
-    className: "text-center whitespace-nowrap",
-  },
-  {
-    id: HeaderColumnTypes.idCard,
-    label: "ID Card",
-    className: "text-center whitespace-nowrap",
-  },
-  {
     id: HeaderColumnTypes.firstNames,
     label: "First Names",
     className: "text-center whitespace-nowrap",
@@ -22,34 +12,44 @@ const HEADER_COLUMNS: HeaderColumns[] = [
     className: "text-center whitespace-nowrap",
   },
   {
+    id: HeaderColumnTypes.companyName,
+    label: "Company Name",
+    className: "text-center whitespace-nowrap",
+  },
+  {
+    id: HeaderColumnTypes.idCard,
+    label: "ID Card",
+    className: "text-center whitespace-nowrap",
+  },
+  {
     id: HeaderColumnTypes.email,
     label: "Email",
-    className: "text-center whitespace-nowrap font-bold",
+    className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.phoneNumber,
     label: "Phone Number",
-    className: "text-center whitespace-nowrap font-bold",
+    className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.address,
     label: "Address",
-    className: "text-center whitespace-nowrap font-bold",
+    className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.isActive,
     label: "Active",
-    className: "text-center whitespace-nowrap font-bold",
+    className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.createdAt,
     label: "Creation date",
-    className: "text-center whitespace-nowrap font-bold",
+    className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.updatedAt,
     label: "Last modified date",
-    className: "text-center whitespace-nowrap font-bold",
+    className: "text-center whitespace-nowrap",
   },
 ];
 

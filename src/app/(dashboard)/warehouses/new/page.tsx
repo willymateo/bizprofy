@@ -1,10 +1,11 @@
 import Card from "@mui/material/Card";
 
-import { NewWarehouseForm } from "./components/NewWarehouseForm";
+import { WarehouseForm } from "../components/WarehouseForm";
+import { createWarehouse } from "@/services/warehouses";
 
 const NewWarehouse = () => (
   <Card className="flex flex-col gap-10 p-10 rounded-2xl">
-    <NewWarehouseForm />
+    <WarehouseForm onSave={createWarehouse} saveButtonLabel="Create warehouse" />
   </Card>
 );
 

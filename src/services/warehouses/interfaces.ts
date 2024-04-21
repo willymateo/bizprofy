@@ -5,6 +5,8 @@ export interface CreateWarehousePayload {
   code: string;
 }
 
+export type EditWarehousePayload = Partial<CreateWarehousePayload>;
+
 export interface GetWarehousesPayload {
   orderByField?: string;
   offset?: number;

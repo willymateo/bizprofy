@@ -10,11 +10,15 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateWarehousePayload } from "@/services/warehouses/interfaces";
-import { createWarehouse } from "@/services/warehouses";
+import { CreateWarehousePayload, Warehouse } from "@/services/warehouses/interfaces";
 import { useActive } from "@/hooks/useActive";
 
-const NewWarehouseForm = () => {
+type Props<T, U> = {
+  onSave: (data: T) => Promise<U>;
+  saveButtonLabel?: string;
+} & Partial<Warehouse>;
+
+const WarehouseForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -23,8 +27,8 @@ const NewWarehouseForm = () => {
     register,
   } = useForm<CreateWarehousePayload>({
     values: {
-      code: "",
-      name: "",
+      code: props.code ?? "",
+      name: props.name ?? "",
     },
   });
   const router = useRouter();
@@ -34,7 +38,7 @@ const NewWarehouseForm = () => {
     setError("");
 
     try {
-      await createWarehouse(data);
+      await onSave(data as T);
 
       stopLoading();
       router.push("/warehouses");
@@ -91,7 +95,7 @@ const NewWarehouseForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create warehouse
+          {saveButtonLabel}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -99,4 +103,4 @@ const NewWarehouseForm = () => {
   );
 };
 
-export { NewWarehouseForm };
+export { WarehouseForm };

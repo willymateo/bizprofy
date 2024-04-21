@@ -8,8 +8,34 @@ import {
   CreateCustomerPayload,
   GetCustomersResponse,
   GetCustomersPayload,
+  EditCustomerPayload,
   Customer,
 } from "./interfaces";
+
+const getCustomerById = async ({ id = "" }): Promise<Customer> => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers/${id}`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to fetch customer");
+  }
+
+  return resBody;
+};
 
 const getCustomers = async ({
   order = Order.desc,
@@ -93,4 +119,36 @@ const createCustomer = async (payload: CreateCustomerPayload): Promise<Customer>
   return resBody;
 };
 
-export { getCustomers, createCustomer };
+const editCustomer = async ({
+  id = "",
+  payload,
+}: {
+  payload: EditCustomerPayload;
+  id: string;
+}): Promise<Customer> => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers/${id}`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+    method: "PATCH",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to edit customer");
+  }
+
+  return resBody;
+};
+
+export { getCustomers, createCustomer, getCustomerById, editCustomer };

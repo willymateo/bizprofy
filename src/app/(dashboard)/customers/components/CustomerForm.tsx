@@ -10,12 +10,17 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateCustomerPayload } from "@/services/customers/interfaces";
+import { CreateCustomerPayload, Customer } from "@/services/customers/interfaces";
 import { createCustomer } from "@/services/customers";
 import { EMAIL_REGEX } from "@/shared/constants";
 import { useActive } from "@/hooks/useActive";
 
-const NewCustomerForm = () => {
+type Props<T, U> = {
+  onSave: (data: T) => Promise<U>;
+  saveButtonLabel?: string;
+} & Partial<Customer>;
+
+const CustomerForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -24,12 +29,12 @@ const NewCustomerForm = () => {
     register,
   } = useForm<CreateCustomerPayload>({
     values: {
-      phoneNumber: "",
-      firstNames: "",
-      lastNames: "",
-      address: "",
-      idCard: "",
-      email: "",
+      phoneNumber: props.phoneNumber ?? "",
+      firstNames: props.firstNames ?? "",
+      lastNames: props.lastNames ?? "",
+      address: props.address ?? "",
+      idCard: props.idCard ?? "",
+      email: props.email ?? "",
     },
   });
   const router = useRouter();
@@ -39,7 +44,7 @@ const NewCustomerForm = () => {
     setError("");
 
     try {
-      await createCustomer(data);
+      await onSave(data as T);
 
       stopLoading();
       router.push("/customers");
@@ -167,7 +172,7 @@ const NewCustomerForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create customer
+          {saveButtonLabel}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -175,4 +180,4 @@ const NewCustomerForm = () => {
   );
 };
 
-export { NewCustomerForm };
+export { CustomerForm };

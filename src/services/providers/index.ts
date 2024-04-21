@@ -31,7 +31,7 @@ const getProviderById = async ({ id = "" }): Promise<Provider> => {
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch providers");
+    throw new Error(resBody.error?.message || "Failed to fetch provider");
   }
 
   return resBody;

@@ -4,7 +4,7 @@ import { Layout } from "./components/Layout";
 
 const metadata: Metadata = {
   description: "Business management system",
-  title: "Edit Provider | Bizprofy",
+  title: "Edit User | Bizprofy",
 };
 
 export default Layout;

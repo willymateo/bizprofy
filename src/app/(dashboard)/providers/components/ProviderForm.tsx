@@ -28,13 +28,13 @@ const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Prop
     register,
   } = useForm<CreateProviderPayload>({
     values: {
-      companyName: props.companyName || "",
-      phoneNumber: props.phoneNumber || "",
-      firstNames: props.firstNames || "",
-      lastNames: props.lastNames || "",
-      address: props.address || "",
-      idCard: props.idCard || "",
-      email: props.email || "",
+      companyName: props.companyName ?? "",
+      phoneNumber: props.phoneNumber ?? "",
+      firstNames: props.firstNames ?? "",
+      lastNames: props.lastNames ?? "",
+      address: props.address ?? "",
+      idCard: props.idCard ?? "",
+      email: props.email ?? "",
     },
   });
   const router = useRouter();

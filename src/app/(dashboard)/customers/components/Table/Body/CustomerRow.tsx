@@ -29,7 +29,6 @@ const CustomerRow = ({
   createdAt,
   updatedAt,
   deletedAt,
-  id = "",
   onClick,
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -47,11 +46,6 @@ const CustomerRow = ({
           <Checkbox disableRipple checked={isSelected} onChange={onClick} />
         </TableCell>
 
-        <TableCell className="whitespace-nowrap">
-          <Link href={`/customers/${id ?? ""}`} className="no-underline text-slate-800">
-            {id ?? ""}
-          </Link>
-        </TableCell>
         <TableCell className="whitespace-nowrap">{idCard ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{firstNames ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{lastNames ?? ""}</TableCell>
@@ -68,7 +62,7 @@ const CustomerRow = ({
         <TableCell className="whitespace-nowrap">{dayjs(createdAt).format(DATE_FORMAT)}</TableCell>
         <TableCell className="whitespace-nowrap">{dayjs(updatedAt).format(DATE_FORMAT)}</TableCell>
 
-        <TableCell>
+        <TableCell className="sticky right-0 bg-white">
           <IconButton onClick={handleOpenMenu}>
             <Icon icon="eva:more-vertical-fill" />
           </IconButton>

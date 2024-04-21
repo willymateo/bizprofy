@@ -21,6 +21,7 @@ interface Props extends Provider {
 
 const ProviderRow = ({
   isSelected = false,
+  companyName = "",
   phoneNumber = "",
   firstNames = "",
   lastNames = "",
@@ -30,8 +31,8 @@ const ProviderRow = ({
   createdAt,
   updatedAt,
   deletedAt,
-  id = "",
   onClick,
+  id = "",
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -48,14 +49,10 @@ const ProviderRow = ({
           <Checkbox disableRipple checked={isSelected} onChange={onClick} />
         </TableCell>
 
-        <TableCell className="whitespace-nowrap">
-          <Link href={`/providers/${id ?? ""}`} className="no-underline text-slate-800">
-            {id ?? ""}
-          </Link>
-        </TableCell>
-        <TableCell className="whitespace-nowrap">{idCard ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{firstNames ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">{lastNames ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">{companyName ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">{idCard ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">
           <Link href={`mailto:${email ?? ""}`} target="_blank">
             {email ?? ""}
@@ -69,7 +66,7 @@ const ProviderRow = ({
         <TableCell className="whitespace-nowrap">{dayjs(createdAt).format(DATE_FORMAT)}</TableCell>
         <TableCell className="whitespace-nowrap">{dayjs(updatedAt).format(DATE_FORMAT)}</TableCell>
 
-        <TableCell>
+        <TableCell className="sticky right-0 bg-white">
           <IconButton onClick={handleOpenMenu}>
             <Icon icon="eva:more-vertical-fill" />
           </IconButton>
@@ -83,9 +80,14 @@ const ProviderRow = ({
         anchorEl={anchorEl}
         open={isMenuOpen}
       >
-        <MenuItem onClick={handleCloseMenu} className="flex flex-row gap-3">
-          <Icon icon="solar:pen-bold-duotone" />
-          Edit
+        <MenuItem>
+          <Link
+            className="flex flex-row gap-3 w-full items-center no-underline text-black"
+            href={`/providers/${id ?? ""}`}
+          >
+            <Icon icon="solar:pen-bold-duotone" />
+            Edit
+          </Link>
         </MenuItem>
 
         <MenuItem onClick={handleCloseMenu} className="flex flex-row gap-3 text-red-500">

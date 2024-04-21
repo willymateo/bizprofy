@@ -1,10 +1,11 @@
 import Card from "@mui/material/Card";
 
-import { NewProviderForm } from "./components/NewProviderForm";
+import { ProviderForm } from "../components/ProviderForm";
+import { createProvider } from "@/services/providers";
 
 const NewProvider = () => (
   <Card className="flex flex-col gap-10 p-10 rounded-2xl">
-    <NewProviderForm />
+    <ProviderForm onSave={createProvider} saveButtonLabel="Create provider" />
   </Card>
 );
 

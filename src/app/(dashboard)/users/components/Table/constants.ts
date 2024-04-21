@@ -2,11 +2,6 @@ import { HeaderColumnTypes, HeaderColumns } from "./interfaces";
 
 const HEADER_COLUMNS: HeaderColumns[] = [
   {
-    id: HeaderColumnTypes.id,
-    label: "ID",
-    className: "text-center whitespace-nowrap",
-  },
-  {
     id: HeaderColumnTypes.username,
     label: "Username",
     className: "text-center whitespace-nowrap",
@@ -24,22 +19,22 @@ const HEADER_COLUMNS: HeaderColumns[] = [
   {
     id: HeaderColumnTypes.email,
     label: "Email",
-    className: "text-center whitespace-nowrap font-bold",
+    className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.isActive,
     label: "Active",
-    className: "text-center whitespace-nowrap font-bold",
+    className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.createdAt,
     label: "Creation date",
-    className: "text-center whitespace-nowrap font-bold",
+    className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.updatedAt,
     label: "Last modified date",
-    className: "text-center whitespace-nowrap font-bold",
+    className: "text-center whitespace-nowrap",
   },
 ];
 

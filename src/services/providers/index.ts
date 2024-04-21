@@ -9,7 +9,33 @@ import {
   GetProvidersResponse,
   GetProvidersPayload,
   Provider,
+  EditProviderPayload,
 } from "./interfaces";
+
+const getProviderById = async ({ id = "" }): Promise<Provider> => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/providers/${id}`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to fetch providers");
+  }
+
+  return resBody;
+};
 
 const getProviders = async ({
   order = Order.desc,
@@ -93,4 +119,36 @@ const createProvider = async (payload: CreateProviderPayload): Promise<Provider>
   return resBody;
 };
 
-export { getProviders, createProvider };
+const editProvider = async ({
+  id = "",
+  payload,
+}: {
+  payload: EditProviderPayload;
+  id: string;
+}): Promise<Provider> => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/providers/${id}`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+    method: "PATCH",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to edit provider");
+  }
+
+  return resBody;
+};
+
+export { getProviders, createProvider, getProviderById, editProvider };

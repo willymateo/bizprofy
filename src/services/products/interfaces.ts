@@ -27,6 +27,8 @@ export interface CreateProductPayload {
   name: string;
 }
 
+export type EditProductCategoryPayload = Partial<CreateProductCategoryPayload>;
+
 export interface Product extends AuditFields {
   productCategory: ProductCategory | null;
   provider: Provider | null;

@@ -15,7 +15,7 @@ const ProductCategoryCard = (productCategory: ProductCategory) => (
       <div className="flex flex-row justify-between items-center">
         <Link
           className="font-bold text-black no-underline overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:1] hover:underline"
-          href={`/products/${productCategory?.id}`}
+          href={`/products/categories/${productCategory?.id}`}
         >
           {productCategory?.name ?? ""}
         </Link>

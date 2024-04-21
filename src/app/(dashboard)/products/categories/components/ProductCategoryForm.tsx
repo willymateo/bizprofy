@@ -10,11 +10,15 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateProductCategoryPayload } from "@/services/products/interfaces";
-import { createProductCategory } from "@/services/products";
+import { CreateProductCategoryPayload, ProductCategory } from "@/services/products/interfaces";
 import { useActive } from "@/hooks/useActive";
 
-const NewProductCategoryForm = () => {
+type Props<T, U> = {
+  onSave: (data: T) => Promise<U>;
+  saveButtonLabel?: string;
+} & Partial<ProductCategory>;
+
+const ProductCategoryForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -23,7 +27,7 @@ const NewProductCategoryForm = () => {
     register,
   } = useForm<CreateProductCategoryPayload>({
     values: {
-      name: "",
+      name: props.name ?? "",
     },
   });
   const router = useRouter();
@@ -33,7 +37,7 @@ const NewProductCategoryForm = () => {
     setError("");
 
     try {
-      await createProductCategory(data);
+      await onSave(data as T);
 
       stopLoading();
       router.push("/products/categories");
@@ -74,7 +78,7 @@ const NewProductCategoryForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create product category
+          {saveButtonLabel}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -82,4 +86,4 @@ const NewProductCategoryForm = () => {
   );
 };
 
-export { NewProductCategoryForm };
+export { ProductCategoryForm };

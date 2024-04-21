@@ -16,7 +16,7 @@ const Layout = ({ params, children }: Readonly<Props>) => (
   <div className="flex flex-col gap-5">
     <div className="flex flex-row gap-5 items-center justify-between">
       <h1 className="flex flex-wrap gap-3 items-center">
-        Edit Customer
+        Edit customer
         {params?.id && <Chip label={params?.id ?? ""} color="default" />}
       </h1>
 

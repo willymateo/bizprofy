@@ -8,6 +8,8 @@ export interface CreateUserPayload {
   email: string;
 }
 
+export type EditUserPayload = Partial<CreateUserPayload>;
+
 export interface GetUsersPayload {
   orderByField?: string;
   offset?: number;

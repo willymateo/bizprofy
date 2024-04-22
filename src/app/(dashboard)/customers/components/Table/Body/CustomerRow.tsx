@@ -30,6 +30,7 @@ const CustomerRow = ({
   updatedAt,
   deletedAt,
   onClick,
+  id = "",
 }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -76,9 +77,14 @@ const CustomerRow = ({
         anchorEl={anchorEl}
         open={isMenuOpen}
       >
-        <MenuItem onClick={handleCloseMenu} className="flex flex-row gap-3">
-          <Icon icon="solar:pen-bold-duotone" />
-          Edit
+        <MenuItem>
+          <Link
+            className="flex flex-row gap-3 w-full items-center no-underline text-black"
+            href={`/customers/${id ?? ""}`}
+          >
+            <Icon icon="solar:pen-bold-duotone" />
+            Edit
+          </Link>
         </MenuItem>
 
         <MenuItem onClick={handleCloseMenu} className="flex flex-row gap-3 text-red-500">

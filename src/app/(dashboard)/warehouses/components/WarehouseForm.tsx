@@ -10,20 +10,25 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateProductCategoryPayload } from "@/services/products/interfaces";
-import { createProductCategory } from "@/services/products";
+import { CreateWarehousePayload, Warehouse } from "@/services/warehouses/interfaces";
 import { useActive } from "@/hooks/useActive";
 
-const NewProductCategoryForm = () => {
+type Props<T, U> = {
+  onSave: (data: T) => Promise<U>;
+  saveButtonLabel?: string;
+} & Partial<Warehouse>;
+
+const WarehouseForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
     formState: { errors: formError },
     handleSubmit,
     register,
-  } = useForm<CreateProductCategoryPayload>({
+  } = useForm<CreateWarehousePayload>({
     values: {
-      name: "",
+      code: props.code ?? "",
+      name: props.name ?? "",
     },
   });
   const router = useRouter();
@@ -33,13 +38,13 @@ const NewProductCategoryForm = () => {
     setError("");
 
     try {
-      await createProductCategory(data);
+      await onSave(data as T);
 
       stopLoading();
-      router.push("/products/categories");
+      router.push("/warehouses");
       router.refresh();
     } catch (err) {
-      console.error("Error creating product category", err);
+      console.error("Error creating warehouse", err);
 
       setError((err as Error).message);
       stopLoading();
@@ -52,16 +57,32 @@ const NewProductCategoryForm = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Icon icon="solar:bag-smile-bold-duotone" width={24} height={24} />
+              <Icon icon="solar:code-scan-line-duotone" width={24} height={24} />
             </InputAdornment>
           ),
         }}
-        {...register("name", {
-          required: "Product category name is required",
-        })}
+        helperText={formError?.code?.message}
+        error={Boolean(formError?.code)}
+        placeholder="warehouse-001"
+        {...register("code", {})}
+        label="Warehouse code"
+      />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:user-hands-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
         helperText={formError?.name?.message}
+        {...register("name", {
+          required: "Warehouse name is required",
+        })}
         error={Boolean(formError?.name)}
-        label="Product category name"
+        placeholder="Downtown warehouse"
+        label="Warehouse name"
         required
       />
 
@@ -74,7 +95,7 @@ const NewProductCategoryForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create product category
+          {saveButtonLabel}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -82,4 +103,4 @@ const NewProductCategoryForm = () => {
   );
 };
 
-export { NewProductCategoryForm };
+export { WarehouseForm };

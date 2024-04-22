@@ -8,16 +8,44 @@ import {
   GetProductCategoriesResponse,
   CreateProductCategoryPayload,
   GetProductCategoriesPayload,
+  EditProductCategoryPayload,
   CreateProductPayload,
   GetProductsResponse,
   GetProductsPayload,
+  EditProductPayload,
   ProductCategory,
+  SimpleProduct,
   Product,
 } from "./interfaces";
 
 interface GetProductsProps extends GetProductsPayload {
   abortController?: AbortController;
 }
+
+const getProductById = async ({ id = "" }): Promise<Product> => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/${id}`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to fetch product");
+  }
+
+  return resBody;
+};
 
 const getProducts = async ({
   unitPriceGreaterThanOrEqualTo,
@@ -83,7 +111,7 @@ const getProducts = async ({
   return resBody;
 };
 
-const createProduct = async (payload: CreateProductPayload): Promise<Product> => {
+const createProduct = async (payload: CreateProductPayload): Promise<SimpleProduct> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
@@ -104,6 +132,63 @@ const createProduct = async (payload: CreateProductPayload): Promise<Product> =>
 
   if (!res.ok) {
     throw new Error(resBody.error?.message || "Failed to create product");
+  }
+
+  return resBody;
+};
+
+const editProduct = async ({
+  id = "",
+  payload,
+}: {
+  payload: EditProductPayload;
+  id: string;
+}): Promise<SimpleProduct> => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/${id}`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+    method: "PATCH",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to edit product");
+  }
+
+  return resBody;
+};
+
+const getProductCategoryById = async ({ id = "" }): Promise<ProductCategory> => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories/${id}`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to fetch product category");
   }
 
   return resBody;
@@ -193,4 +278,45 @@ const createProductCategory = async (
   return resBody;
 };
 
-export { getProducts, createProduct, getProductCategories, createProductCategory };
+const editProductCategory = async ({
+  id = "",
+  payload,
+}: {
+  payload: EditProductCategoryPayload;
+  id: string;
+}): Promise<ProductCategory> => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories/${id}`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+    method: "PATCH",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to edit product category");
+  }
+
+  return resBody;
+};
+
+export {
+  getProductCategoryById,
+  createProductCategory,
+  getProductCategories,
+  editProductCategory,
+  getProductById,
+  createProduct,
+  getProducts,
+  editProduct,
+};

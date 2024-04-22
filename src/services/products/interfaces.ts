@@ -27,7 +27,9 @@ export interface CreateProductPayload {
   name: string;
 }
 
-export interface Product extends AuditFields {
+export type EditProductPayload = Partial<CreateProductPayload>;
+
+export type Product = AuditFields & {
   productCategory: ProductCategory | null;
   provider: Provider | null;
   description: string;
@@ -38,7 +40,12 @@ export interface Product extends AuditFields {
   code: string;
   name: string;
   id: string;
-}
+};
+
+export type SimpleProduct = Omit<Product, "productCategory" | "provider"> & {
+  productCategoryId: string | null;
+  providerId: string | null;
+};
 
 export interface GetProductCategoriesPayload {
   orderByField?: string;
@@ -56,6 +63,8 @@ export interface GetProductCategoriesResponse {
 export interface CreateProductCategoryPayload {
   name: string;
 }
+
+export type EditProductCategoryPayload = Partial<CreateProductCategoryPayload>;
 
 export interface ProductCategory extends AuditFields {
   companyId: string;

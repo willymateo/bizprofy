@@ -11,9 +11,8 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateUserPayload } from "@/services/users/interfaces";
+import { CreateUserPayload, User } from "@/services/users/interfaces";
 import { useActive } from "@/hooks/useActive";
-import { createUser } from "@/services/users";
 import {
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,
@@ -22,11 +21,22 @@ import {
   EMAIL_REGEX,
 } from "@/shared/constants";
 
-interface FormInputs extends CreateUserPayload {
-  repeatedPassword: string;
-}
+type Props<T, U> = {
+  onSave: (data: T) => Promise<U>;
+  isPasswordRequired?: boolean;
+  saveButtonLabel?: string;
+} & Partial<User>;
 
-const NewUserForm = () => {
+type FormInputs = {
+  repeatedPassword: string;
+} & CreateUserPayload;
+
+const UserForm = <T, U>({
+  isPasswordRequired = false,
+  saveButtonLabel = "Save",
+  onSave,
+  ...props
+}: Props<T, U>) => {
   const { isActive: isRepeatedPasswordVisible = false, toggle: toggleRepeatedPasswordVisibility } =
     useActive();
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
@@ -39,12 +49,12 @@ const NewUserForm = () => {
     watch,
   } = useForm<FormInputs>({
     values: {
+      firstNames: props.firstNames ?? "",
+      lastNames: props.lastNames ?? "",
+      username: props.username ?? "",
+      email: props.email ?? "",
       repeatedPassword: "",
-      firstNames: "",
-      lastNames: "",
-      username: "",
       password: "",
-      email: "",
     },
   });
   const password = watch("password");
@@ -55,7 +65,7 @@ const NewUserForm = () => {
     setError("");
 
     try {
-      await createUser(data);
+      await onSave(data as T);
 
       stopLoading();
       router.push("/users");
@@ -182,15 +192,17 @@ const NewUserForm = () => {
         helperText={formError?.password?.message}
         error={Boolean(formError?.password)}
         {...register("password", {
-          required: "Password is required",
           minLength: {
             message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
             value: PASSWORD_MIN_LENGTH,
           },
+          ...(isPasswordRequired && {
+            required: "Password is required",
+          }),
         })}
+        required={isPasswordRequired}
         placeholder="●●●●●●●●"
         label="Password"
-        required
       />
 
       <TextField
@@ -214,14 +226,16 @@ const NewUserForm = () => {
         }}
         {...register("repeatedPassword", {
           validate: value => value === password || "Passwords don't match",
-          required: "This field is required",
+          ...(isPasswordRequired && {
+            required: "This field is required",
+          }),
         })}
         type={isRepeatedPasswordVisible ? "text" : "password"}
         helperText={formError?.repeatedPassword?.message}
         error={Boolean(formError?.repeatedPassword)}
+        required={isPasswordRequired}
         label="Repeat password"
         placeholder="●●●●●●●●"
-        required
       />
 
       {error && <Alert severity="error">{error}</Alert>}
@@ -233,7 +247,7 @@ const NewUserForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create user
+          {saveButtonLabel}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -241,4 +255,4 @@ const NewUserForm = () => {
   );
 };
 
-export { NewUserForm };
+export { UserForm };

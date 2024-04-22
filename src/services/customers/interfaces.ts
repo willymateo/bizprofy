@@ -9,6 +9,8 @@ export interface CreateCustomerPayload {
   email: string;
 }
 
+export type EditCustomerPayload = Partial<CreateCustomerPayload>;
+
 export interface GetCustomersPayload {
   orderByField?: string;
   offset?: number;

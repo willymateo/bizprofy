@@ -10,20 +10,24 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
+import { CreateProductPayload, Product, ProductCategory } from "@/services/products/interfaces";
 import { ProductCategoriesHookForm } from "@/app/components/inputs/ProductCategoriesHookForm";
-import { CreateProductPayload, ProductCategory } from "@/services/products/interfaces";
 import { ProvidersHookForm } from "@/app/components/inputs/ProvidersHookForm";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
 import { Provider } from "@/services/providers/interfaces";
-import { createProduct } from "@/services/products";
 import { useActive } from "@/hooks/useActive";
+
+type Props<T, U> = {
+  onSave: (data: T) => Promise<U>;
+  saveButtonLabel?: string;
+} & Partial<Product>;
 
 interface FormInputs extends Omit<CreateProductPayload, "productCategoryId" | "providerId"> {
   productCategory: ProductCategory | null;
   provider: Provider | null;
 }
 
-const NewProductForm = () => {
+const ProductForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -33,13 +37,13 @@ const NewProductForm = () => {
     control,
   } = useForm<FormInputs>({
     values: {
-      productCategory: null,
-      description: "",
-      provider: null,
-      unitPrice: 0,
-      unitCost: 0,
-      code: "",
-      name: "",
+      productCategory: props.productCategory ?? null,
+      description: props.description ?? "",
+      provider: props.provider ?? null,
+      unitPrice: props.unitPrice ?? 0,
+      unitCost: props.unitCost ?? 0,
+      code: props.code ?? "",
+      name: props.name ?? "",
     },
   });
   const router = useRouter();
@@ -49,11 +53,11 @@ const NewProductForm = () => {
     setError("");
 
     try {
-      await createProduct({
+      await onSave({
         ...data,
         productCategoryId: productCategory?.id as string,
         providerId: provider?.id as string,
-      });
+      } as T);
 
       stopLoading();
       router.push("/products");
@@ -168,7 +172,7 @@ const NewProductForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Create product
+          {saveButtonLabel}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>
@@ -176,4 +180,4 @@ const NewProductForm = () => {
   );
 };
 
-export { NewProductForm };
+export { ProductForm };

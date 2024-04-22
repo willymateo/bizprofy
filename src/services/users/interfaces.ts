@@ -10,6 +10,11 @@ export interface CreateUserPayload {
 
 export type EditUserPayload = Partial<CreateUserPayload>;
 
+export type UserActivationPayload = {
+  activate?: boolean;
+  force?: boolean;
+};
+
 export interface GetUsersPayload {
   orderByField?: string;
   offset?: number;

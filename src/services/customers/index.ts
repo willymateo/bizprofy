@@ -10,6 +10,7 @@ import {
   GetCustomersPayload,
   EditCustomerPayload,
   Customer,
+  CustomerActivationPayload,
 } from "./interfaces";
 
 const getCustomerById = async ({ id = "" }): Promise<Customer> => {
@@ -151,4 +152,42 @@ const editCustomer = async ({
   return resBody;
 };
 
-export { getCustomers, createCustomer, getCustomerById, editCustomer };
+const manageCustomerActivationById = async ({
+  id = "",
+  payload,
+}: {
+  payload?: CustomerActivationPayload;
+  id: string;
+}): Promise<Customer> => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers/${id}/activation`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+    method: "PATCH",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to manage customer activation");
+  }
+
+  return resBody;
+};
+
+export {
+  manageCustomerActivationById,
+  getCustomerById,
+  createCustomer,
+  getCustomers,
+  editCustomer,
+};

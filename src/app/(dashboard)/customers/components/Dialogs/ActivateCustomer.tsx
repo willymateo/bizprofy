@@ -9,18 +9,18 @@ import Dialog from "@mui/material/Dialog";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { manageUserActivationById } from "@/services/users";
-import { User } from "@/services/users/interfaces";
+import { manageCustomerActivationById } from "@/services/customers";
+import { Customer } from "@/services/customers/interfaces";
 import { useActive } from "@/hooks/useActive";
 
 type Props = {
   onClose: () => void;
+  customer: Customer;
   isOpen?: boolean;
-  user: User;
 };
 
-const ActivateUser = ({
-  user: { id = "", username = "", email = "" },
+const ActivateCustomer = ({
+  customer: { id = "", idCard = "", firstNames = "", lastNames = "" },
   isOpen = false,
   onClose,
 }: Props) => {
@@ -28,12 +28,12 @@ const ActivateUser = ({
   const [error, setError] = useState<Error | null>(null);
   const router = useRouter();
 
-  const activateUser = async () => {
+  const activateCustomer = async () => {
     setError(null);
     startLoading();
 
     try {
-      await manageUserActivationById({
+      await manageCustomerActivationById({
         payload: {
           activate: true,
           force: false,
@@ -44,7 +44,7 @@ const ActivateUser = ({
       onClose();
       router.refresh();
     } catch (err) {
-      console.log("Error activating user", err);
+      console.log("Error activating customer", err);
 
       setError(err as Error);
     }
@@ -54,18 +54,21 @@ const ActivateUser = ({
 
   return (
     <Dialog onClose={onClose} open={isOpen}>
-      <DialogTitle>Activate user</DialogTitle>
+      <DialogTitle>Activate customer</DialogTitle>
 
       <DialogContent className="flex flex-col gap-5 items-center">
         {error ? (
           <Alert variant="filled" severity="error" className="w-full">
-            An error occurred while activating the user. Please try again later.
+            An error occurred while activating the customer. Please try again later.
           </Alert>
         ) : null}
 
         <DialogContentText>
-          Are you sure you want to activate the user <strong>{username}</strong> with email{" "}
-          <strong>{email}</strong>?
+          Are you sure you want to activate the customer{" "}
+          <strong>
+            {firstNames} {lastNames}
+          </strong>{" "}
+          with id card <strong>{idCard}</strong>?
         </DialogContentText>
 
         {isLoading ? <CircularProgress /> : null}
@@ -76,7 +79,7 @@ const ActivateUser = ({
           Cancel
         </Button>
 
-        <Button onClick={activateUser} autoFocus disabled={isLoading}>
+        <Button onClick={activateCustomer} autoFocus disabled={isLoading}>
           Yes, activate
         </Button>
       </DialogActions>
@@ -84,4 +87,4 @@ const ActivateUser = ({
   );
 };
 
-export { ActivateUser };
+export { ActivateCustomer };

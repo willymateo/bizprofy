@@ -3,7 +3,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { User } from "@/services/users/interfaces";
 import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -11,6 +10,7 @@ import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
 import { manageUserActivationById } from "@/services/users";
+import { User } from "@/services/users/interfaces";
 import { useActive } from "@/hooks/useActive";
 
 type Props = {
@@ -28,7 +28,7 @@ const DeactivateUser = ({
   const [error, setError] = useState<Error | null>(null);
   const router = useRouter();
 
-  const handleDeleteUser = async () => {
+  const deactivateUser = async () => {
     setError(null);
     startLoading();
 
@@ -44,7 +44,7 @@ const DeactivateUser = ({
       onClose();
       router.refresh();
     } catch (err) {
-      console.log("Error deleting user", err);
+      console.log("Error deactivating user", err);
 
       setError(err as Error);
     }
@@ -63,7 +63,7 @@ const DeactivateUser = ({
           </Alert>
         ) : null}
 
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText>
           Are you sure you want to deactivate the user <strong>{username}</strong> with email{" "}
           <strong>{email}</strong>?
         </DialogContentText>
@@ -76,7 +76,7 @@ const DeactivateUser = ({
           Cancel
         </Button>
 
-        <Button onClick={handleDeleteUser} autoFocus disabled={isLoading}>
+        <Button onClick={deactivateUser} autoFocus disabled={isLoading}>
           Yes, deactivate
         </Button>
       </DialogActions>

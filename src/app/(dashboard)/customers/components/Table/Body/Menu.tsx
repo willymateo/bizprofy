@@ -3,19 +3,19 @@ import { Icon } from "@iconify-icon/react";
 import MuiMenu from "@mui/material/Menu";
 import Link from "next/link";
 
-import { DeactivateUser } from "../../Dialogs/DeactivateUser";
-import { ActivateUser } from "../../Dialogs/ActivateUser";
-import { User } from "@/services/users/interfaces";
+import { DeactivateCustomer } from "../../Dialogs/DeactivateCustomer";
+import { ActivateCustomer } from "../../Dialogs/ActivateCustomer";
+import { Customer } from "@/services/customers/interfaces";
 import { useActive } from "@/hooks/useActive";
 
 type Props = {
   anchorEl: Element | null;
   onClose: () => void;
+  customer: Customer;
   isOpen?: boolean;
-  user: User;
 };
 
-const Menu = ({ isOpen = false, anchorEl, onClose, user }: Props) => {
+const Menu = ({ isOpen = false, anchorEl, onClose, customer }: Props) => {
   const {
     isActive: isDeactivateDialogOpen = false,
     disable: closeDeactivateDialog,
@@ -47,11 +47,11 @@ const Menu = ({ isOpen = false, anchorEl, onClose, user }: Props) => {
         onClose={onClose}
         open={isOpen}
       >
-        {user?.deletedAt ? null : (
+        {customer?.deletedAt ? null : (
           <MenuItem>
             <Link
               className="flex flex-row gap-3 w-full items-center no-underline text-black"
-              href={`/users/${user?.id ?? ""}`}
+              href={`/customers/${customer?.id ?? ""}`}
             >
               <Icon icon="solar:pen-bold-duotone" />
               Edit
@@ -59,7 +59,7 @@ const Menu = ({ isOpen = false, anchorEl, onClose, user }: Props) => {
           </MenuItem>
         )}
 
-        {user?.deletedAt ? null : (
+        {customer?.deletedAt ? null : (
           <MenuItem
             className="flex flex-row gap-3 text-red-500"
             onClick={handleOpenDeactivateDialog}
@@ -69,7 +69,7 @@ const Menu = ({ isOpen = false, anchorEl, onClose, user }: Props) => {
           </MenuItem>
         )}
 
-        {user?.deletedAt ? (
+        {customer?.deletedAt ? (
           <MenuItem onClick={handleOpenActivateDialog} className="flex flex-row gap-3">
             <Icon icon="solar:restart-bold-duotone" />
             Activate
@@ -77,8 +77,16 @@ const Menu = ({ isOpen = false, anchorEl, onClose, user }: Props) => {
         ) : null}
       </MuiMenu>
 
-      <DeactivateUser isOpen={isDeactivateDialogOpen} onClose={closeDeactivateDialog} user={user} />
-      <ActivateUser isOpen={isActivateDialogOpen} onClose={closeActivateDialog} user={user} />
+      <DeactivateCustomer
+        isOpen={isDeactivateDialogOpen}
+        onClose={closeDeactivateDialog}
+        customer={customer}
+      />
+      <ActivateCustomer
+        isOpen={isActivateDialogOpen}
+        onClose={closeActivateDialog}
+        customer={customer}
+      />
     </>
   );
 };

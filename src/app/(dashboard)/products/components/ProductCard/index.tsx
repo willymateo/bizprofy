@@ -5,12 +5,17 @@ import Card from "@mui/material/Card";
 import Image from "next/image";
 import Link from "next/link";
 
+import { ActivationSwitch } from "./ActivationSwitch";
 import { Product } from "@/services/products/types";
 import { TooltipContent } from "./TooltipContent";
 
 const ProductCard = (product: Product) => (
   <Tooltip title={<TooltipContent {...product} />} arrow followCursor>
-    <Card className="flex flex-col">
+    <Card className="flex flex-col gap-5 h-full p-3">
+      <div className="flex flex-row items-center justify-end">
+        <ActivationSwitch product={product} />
+      </div>
+
       <Link
         className="flex flex-row items-center justify-center pt-full relative text-black"
         href={`/products/${product?.id}`}
@@ -28,7 +33,7 @@ const ProductCard = (product: Product) => (
         )}
       </Link>
 
-      <div className="flex flex-col gap-5 h-full p-3">
+      <div className="flex flex-col gap-5 h-full">
         <div className="flex flex-col justify-center gap-1">
           <Link
             className="font-bold text-black no-underline overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:1] hover:underline"

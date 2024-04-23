@@ -30,6 +30,11 @@ export type CreateProductPayload = {
 
 export type EditProductPayload = Partial<CreateProductPayload>;
 
+export type ProductActivationPayload = {
+  activate?: boolean;
+  force?: boolean;
+};
+
 export type Product = AuditFields & {
   productCategory: ProductCategory | null;
   provider: Provider | null;

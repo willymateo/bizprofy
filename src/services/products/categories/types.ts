@@ -19,6 +19,11 @@ export type CreateProductCategoryPayload = {
 
 export type EditProductCategoryPayload = Partial<CreateProductCategoryPayload>;
 
+export type ProductCategoryActivationPayload = {
+  activate?: boolean;
+  force?: boolean;
+};
+
 export type ProductCategory = AuditFields & {
   companyId: string;
   name: string;

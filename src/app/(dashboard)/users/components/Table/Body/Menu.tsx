@@ -77,8 +77,8 @@ const Menu = ({ isOpen = false, anchorEl, onClose, user }: Props) => {
         ) : null}
       </MuiMenu>
 
-      <DeactivateUser isOpen={isDeactivateDialogOpen} onClose={closeDeactivateDialog} user={user} />
       <ActivateUser isOpen={isActivateDialogOpen} onClose={closeActivateDialog} user={user} />
+      <DeactivateUser isOpen={isDeactivateDialogOpen} onClose={closeDeactivateDialog} user={user} />
     </>
   );
 };

@@ -3,25 +3,20 @@
 import { getServerSession } from "next-auth";
 
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { Order, SessionPayload } from "../interfaces";
+import { Order, SessionPayload } from "@/services/interfaces";
 import {
-  CreateProductPayload,
-  GetProductsResponse,
-  GetProductsPayload,
-  EditProductPayload,
-  SimpleProduct,
-  Product,
+  GetProductCategoriesResponse,
+  CreateProductCategoryPayload,
+  GetProductCategoriesPayload,
+  EditProductCategoryPayload,
+  ProductCategory,
 } from "./types";
 
-interface GetProductsProps extends GetProductsPayload {
-  abortController?: AbortController;
-}
-
-const getProductById = async ({ id = "" }): Promise<Product> => {
+const getProductCategoryById = async ({ id = "" }): Promise<ProductCategory> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/${id}`, {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories/${id}`, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
@@ -36,34 +31,27 @@ const getProductById = async ({ id = "" }): Promise<Product> => {
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch product");
+    throw new Error(resBody.error?.message || "Failed to fetch product category");
   }
 
   return resBody;
 };
 
-const getProducts = async ({
-  unitPriceGreaterThanOrEqualTo,
-  unitPriceLessThanOrEqualTo,
+const getProductCategories = async ({
   order = Order.desc,
-  abortController,
+  orderByField,
   offset = 0,
   limit = 5,
   q = "",
-}: GetProductsProps = {}): Promise<GetProductsResponse> => {
+}: GetProductCategoriesPayload = {}): Promise<GetProductCategoriesResponse> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const url = new URL("products", process.env.BIZPROFY_API_URL);
-
+  const url = new URL("products/categories", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
 
-  if (unitPriceGreaterThanOrEqualTo) {
-    searchParams.append("unitPriceGreaterThanOrEqualTo", unitPriceGreaterThanOrEqualTo.toString());
-  }
-
-  if (unitPriceLessThanOrEqualTo) {
-    searchParams.append("unitPriceLessThanOrEqualTo", unitPriceLessThanOrEqualTo.toString());
+  if (orderByField) {
+    searchParams.append("orderByField", orderByField);
   }
 
   if (offset) {
@@ -89,7 +77,6 @@ const getProducts = async ({
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
     },
-    signal: abortController?.signal,
     method: "GET",
   });
 
@@ -100,17 +87,19 @@ const getProducts = async ({
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch product");
+    throw new Error(resBody.error?.message || "Failed to fetch product categories");
   }
 
   return resBody;
 };
 
-const createProduct = async (payload: CreateProductPayload): Promise<SimpleProduct> => {
+const createProductCategory = async (
+  payload: CreateProductCategoryPayload,
+): Promise<ProductCategory> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products`, {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories`, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
@@ -126,23 +115,23 @@ const createProduct = async (payload: CreateProductPayload): Promise<SimpleProdu
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to create product");
+    throw new Error(resBody.error?.message || "Failed to create product category");
   }
 
   return resBody;
 };
 
-const editProduct = async ({
+const editProductCategory = async ({
   id = "",
   payload,
 }: {
-  payload: EditProductPayload;
+  payload: EditProductCategoryPayload;
   id: string;
-}): Promise<SimpleProduct> => {
+}): Promise<ProductCategory> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/${id}`, {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories/${id}`, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
@@ -158,10 +147,10 @@ const editProduct = async ({
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to edit product");
+    throw new Error(resBody.error?.message || "Failed to edit product category");
   }
 
   return resBody;
 };
 
-export { getProductById, createProduct, getProducts, editProduct };
+export { getProductCategoryById, createProductCategory, getProductCategories, editProductCategory };

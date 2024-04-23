@@ -1,4 +1,4 @@
-import { ProductCategory } from "@/services/products/interfaces";
+import { ProductCategory } from "@/services/products/categories/types";
 
 const TooltipContent = ({ id = "", name = "" }: ProductCategory) => (
   <div className="flex flex-col">

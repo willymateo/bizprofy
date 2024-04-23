@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { NoProductCategoriesFound } from "./components/NoProductCategoriesFound";
 import { ProductCategoryCard } from "./components/ProductCategoryCard";
-import { getProductCategories } from "@/services/products";
+import { getProductCategories } from "@/services/products/categories";
 import { Layout } from "./components/Layout";
 
 const metadata: Metadata = {

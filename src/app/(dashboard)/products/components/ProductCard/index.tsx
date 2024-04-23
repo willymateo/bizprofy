@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Product } from "@/services/products/interfaces";
+import { Product } from "@/services/products/types";
 import { TooltipContent } from "./TooltipContent";
 
 const ProductCard = (product: Product) => (

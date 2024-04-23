@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import Link from "next/link";
 import dayjs from "dayjs";
 
-import { ProductCategory } from "@/services/products/interfaces";
+import { ProductCategory } from "@/services/products/categories/types";
 import { TooltipContent } from "./TooltipContent";
 
 const DATE_FORMAT = "DD MMMM YYYY";

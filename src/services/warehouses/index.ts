@@ -8,8 +8,8 @@ import {
   CreateWarehousePayload,
   GetWarehousesResponse,
   GetWarehousesPayload,
-  Warehouse,
   EditWarehousePayload,
+  Warehouse,
 } from "./interfaces";
 
 const getWarehouseById = async ({ id = "" }): Promise<Warehouse> => {

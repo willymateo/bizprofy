@@ -5,11 +5,12 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
 import { Order, SessionPayload } from "../interfaces";
 import {
+  ProviderActivationPayload,
   CreateProviderPayload,
   GetProvidersResponse,
   GetProvidersPayload,
-  Provider,
   EditProviderPayload,
+  Provider,
 } from "./interfaces";
 
 const getProviderById = async ({ id = "" }): Promise<Provider> => {
@@ -151,4 +152,42 @@ const editProvider = async ({
   return resBody;
 };
 
-export { getProviders, createProvider, getProviderById, editProvider };
+const manageProviderActivationById = async ({
+  id = "",
+  payload,
+}: {
+  payload?: ProviderActivationPayload;
+  id: string;
+}): Promise<Provider> => {
+  const session = await getServerSession(authConfig);
+  const user = session?.user as SessionPayload;
+
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/providers/${id}/activation`, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+    method: "PATCH",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to manage provider activation");
+  }
+
+  return resBody;
+};
+
+export {
+  manageProviderActivationById,
+  getProviderById,
+  createProvider,
+  getProviders,
+  editProvider,
+};

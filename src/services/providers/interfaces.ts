@@ -12,6 +12,11 @@ export interface CreateProviderPayload {
 
 export type EditProviderPayload = Partial<CreateProviderPayload>;
 
+export type ProviderActivationPayload = {
+  activate?: boolean;
+  force?: boolean;
+};
+
 export interface GetProvidersPayload {
   orderByField?: string;
   offset?: number;

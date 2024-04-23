@@ -12,10 +12,10 @@ import { DATE_FORMAT } from "@/app/components/inputs/DateTimePickerHookForm/cons
 import { Customer } from "@/services/customers/interfaces";
 import { Menu } from "./Menu";
 
-interface Props extends Customer {
+type Props = Customer & {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isSelected?: boolean;
-}
+};
 
 const CustomerRow = ({ isSelected = false, onClick, ...customer }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);

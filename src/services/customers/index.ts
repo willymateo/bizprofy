@@ -5,12 +5,12 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
 import { Order, SessionPayload } from "../interfaces";
 import {
+  CustomerActivationPayload,
   CreateCustomerPayload,
   GetCustomersResponse,
   GetCustomersPayload,
   EditCustomerPayload,
   Customer,
-  CustomerActivationPayload,
 } from "./interfaces";
 
 const getCustomerById = async ({ id = "" }): Promise<Customer> => {

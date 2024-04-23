@@ -18,8 +18,8 @@ import { CreateStockOutPayload } from "@/services/stock/out/interfaces";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
 import { Warehouse } from "@/services/warehouses/interfaces";
 import { Customer } from "@/services/customers/interfaces";
-import { Product } from "@/services/products/interfaces";
 import { createStockOut } from "@/services/stock/out";
+import { Product } from "@/services/products/types";
 import { useActive } from "@/hooks/useActive";
 
 const NOW_DAYJS = dayjs();

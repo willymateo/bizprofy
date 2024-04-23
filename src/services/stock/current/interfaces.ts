@@ -1,4 +1,4 @@
-import { Product } from "../../products/interfaces";
+import { Product } from "@/services/products/types";
 import { Order } from "../../interfaces";
 
 export interface GetCurrentStockPayload {

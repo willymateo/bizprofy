@@ -1,7 +1,7 @@
 import { Warehouse } from "../../warehouses/interfaces";
 import { Customer } from "../../customers/interfaces";
 import { AuditFields, Order } from "../../interfaces";
-import { Product } from "../../products/interfaces";
+import { Product } from "@/services/products/types";
 
 export interface GetStockOutPayload {
   transactionDateGreaterThanOrEqualTo?: string;

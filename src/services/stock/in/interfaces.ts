@@ -1,6 +1,6 @@
 import { Warehouse } from "../../warehouses/interfaces";
 import { AuditFields, Order } from "../../interfaces";
-import { Product } from "../../products/interfaces";
+import { Product } from "@/services/products/types";
 
 export interface GetStockInPayload {
   transactionDateGreaterThanOrEqualTo?: string;

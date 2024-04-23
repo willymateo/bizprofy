@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import { Icon } from "@iconify-icon/react";
 
 import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
-import { Product } from "@/services/products/interfaces";
+import { Product } from "@/services/products/types";
 import { useActive } from "@/hooks/useActive";
 
 type Props<T extends FieldValues> = UseControllerProps<T> & {

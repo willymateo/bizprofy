@@ -16,7 +16,7 @@ import { ProductsHookForm } from "@/app/components/inputs/ProductsHookForm";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
 import { CreateStockInPayload } from "@/services/stock/in/interfaces";
 import { Warehouse } from "@/services/warehouses/interfaces";
-import { Product } from "@/services/products/interfaces";
+import { Product } from "@/services/products/types";
 import { createStockIn } from "@/services/stock/in";
 import { useActive } from "@/hooks/useActive";
 

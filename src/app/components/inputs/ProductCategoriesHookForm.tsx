@@ -6,9 +6,9 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Icon } from "@iconify-icon/react";
 
-import { ProductCategory } from "@/services/products/interfaces";
+import { ProductCategory } from "@/services/products/categories/types";
+import { getProductCategories } from "@/services/products/categories";
 import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
-import { getProductCategories } from "@/services/products";
 import { useActive } from "@/hooks/useActive";
 
 const ProductCategoriesHookForm = <T extends FieldValues>(props: UseControllerProps<T>) => {

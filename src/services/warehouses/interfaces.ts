@@ -7,6 +7,11 @@ export interface CreateWarehousePayload {
 
 export type EditWarehousePayload = Partial<CreateWarehousePayload>;
 
+export type WarehouseActivationPayload = {
+  activate?: boolean;
+  force?: boolean;
+};
+
 export interface GetWarehousesPayload {
   orderByField?: string;
   offset?: number;

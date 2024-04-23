@@ -3,21 +3,21 @@
 import { getServerSession } from "next-auth";
 
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { Order, SessionPayload } from "../interfaces";
+import { Order, SessionPayload } from "@/services/interfaces";
 import {
-  CustomerActivationPayload,
-  CreateCustomerPayload,
-  GetCustomersResponse,
-  GetCustomersPayload,
-  EditCustomerPayload,
-  Customer,
-} from "./interfaces";
+  ProductCategoryActivationPayload,
+  GetProductCategoriesResponse,
+  CreateProductCategoryPayload,
+  GetProductCategoriesPayload,
+  EditProductCategoryPayload,
+  ProductCategory,
+} from "./types";
 
-const getCustomerById = async ({ id = "" }): Promise<Customer> => {
+const getProductCategoryById = async ({ id = "" }): Promise<ProductCategory> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers/${id}`, {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories/${id}`, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
@@ -32,23 +32,23 @@ const getCustomerById = async ({ id = "" }): Promise<Customer> => {
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch customer");
+    throw new Error(resBody.error?.message || "Failed to fetch product category");
   }
 
   return resBody;
 };
 
-const getCustomers = async ({
+const getProductCategories = async ({
   order = Order.desc,
   orderByField,
   offset = 0,
   limit = 5,
   q = "",
-}: GetCustomersPayload = {}): Promise<GetCustomersResponse> => {
+}: GetProductCategoriesPayload = {}): Promise<GetProductCategoriesResponse> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const url = new URL("customers", process.env.BIZPROFY_API_URL);
+  const url = new URL("products/categories", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
 
   if (orderByField) {
@@ -88,17 +88,19 @@ const getCustomers = async ({
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch customers");
+    throw new Error(resBody.error?.message || "Failed to fetch product categories");
   }
 
   return resBody;
 };
 
-const createCustomer = async (payload: CreateCustomerPayload): Promise<Customer> => {
+const createProductCategory = async (
+  payload: CreateProductCategoryPayload,
+): Promise<ProductCategory> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers`, {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories`, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
@@ -114,23 +116,23 @@ const createCustomer = async (payload: CreateCustomerPayload): Promise<Customer>
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to create customer");
+    throw new Error(resBody.error?.message || "Failed to create product category");
   }
 
   return resBody;
 };
 
-const editCustomer = async ({
+const editProductCategory = async ({
   id = "",
   payload,
 }: {
-  payload: EditCustomerPayload;
+  payload: EditProductCategoryPayload;
   id: string;
-}): Promise<Customer> => {
+}): Promise<ProductCategory> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers/${id}`, {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories/${id}`, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
@@ -146,23 +148,23 @@ const editCustomer = async ({
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to edit customer");
+    throw new Error(resBody.error?.message || "Failed to edit product category");
   }
 
   return resBody;
 };
 
-const manageCustomerActivationById = async ({
+const manageProductCategoryActivationById = async ({
   id = "",
   payload,
 }: {
-  payload?: CustomerActivationPayload;
+  payload?: ProductCategoryActivationPayload;
   id: string;
-}): Promise<Customer> => {
+}): Promise<ProductCategory> => {
   const session = await getServerSession(authConfig);
   const user = session?.user as SessionPayload;
 
-  const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers/${id}/activation`, {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories/${id}/activation`, {
     headers: {
       Authorization: `Bearer ${user?.token}`,
       "Content-Type": "application/json",
@@ -178,16 +180,16 @@ const manageCustomerActivationById = async ({
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to manage customer activation");
+    throw new Error(resBody.error?.message || "Failed to manage product category activation");
   }
 
   return resBody;
 };
 
 export {
-  manageCustomerActivationById,
-  getCustomerById,
-  createCustomer,
-  getCustomers,
-  editCustomer,
+  manageProductCategoryActivationById,
+  getProductCategoryById,
+  createProductCategory,
+  getProductCategories,
+  editProductCategory,
 };

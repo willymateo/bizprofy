@@ -1,7 +1,7 @@
 import Card from "@mui/material/Card";
 
 import { EditProductCategoryForm } from "./components/EditProductCategoryForm";
-import { getProductCategoryById } from "@/services/products";
+import { getProductCategoryById } from "@/services/products/categories";
 
 type Props = {
   params: Params;

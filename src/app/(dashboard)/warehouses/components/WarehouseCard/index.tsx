@@ -1,12 +1,12 @@
 import Tooltip from "@mui/material/Tooltip";
 import { Icon } from "@iconify-icon/react";
-import Switch from "@mui/material/Switch";
 import Card from "@mui/material/Card";
 import Chip from "@mui/material/Chip";
 import Link from "next/link";
 import dayjs from "dayjs";
 
 import { Warehouse } from "@/services/warehouses/interfaces";
+import { ActivationSwitch } from "./ActivationSwitch";
 import { TooltipContent } from "./TooltipContent";
 
 const DATE_FORMAT = "DD MMMM YYYY";
@@ -23,7 +23,7 @@ const WarehouseCard = (warehouse: Warehouse) => (
             {warehouse?.name ?? ""}
           </Link>
 
-          <Switch checked={!warehouse?.deletedAt} />
+          <ActivationSwitch warehouse={warehouse} />
         </div>
 
         {warehouse?.code && (

@@ -1,4 +1,4 @@
-import { Product } from "@/services/products/interfaces";
+import { Product } from "@/services/products/types";
 
 const TooltipContent = ({ id = "", name = "", description = "" }: Product) => (
   <div className="flex flex-col">

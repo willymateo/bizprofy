@@ -2,35 +2,23 @@ import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
-import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
-import Menu from "@mui/material/Menu";
 import Link from "next/link";
 import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "@/app/components/inputs/DateTimePickerHookForm/constants";
 import { User } from "@/services/users/interfaces";
+import { Menu } from "./Menu";
 
-interface Props extends User {
+type Props = User & {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isSelected?: boolean;
-}
+};
 
-const UserRow = ({
-  isSelected = false,
-  firstNames = "",
-  lastNames = "",
-  username = "",
-  email = "",
-  createdAt,
-  updatedAt,
-  deletedAt,
-  onClick,
-  id = "",
-}: Props) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+const UserRow = ({ onClick, isSelected = false, ...user }: Props) => {
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null);
   const isMenuOpen = Boolean(anchorEl);
 
   const handleOpenMenu = ({ currentTarget }: MouseEvent<HTMLButtonElement>) =>
@@ -46,26 +34,30 @@ const UserRow = ({
         </TableCell>
 
         <TableCell className="whitespace-nowrap">
-          {username && (
+          {user?.username && (
             <Chip
               icon={<Icon icon="solar:user-bold-duotone" className="pl-3" />}
-              color={deletedAt ? "default" : "info"}
-              label={username ?? ""}
+              color={user?.deletedAt ? "default" : "info"}
+              label={user?.username ?? ""}
             />
           )}
         </TableCell>
-        <TableCell className="whitespace-nowrap">{firstNames ?? ""}</TableCell>
-        <TableCell className="whitespace-nowrap">{lastNames ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">{user?.firstNames ?? ""}</TableCell>
+        <TableCell className="whitespace-nowrap">{user?.lastNames ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">
-          <Link href={`mailto:${email ?? ""}`} target="_blank">
-            {email ?? ""}
+          <Link href={`mailto:${user?.email ?? ""}`} target="_blank">
+            {user?.email ?? ""}
           </Link>
         </TableCell>
         <TableCell className="whitespace-nowrap">
-          {deletedAt ? <Chip label="Inactive" /> : <Chip label="Active" color="success" />}
+          {user?.deletedAt ? <Chip label="Inactive" /> : <Chip label="Active" color="success" />}
         </TableCell>
-        <TableCell className="whitespace-nowrap">{dayjs(createdAt).format(DATE_FORMAT)}</TableCell>
-        <TableCell className="whitespace-nowrap">{dayjs(updatedAt).format(DATE_FORMAT)}</TableCell>
+        <TableCell className="whitespace-nowrap">
+          {dayjs(user?.createdAt).format(DATE_FORMAT)}
+        </TableCell>
+        <TableCell className="whitespace-nowrap">
+          {dayjs(user?.updatedAt).format(DATE_FORMAT)}
+        </TableCell>
 
         <TableCell className="sticky right-0 bg-white">
           <IconButton onClick={handleOpenMenu}>
@@ -74,28 +66,7 @@ const UserRow = ({
         </TableCell>
       </TableRow>
 
-      <Menu
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        onClose={handleCloseMenu}
-        anchorEl={anchorEl}
-        open={isMenuOpen}
-      >
-        <MenuItem>
-          <Link
-            className="flex flex-row gap-3 w-full items-center no-underline text-black"
-            href={`/users/${id ?? ""}`}
-          >
-            <Icon icon="solar:pen-bold-duotone" />
-            Edit
-          </Link>
-        </MenuItem>
-
-        <MenuItem onClick={handleCloseMenu} className="flex flex-row gap-3 text-red-500">
-          <Icon icon="solar:trash-bin-minimalistic-bold-duotone" />
-          Delete
-        </MenuItem>
-      </Menu>
+      <Menu anchorEl={anchorEl} onClose={handleCloseMenu} isOpen={isMenuOpen} user={user} />
     </>
   );
 };

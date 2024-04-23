@@ -10,10 +10,11 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateProductPayload, Product, ProductCategory } from "@/services/products/interfaces";
 import { ProductCategoriesHookForm } from "@/app/components/inputs/ProductCategoriesHookForm";
 import { ProvidersHookForm } from "@/app/components/inputs/ProvidersHookForm";
+import { CreateProductPayload, Product } from "@/services/products/types";
 import { NumberHookForm } from "@/app/components/inputs/NumberHookForm";
+import { ProductCategory } from "@/services/products/categories/types";
 import { Provider } from "@/services/providers/interfaces";
 import { useActive } from "@/hooks/useActive";
 

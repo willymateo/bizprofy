@@ -1,6 +1,6 @@
 "use client";
 
-import { EditProductPayload, Product } from "@/services/products/interfaces";
+import { EditProductPayload, Product } from "@/services/products/types";
 import { ProductForm } from "../../components/ProductForm";
 import { editProduct } from "@/services/products";
 

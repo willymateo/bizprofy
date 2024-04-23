@@ -11,6 +11,11 @@ export interface CreateCustomerPayload {
 
 export type EditCustomerPayload = Partial<CreateCustomerPayload>;
 
+export type CustomerActivationPayload = {
+  activate?: boolean;
+  force?: boolean;
+};
+
 export interface GetCustomersPayload {
   orderByField?: string;
   offset?: number;

@@ -10,7 +10,10 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-import { CreateProductCategoryPayload, ProductCategory } from "@/services/products/interfaces";
+import {
+  CreateProductCategoryPayload,
+  ProductCategory,
+} from "@/services/products/categories/types";
 import { useActive } from "@/hooks/useActive";
 
 type Props<T, U> = {

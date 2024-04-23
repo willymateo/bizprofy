@@ -1,7 +1,8 @@
+import { ProductCategory } from "./categories/types";
 import { AuditFields, Order } from "../interfaces";
 import { Provider } from "../providers/interfaces";
 
-export interface GetProductsPayload {
+export type GetProductsPayload = {
   unitPriceGreaterThanOrEqualTo?: number;
   unitCostGreaterThanOrEqualTo?: number;
   unitPriceLessThanOrEqualTo?: number;
@@ -10,14 +11,14 @@ export interface GetProductsPayload {
   limit?: number;
   order?: Order;
   q?: string;
-}
+};
 
-export interface GetProductsResponse {
+export type GetProductsResponse = {
   rows: Product[];
   count: number;
-}
+};
 
-export interface CreateProductPayload {
+export type CreateProductPayload = {
   productCategoryId: string | null;
   providerId: string | null;
   description: string;
@@ -25,9 +26,14 @@ export interface CreateProductPayload {
   unitCost: number;
   code: string;
   name: string;
-}
+};
 
 export type EditProductPayload = Partial<CreateProductPayload>;
+
+export type ProductActivationPayload = {
+  activate?: boolean;
+  force?: boolean;
+};
 
 export type Product = AuditFields & {
   productCategory: ProductCategory | null;
@@ -46,28 +52,3 @@ export type SimpleProduct = Omit<Product, "productCategory" | "provider"> & {
   productCategoryId: string | null;
   providerId: string | null;
 };
-
-export interface GetProductCategoriesPayload {
-  orderByField?: string;
-  offset?: number;
-  limit?: number;
-  order?: Order;
-  q?: string;
-}
-
-export interface GetProductCategoriesResponse {
-  rows: ProductCategory[];
-  count: number;
-}
-
-export interface CreateProductCategoryPayload {
-  name: string;
-}
-
-export type EditProductCategoryPayload = Partial<CreateProductCategoryPayload>;
-
-export interface ProductCategory extends AuditFields {
-  companyId: string;
-  name: string;
-  id: string;
-}

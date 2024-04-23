@@ -1,10 +1,10 @@
 import Tooltip from "@mui/material/Tooltip";
-import Switch from "@mui/material/Switch";
 import Card from "@mui/material/Card";
 import Link from "next/link";
 import dayjs from "dayjs";
 
-import { ProductCategory } from "@/services/products/interfaces";
+import { ProductCategory } from "@/services/products/categories/types";
+import { ActivationSwitch } from "./ActivationSwitch";
 import { TooltipContent } from "./TooltipContent";
 
 const DATE_FORMAT = "DD MMMM YYYY";
@@ -20,7 +20,7 @@ const ProductCategoryCard = (productCategory: ProductCategory) => (
           {productCategory?.name ?? ""}
         </Link>
 
-        <Switch checked={!productCategory?.deletedAt} />
+        <ActivationSwitch productCategory={productCategory} />
       </div>
 
       <div className="flex flex-col">

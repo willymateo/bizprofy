@@ -115,7 +115,7 @@ const createUser = async (payload: CreateUserPayload): Promise<User> => {
   return resBody;
 };
 
-const editUser = async ({
+const editUserById = async ({
   id = "",
   payload,
 }: {
@@ -179,4 +179,4 @@ const manageUserActivationById = async ({
   return resBody;
 };
 
-export { getUsers, createUser, getUserById, editUser, manageUserActivationById };
+export { getUsers, createUser, getUserById, editUserById, manageUserActivationById };

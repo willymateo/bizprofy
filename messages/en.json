@@ -1,0 +1,52 @@
+{
+  "AccountPopover": {
+    "Logout": "Logout",
+    "Profile": "Profile",
+    "Settings": "Settings"
+  },
+  "locales": {
+    "English": "English",
+    "Spanish": "Spanish"
+  },
+  "auth": {
+    "login": {
+      "Login to Bizprofy": "Login to Bizprofy",
+      "Don't have an account?": "Don't have an account?",
+      "Get started": "Get started",
+      "Or": "Or",
+      "Email or username": "Email or username",
+      "This field is required": "This field is required",
+      "Password is required": "Password is required",
+      "Password": "Password",
+      "Forgot password?": "Forgot password?",
+      "Login": "Login"
+    },
+    "signUp": {
+      "Sign up for Bizprofy": "Sign up for Bizprofy",
+      "Already have an account?": "Already have an account?",
+      "Login here": "Login here",
+      "Company name": "Company name",
+      "Company name is required": "Company name is required",
+      "Company Inc": "Company Inc.",
+      "First names are required": "First names are required",
+      "First names": "First names",
+      "Last names": "Last names",
+      "Last names are required": "Last names are required",
+      "Email address": "Email address",
+      "Invalid email address": "Invalid email address",
+      "Email is required": "Email is required",
+      "Username should be in lowercase and can have numbers The only allowed special characters are '_' and ''": "Username should be in lowercase and can have numbers. The only allowed special characters are '_' and '.'",
+      "Username must be less than {maxLength} characters": "Username must be less than {maxLength} characters",
+      "Username must be at least {minLength} characters": "Username must be at least {minLength} characters",
+      "Username is required": "Username is required",
+      "Username": "Username",
+      "Password must be at least {minLength} characters": "Password must be at least {minLength} characters",
+      "Password is required": "Password is required",
+      "Password": "Password",
+      "Passwords don't match": "Passwords don't match",
+      "This field is required": "This field is required",
+      "Repeat password": "Repeat password",
+      "Create account": "Create account"
+    }
+  }
+}

@@ -120,7 +120,7 @@ const createProvider = async (payload: CreateProviderPayload): Promise<Provider>
   return resBody;
 };
 
-const editProvider = async ({
+const editProviderById = async ({
   id = "",
   payload,
 }: {
@@ -186,8 +186,8 @@ const manageProviderActivationById = async ({
 
 export {
   manageProviderActivationById,
+  editProviderById,
   getProviderById,
   createProvider,
   getProviders,
-  editProvider,
 };

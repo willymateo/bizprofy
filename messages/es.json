@@ -1,0 +1,52 @@
+{
+  "AccountPopover": {
+    "Logout": "Cerrar sesión",
+    "Profile": "Perfil",
+    "Settings": "Configuración"
+  },
+  "locales": {
+    "English": "Inglés",
+    "Spanish": "Español"
+  },
+  "auth": {
+    "login": {
+      "Login to Bizprofy": "Iniciar sesión en Bizprofy",
+      "Don't have an account?": "¿No tienes una cuenta?",
+      "Get started": "Empezar",
+      "Or": "O",
+      "Email or username": "Correo electrónico o nombre de usuario",
+      "This field is required": "Este campo es obligatorio",
+      "Password is required": "La contraseña es obligatoria",
+      "Password": "Contraseña",
+      "Forgot password?": "¿Olvidaste tu contraseña?",
+      "Login": "Iniciar sesión"
+    },
+    "signUp": {
+      "Sign up for Bizprofy": "Regístrate en Bizprofy",
+      "Already have an account?": "¿Ya tienes una cuenta?",
+      "Login here": "Inicia sesión aquí",
+      "Company name": "Nombre de la empresa",
+      "Company name is required": "El nombre de la empresa es obligatorio",
+      "Company Inc": "Empresa S.A.",
+      "First names are required": "Los nombres son obligatorios",
+      "First names": "Nombres",
+      "Last names": "Apellidos",
+      "Last names are required": "Los apellidos son obligatorios",
+      "Email address": "Correo electrónico",
+      "Invalid email address": "Correo electrónico inválido",
+      "Email is required": "El correo electrónico es obligatorio",
+      "Username should be in lowercase and can have numbers The only allowed special characters are '_' and ''": "El nombre de usuario debe estar en minúsculas y puede tener números. Los únicos caracteres especiales permitidos son '_' y '.'",
+      "Username must be less than {maxLength} characters": "El nombre de usuario debe tener menos de {maxLength} caracteres",
+      "Username must be at least {minLength} characters": "El nombre de usuario debe tener al menos {minLength} caracteres",
+      "Username is required": "El nombre de usuario es obligatorio",
+      "Username": "Nombre de usuario",
+      "Password must be at least {minLength} characters": "La contraseña debe tener al menos {minLength} caracteres",
+      "Password is required": "La contraseña es obligatoria",
+      "Password": "Contraseña",
+      "Passwords don't match": "Las contraseñas no coinciden",
+      "This field is required": "Este campo es obligatorio",
+      "Repeat password": "Repetir contraseña",
+      "Create account": "Crear cuenta"
+    }
+  }
+}

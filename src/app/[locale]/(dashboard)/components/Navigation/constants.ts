@@ -13,12 +13,12 @@ const MENU_OPTIONS: MenuOption[] = [
     icon: "solar:bag-smile-bold-duotone",
   },
   {
-    label: "Stock In",
+    label: "Stock in",
     path: `/stock/in`,
     icon: "fluent:cube-arrow-curve-down-20-filled",
   },
   {
-    label: "Stock Out",
+    label: "Stock out",
     path: `/stock/out`,
     icon: "fluent:box-arrow-up-24-filled",
   },

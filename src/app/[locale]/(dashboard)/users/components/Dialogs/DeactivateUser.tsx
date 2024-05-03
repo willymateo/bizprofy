@@ -4,6 +4,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import Alert from "@mui/material/Alert";
@@ -26,6 +27,7 @@ const DeactivateUser = ({
 }: Props) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<Error | null>(null);
+  const t = useTranslations();
   const router = useRouter();
 
   const deactivateUser = async () => {
@@ -54,17 +56,19 @@ const DeactivateUser = ({
 
   return (
     <Dialog onClose={onClose} open={isOpen}>
-      <DialogTitle>Deactivate user</DialogTitle>
+      <DialogTitle>{t("Deactivate user")}</DialogTitle>
 
       <DialogContent className="flex flex-col gap-5 items-center">
         {error ? (
           <Alert variant="filled" severity="error" className="w-full">
-            An error occurred while deactivating the user. Please try again later.
+            {t("An error occurred while deactivating the user Please try again later")}.
           </Alert>
         ) : null}
 
         <DialogContentText>
-          Are you sure you want to deactivate the user <strong>{username}</strong> with email{" "}
+          {`${t("Are you sure you want to deactivate the user")} `}
+          <strong>{username}</strong>
+          {` ${t("with email")} `}
           <strong>{email}</strong>?
         </DialogContentText>
 
@@ -73,11 +77,11 @@ const DeactivateUser = ({
 
       <DialogActions>
         <Button onClick={onClose} disabled={isLoading}>
-          Cancel
+          {t("Cancel")}
         </Button>
 
         <Button onClick={deactivateUser} autoFocus disabled={isLoading}>
-          Yes, deactivate
+          {t("Yes, deactivate")}
         </Button>
       </DialogActions>
     </Dialog>

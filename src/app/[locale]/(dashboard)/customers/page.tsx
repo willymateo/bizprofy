@@ -1,11 +1,13 @@
+import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 
 import { GetCustomersPayload } from "@/services/customers/interfaces";
 import { PAGE_SIZE_OPTIONS } from "./components/Table/constants";
 import { getCustomers } from "@/services/customers";
-import { Table } from "./components/Table";
 import { Layout } from "./components/Layout";
+import { Table } from "./components/Table";
 
 const metadata: Metadata = {
   description: "Business management system",
@@ -37,9 +39,14 @@ const CustomersPage = async ({
     limit,
   });
 
+  const messages = await getMessages();
+  const customersMessages = messages?.customers as AbstractIntlMessages;
+
   return (
     <Layout>
-      <Table {...data} offset={offset} limit={limit} />
+      <NextIntlClientProvider messages={customersMessages}>
+        <Table {...data} offset={offset} limit={limit} />
+      </NextIntlClientProvider>
     </Layout>
   );
 };

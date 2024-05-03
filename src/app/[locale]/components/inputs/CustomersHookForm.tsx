@@ -4,6 +4,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { ChangeEvent, useRef, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 
 import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
@@ -19,6 +20,7 @@ const CustomersHookForm = <T extends FieldValues>(props: UseControllerProps<T>) 
     field: { value, onChange, onBlur },
     fieldState: { error },
   } = useController(props);
+  const t = useTranslations();
 
   const fetchCustomers = async ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
     if (value?.length < MIN_CHARACTERS_TO_SEARCH) {
@@ -69,11 +71,11 @@ const CustomersHookForm = <T extends FieldValues>(props: UseControllerProps<T>) 
               params.InputProps?.endAdornment
             ),
           }}
-          placeholder="Type code or name of a customer"
+          placeholder={t("Type ID card or name of a customer")}
           helperText={error?.message}
           onChange={fetchCustomers}
           error={Boolean(error)}
-          label="Customer"
+          label={t("Customer")}
         />
       )}
       onChange={(_, newValue) => onChange(newValue)}

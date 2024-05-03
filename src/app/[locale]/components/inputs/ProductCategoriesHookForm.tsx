@@ -4,6 +4,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { ChangeEvent, useRef, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 
 import { ProductCategory } from "@/services/products/categories/types";
@@ -19,6 +20,7 @@ const ProductCategoriesHookForm = <T extends FieldValues>(props: UseControllerPr
     field: { value, onChange, onBlur },
     fieldState: { error },
   } = useController(props);
+  const t = useTranslations();
 
   const fetchProductCategories = async ({
     target: { value = "" },
@@ -68,10 +70,10 @@ const ProductCategoriesHookForm = <T extends FieldValues>(props: UseControllerPr
               params.InputProps?.endAdornment
             ),
           }}
-          placeholder="Type product category name"
+          placeholder={t("Type a product category name")}
           onChange={fetchProductCategories}
+          label={t("Product category")}
           helperText={error?.message}
-          label="Product category"
           error={Boolean(error)}
         />
       )}

@@ -12,6 +12,7 @@ import { GetStockInPayload } from "@/services/stock/in/interfaces";
 import { setFiltersByWarehoseId } from "@/redux/states/stock/in";
 import { Warehouse } from "@/services/warehouses/interfaces";
 import { Store } from "@/redux/types";
+import { useTranslations } from "next-intl";
 
 type FormInputs = Omit<
   GetStockInPayload,
@@ -27,6 +28,8 @@ type Props = {
 };
 
 const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
+  const t = useTranslations();
+
   const transactionDateGreaterThanOrEqualToStore = useSelector(
     (state: Store) =>
       state?.stockIn?.filters?.[warehouse?.id ?? ""]?.transactionDateGreaterThanOrEqualTo ||
@@ -88,10 +91,10 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
         ) : (
           <>
             <DateTimePickerHookForm
-              rules={{ required: "This field is required" }}
+              rules={{ required: t("This field is required") }}
               maxDateTime={transactionDateLessThanOrEqualTo}
               name="transactionDateGreaterThanOrEqualTo"
-              label="Start transaction date"
+              label={t("Start transaction date")}
               control={control}
               className="grow"
               closeOnSelect
@@ -99,9 +102,9 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
 
             <DateTimePickerHookForm
               minDateTime={transactionDateGreaterThanOrEqualTo}
-              rules={{ required: "This field is required" }}
+              rules={{ required: t("This field is required") }}
               name="transactionDateLessThanOrEqualTo"
-              label="End transaction date"
+              label={t("End transaction date")}
               control={control}
               className="grow"
               closeOnSelect
@@ -112,7 +115,7 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
               onClick={applyFilters}
               variant="contained"
             >
-              Search
+              {t("Search")}
             </Button>
           </>
         )}

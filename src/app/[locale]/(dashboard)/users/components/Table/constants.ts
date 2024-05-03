@@ -8,12 +8,12 @@ const HEADER_COLUMNS: HeaderColumns[] = [
   },
   {
     id: HeaderColumnTypes.firstNames,
-    label: "First Names",
+    label: "First names",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.lastNames,
-    label: "Last Names",
+    label: "Last names",
     className: "text-center whitespace-nowrap",
   },
   {

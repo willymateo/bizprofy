@@ -12,6 +12,7 @@ import { GetCurrentStockPayload } from "@/services/stock/current/interfaces";
 import { setFiltersByWarehoseId } from "@/redux/states/stock/current";
 import { Warehouse } from "@/services/warehouses/interfaces";
 import { Store } from "@/redux/types";
+import { useTranslations } from "next-intl";
 
 type FormInputs = Omit<
   GetCurrentStockPayload,
@@ -50,6 +51,7 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
   const transactionDateGreaterThanOrEqualTo = watch("transactionDateGreaterThanOrEqualTo");
   const transactionDateLessThanOrEqualTo = watch("transactionDateLessThanOrEqualTo");
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const applyFilters = handleSubmit(data =>
     dispatch(
@@ -89,10 +91,10 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
         ) : (
           <>
             <DateTimePickerHookForm
-              rules={{ required: "This field is required" }}
+              rules={{ required: t("This field is required") }}
               maxDateTime={transactionDateLessThanOrEqualTo}
               name="transactionDateGreaterThanOrEqualTo"
-              label="Start transaction date"
+              label={t("Start transaction date")}
               control={control}
               className="grow"
               closeOnSelect
@@ -100,9 +102,9 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
 
             <DateTimePickerHookForm
               minDateTime={transactionDateGreaterThanOrEqualTo}
-              rules={{ required: "This field is required" }}
+              rules={{ required: t("This field is required") }}
               name="transactionDateLessThanOrEqualTo"
-              label="End transaction date"
+              label={t("End transaction date")}
               control={control}
               className="grow"
               closeOnSelect
@@ -113,7 +115,7 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
               onClick={applyFilters}
               variant="contained"
             >
-              Search
+              {t("Search")}
             </Button>
           </>
         )}

@@ -1,3 +1,5 @@
+import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -37,9 +39,14 @@ const ProvidersPage = async ({
     limit,
   });
 
+  const messages = await getMessages();
+  const providersMessages = messages?.providers as AbstractIntlMessages;
+
   return (
     <Layout>
-      <Table {...data} limit={limit} offset={offset} />
+      <NextIntlClientProvider messages={providersMessages}>
+        <Table {...data} limit={limit} offset={offset} />
+      </NextIntlClientProvider>
     </Layout>
   );
 };

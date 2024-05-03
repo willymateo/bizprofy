@@ -1,4 +1,5 @@
 import MenuItem from "@mui/material/MenuItem";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 import MuiMenu from "@mui/material/Menu";
 import Link from "next/link";
@@ -21,6 +22,7 @@ const Menu = ({ isOpen = false, anchorEl, onClose, user }: Props) => {
     disable: closeDeactivateDialog,
     enable: openDeactivateDialog,
   } = useActive();
+  const t = useTranslations();
 
   const {
     isActive: isActivateDialogOpen = false,
@@ -54,7 +56,7 @@ const Menu = ({ isOpen = false, anchorEl, onClose, user }: Props) => {
               href={`/users/${user?.id ?? ""}`}
             >
               <Icon icon="solar:pen-bold-duotone" />
-              Edit
+              {t("Edit")}
             </Link>
           </MenuItem>
         )}
@@ -65,14 +67,14 @@ const Menu = ({ isOpen = false, anchorEl, onClose, user }: Props) => {
             onClick={handleOpenDeactivateDialog}
           >
             <Icon icon="solar:trash-bin-minimalistic-bold-duotone" />
-            Deactivate
+            {t("Deactivate")}
           </MenuItem>
         )}
 
         {user?.deletedAt ? (
           <MenuItem onClick={handleOpenActivateDialog} className="flex flex-row gap-3">
             <Icon icon="solar:restart-bold-duotone" />
-            Activate
+            {t("Activate")}
           </MenuItem>
         ) : null}
       </MuiMenu>

@@ -8,27 +8,27 @@ const HEADER_COLUMNS: HeaderColumns[] = [
   },
   {
     id: HeaderColumnTypes.productCode,
-    label: "Product Code",
+    label: "Product code",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.productName,
-    label: "Product Name",
+    label: "Product name",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.providerName,
-    label: "Provider Name",
+    label: "Provider name",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.providerEmail,
-    label: "Provider Email",
+    label: "Provider email",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.unitCost,
-    label: "Unit Cost",
+    label: "Unit cost",
     className: "text-center whitespace-nowrap font-bold",
   },
   {
@@ -38,7 +38,7 @@ const HEADER_COLUMNS: HeaderColumns[] = [
   },
   {
     id: HeaderColumnTypes.totalCost,
-    label: "Total Cost",
+    label: "Total cost",
     className: "text-center whitespace-nowrap font-bold",
   },
 ];

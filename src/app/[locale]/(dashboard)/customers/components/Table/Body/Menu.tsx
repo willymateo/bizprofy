@@ -1,4 +1,5 @@
 import MenuItem from "@mui/material/MenuItem";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 import MuiMenu from "@mui/material/Menu";
 import Link from "next/link";
@@ -16,6 +17,8 @@ type Props = {
 };
 
 const Menu = ({ isOpen = false, anchorEl, onClose, customer }: Props) => {
+  const t = useTranslations();
+
   const {
     isActive: isDeactivateDialogOpen = false,
     disable: closeDeactivateDialog,
@@ -54,7 +57,7 @@ const Menu = ({ isOpen = false, anchorEl, onClose, customer }: Props) => {
               href={`/customers/${customer?.id ?? ""}`}
             >
               <Icon icon="solar:pen-bold-duotone" />
-              Edit
+              {t("Edit")}
             </Link>
           </MenuItem>
         )}
@@ -65,14 +68,14 @@ const Menu = ({ isOpen = false, anchorEl, onClose, customer }: Props) => {
             onClick={handleOpenDeactivateDialog}
           >
             <Icon icon="solar:trash-bin-minimalistic-bold-duotone" />
-            Deactivate
+            {t("Deactivate")}
           </MenuItem>
         )}
 
         {customer?.deletedAt ? (
           <MenuItem onClick={handleOpenActivateDialog} className="flex flex-row gap-3">
             <Icon icon="solar:restart-bold-duotone" />
-            Activate
+            {t("Activate")}
           </MenuItem>
         ) : null}
       </MuiMenu>

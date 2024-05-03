@@ -3,47 +3,47 @@ import { HeaderColumnTypes, HeaderColumns } from "./interfaces";
 const HEADER_COLUMNS: HeaderColumns[] = [
   {
     id: HeaderColumnTypes.productCode,
-    label: "Product Code",
+    label: "Product code",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.productName,
-    label: "Product Name",
+    label: "Product name",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.currentStock,
-    label: "Current Stock",
+    label: "Current stock",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.unitCost,
-    label: "Unit Cost",
+    label: "Unit cost",
     className: "text-center whitespace-nowrap font-bold",
   },
   {
     id: HeaderColumnTypes.purchasesNumber,
-    label: "Number of Purchases",
+    label: "Number of purchases",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.totalCost,
-    label: "Total Cost",
+    label: "Total cost",
     className: "text-center whitespace-nowrap font-bold",
   },
   {
     id: HeaderColumnTypes.unitPrice,
-    label: "Unit Price",
+    label: "Unit price",
     className: "text-center whitespace-nowrap font-bold",
   },
   {
     id: HeaderColumnTypes.salesNumber,
-    label: "Number of Sales",
+    label: "Number of sales",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.totalPrice,
-    label: "Total Price",
+    label: "Total price",
     className: "text-center whitespace-nowrap font-bold",
   },
 ];

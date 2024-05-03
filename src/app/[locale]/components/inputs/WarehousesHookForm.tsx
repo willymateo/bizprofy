@@ -4,6 +4,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { ChangeEvent, useRef, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 
 import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
@@ -19,6 +20,7 @@ const WarehousesHookForm = <T extends FieldValues>(props: UseControllerProps<T>)
     field: { value, onChange, onBlur },
     fieldState: { error },
   } = useController(props);
+  const t = useTranslations();
 
   const fetchWarehouses = async ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
     if (value?.length < MIN_CHARACTERS_TO_SEARCH) {
@@ -67,11 +69,11 @@ const WarehousesHookForm = <T extends FieldValues>(props: UseControllerProps<T>)
               params.InputProps?.endAdornment
             ),
           }}
-          placeholder="Type code or name of a warehouse"
+          placeholder={t("Type code or name of a warehouse")}
           helperText={error?.message}
           onChange={fetchWarehouses}
           error={Boolean(error)}
-          label="Warehouse"
+          label={t("Warehouse")}
         />
       )}
       onChange={(_, newValue) => onChange(newValue)}

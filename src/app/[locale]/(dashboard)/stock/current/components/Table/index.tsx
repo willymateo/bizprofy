@@ -4,6 +4,7 @@ import { ChangeEvent, MouseEvent, useCallback, useEffect, useState } from "react
 import TablePagination from "@mui/material/TablePagination";
 import TableContainer from "@mui/material/TableContainer";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslations } from "next-intl";
 import MuiTable from "@mui/material/Table";
 import Card from "@mui/material/Card";
 import dayjs from "dayjs";
@@ -63,6 +64,7 @@ const Table = ({ className = "", warehouse }: Props) => {
   });
   const [orderBy, setOrderBy] = useState<string>("");
   const dispatch = useDispatch();
+  const t = useTranslations();
 
   const fetchData = useCallback(async () => {
     setError(null);
@@ -185,6 +187,7 @@ const Table = ({ className = "", warehouse }: Props) => {
       <TablePagination
         onRowsPerPageChange={handleChangePageSize}
         rowsPerPageOptions={PAGE_SIZE_OPTIONS}
+        labelRowsPerPage={t("Rows per page")}
         onPageChange={handleChangePage}
         count={data?.count ?? 0}
         page={offset / limit}

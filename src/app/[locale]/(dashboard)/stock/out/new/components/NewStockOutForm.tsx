@@ -2,6 +2,7 @@
 
 import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
@@ -54,6 +55,7 @@ const NewStockOutForm = () => {
       quantity: 1,
     },
   });
+  const t = useTranslations();
   const router = useRouter();
 
   const handleCreate = handleSubmit(
@@ -93,8 +95,8 @@ const NewStockOutForm = () => {
   return (
     <form className="flex flex-col gap-5 justify-center">
       <DateTimePickerHookForm
-        rules={{ required: "Transaction date is required" }}
-        label="Transaction date"
+        rules={{ required: t("Transaction date is required") }}
+        label={t("Transaction date")}
         name="transactionDate"
         control={control}
         closeOnSelect
@@ -105,7 +107,11 @@ const NewStockOutForm = () => {
           validate: value => {
             const warehouse = value as Warehouse;
 
-            return Boolean(warehouse?.id) || "Warehouse is required";
+            if (!warehouse?.id) {
+              return t("Warehouse is required");
+            }
+
+            return true;
           },
         }}
         control={control}
@@ -117,7 +123,11 @@ const NewStockOutForm = () => {
           validate: value => {
             const product = value as Product;
 
-            return Boolean(product?.id) || "Product is required";
+            if (!product?.id) {
+              return t("Product is required");
+            }
+
+            return true;
           },
         }}
         onChange={setDefaultUnitPrice}
@@ -137,11 +147,11 @@ const NewStockOutForm = () => {
         helperText={formError?.unitPrice?.message}
         error={Boolean(formError?.unitPrice)}
         {...register("unitPrice", {
-          required: "Unit price is required",
+          required: t("Unit price is required"),
           valueAsNumber: true,
           min: 0,
         })}
-        label="Unit price"
+        label={t("Unit price")}
         required
       />
 
@@ -154,13 +164,13 @@ const NewStockOutForm = () => {
           ),
         }}
         {...register("quantity", {
-          required: "Product quantity is required",
+          required: t("Product quantity is required"),
           valueAsNumber: true,
           min: 1,
         })}
         helperText={formError?.quantity?.message}
         error={Boolean(formError?.quantity)}
-        label="Product quantity"
+        label={t("Product quantity")}
         isInteger
         required
       />
@@ -176,7 +186,7 @@ const NewStockOutForm = () => {
           disabled={isLoading}
           variant="contained"
         >
-          Register sale
+          {t("Register sale")}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>

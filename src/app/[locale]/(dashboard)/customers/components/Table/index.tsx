@@ -3,6 +3,7 @@
 import TablePagination from "@mui/material/TablePagination";
 import { ChangeEvent, MouseEvent, useState } from "react";
 import TableContainer from "@mui/material/TableContainer";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import MuiTable from "@mui/material/Table";
 import Card from "@mui/material/Card";
@@ -33,6 +34,7 @@ const Table = ({
   const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
   const [orderBy, setOrderBy] = useState<string>("");
   const [query, setQuery] = useState<string>("");
+  const t = useTranslations();
   const router = useRouter();
 
   const handleSort = (id: string = "") => {
@@ -97,6 +99,7 @@ const Table = ({
       <TablePagination
         onRowsPerPageChange={handleChangePageSize}
         rowsPerPageOptions={PAGE_SIZE_OPTIONS}
+        labelRowsPerPage={t("Rows per page")}
         onPageChange={handleChangePage}
         page={offset / limit}
         rowsPerPage={limit}

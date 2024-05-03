@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import { ReactNode } from "react";
@@ -7,24 +8,28 @@ type Props = {
   children?: ReactNode;
 };
 
-const Layout = ({ children }: Props) => (
-  <div className="flex flex-col gap-5 h-full">
-    <div className="flex flex-row gap-5 items-center justify-between">
-      <h1>Users</h1>
+const Layout = async ({ children }: Props) => {
+  const t = await getTranslations("users");
 
-      <Link href="/users/new" className="no-underline">
-        <Button
-          startIcon={<Icon icon="eva:plus-fill" />}
-          className="rounded-lg normal-case"
-          variant="contained"
-        >
-          Add user
-        </Button>
-      </Link>
+  return (
+    <div className="flex flex-col gap-5 h-full">
+      <div className="flex flex-row gap-5 items-center justify-between">
+        <h1>{t("Users")}</h1>
+
+        <Link href="/users/new" className="no-underline">
+          <Button
+            startIcon={<Icon icon="eva:plus-fill" />}
+            className="rounded-lg normal-case"
+            variant="contained"
+          >
+            {t("Add user")}
+          </Button>
+        </Link>
+      </div>
+
+      {children}
     </div>
-
-    {children}
-  </div>
-);
+  );
+};
 
 export { Layout };

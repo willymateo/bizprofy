@@ -8,12 +8,15 @@ import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 
 import { GetUsersPayload } from "@/services/users/interfaces";
+import { useTranslations } from "next-intl";
 
 interface Props extends GetUsersPayload {
   numRowsSelected?: number;
 }
 
 const ToolBar = ({ numRowsSelected = 0 }: Props) => {
+  const t = useTranslations();
+
   return (
     <MaterialToolbar
       className="flex flex-row flex-wrap items-center justify-center gap-3 py-7"
@@ -39,12 +42,12 @@ const ToolBar = ({ numRowsSelected = 0 }: Props) => {
                 </InputAdornment>
               ),
             }}
-            placeholder="Search..."
+            placeholder={`${t("Search")}...`}
             className="grow"
           />
 
           <Button variant="contained" endIcon={<Icon icon="icon-park-outline:search" />}>
-            Search
+            {t("Search")}
           </Button>
 
           <Tooltip title="Filter list">

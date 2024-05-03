@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import Chip from "@mui/material/Chip";
 import { ReactNode } from "react";
 
@@ -12,19 +13,23 @@ type Params = {
   id: string;
 };
 
-const Layout = ({ params, children }: Readonly<Props>) => (
-  <div className="flex flex-col gap-5">
-    <div className="flex flex-row gap-5 items-center justify-between">
-      <h1 className="flex flex-wrap gap-3 items-center">
-        Edit user
-        {params?.id && <Chip label={params?.id ?? ""} color="default" />}
-      </h1>
+const Layout = async ({ params, children }: Readonly<Props>) => {
+  const t = await getTranslations("users");
 
-      <ReturnButton className="w-fit">Cancel</ReturnButton>
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-row gap-5 items-center justify-between">
+        <h1 className="flex flex-wrap gap-3 items-center">
+          {t("Edit user")}
+          {params?.id && <Chip label={params?.id ?? ""} color="default" />}
+        </h1>
+
+        <ReturnButton className="w-fit">{t("Cancel")}</ReturnButton>
+      </div>
+
+      {children}
     </div>
-
-    {children}
-  </div>
-);
+  );
+};
 
 export { Layout };

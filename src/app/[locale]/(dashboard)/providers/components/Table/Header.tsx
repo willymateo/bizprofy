@@ -8,6 +8,7 @@ import { ChangeEvent, Dispatch } from "react";
 import { Provider } from "@/services/providers/interfaces";
 import { HEADER_COLUMNS } from "./constants";
 import { Order } from "./interfaces";
+import { useTranslations } from "next-intl";
 
 interface Props {
   setSelectedRows: Dispatch<Record<string, Provider>>;
@@ -28,6 +29,8 @@ const Header = ({
   rows = [],
   orderBy,
 }: Props) => {
+  const t = useTranslations();
+
   const selectAll = ({ target: { checked = false } }: ChangeEvent<HTMLInputElement>) => {
     if (checked) {
       const newSelectedRows: Record<string, Provider> = {};
@@ -65,7 +68,7 @@ const Header = ({
               active={orderBy === id.toString()}
               hideSortIcon
             >
-              {label}
+              {t(label)}
             </TableSortLabel>
           </TableCell>
         ))}

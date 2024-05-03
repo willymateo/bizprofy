@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
@@ -33,7 +34,7 @@ type FormInputs = {
 
 const UserForm = <T, U>({
   isPasswordRequired = false,
-  saveButtonLabel = "Save",
+  saveButtonLabel,
   onSave,
   ...props
 }: Props<T, U>) => {
@@ -58,6 +59,7 @@ const UserForm = <T, U>({
     },
   });
   const password = watch("password");
+  const t = useTranslations();
   const router = useRouter();
 
   const handleCreate = handleSubmit(async ({ repeatedPassword: _, ...data }) => {
@@ -90,11 +92,11 @@ const UserForm = <T, U>({
         }}
         helperText={formError?.firstNames?.message}
         {...register("firstNames", {
-          required: "First names are required",
+          required: t("First names are required"),
         })}
         error={Boolean(formError?.firstNames)}
         placeholder="John William"
-        label="First names"
+        label={t("First names")}
         required
       />
 
@@ -108,11 +110,11 @@ const UserForm = <T, U>({
         }}
         helperText={formError?.lastNames?.message}
         {...register("lastNames", {
-          required: "Last names are required",
+          required: t("Last names are required"),
         })}
         error={Boolean(formError?.lastNames)}
         placeholder="Doe Smith"
-        label="Last names"
+        label={t("Last names")}
         required
       />
 
@@ -126,34 +128,39 @@ const UserForm = <T, U>({
         }}
         helperText={formError?.email?.message}
         {...register("email", {
-          required: "Email is required",
+          required: t("Email is required"),
           pattern: {
-            message: "Invalid email address",
+            message: t("Invalid email address"),
             value: EMAIL_REGEX,
           },
         })}
         error={Boolean(formError?.email)}
         placeholder="johndoe@mail.com"
-        label="Email address"
+        label={t("Email address")}
         required
       />
 
       <TextField
         {...register("username", {
           pattern: {
-            message:
-              "Username should be in lowercase and can have numbers. The only allowed special characters are '_' and '.'",
+            message: t(
+              "Username should be in lowercase and can have numbers The only allowed special characters are '_' and ''",
+            ),
             value: USERNAME_REGEX,
           },
           maxLength: {
-            message: `Username must be less than ${USERNAME_MAX_LENGTH} characters`,
+            message: t("Username must be less than {maxLength} characters", {
+              maxLength: USERNAME_MAX_LENGTH,
+            }),
             value: USERNAME_MAX_LENGTH,
           },
           minLength: {
-            message: `Username must be at least ${USERNAME_MIN_LENGTH} characters`,
+            message: t("Username must be at least {minLength} characters", {
+              minLength: USERNAME_MIN_LENGTH,
+            }),
             value: USERNAME_MIN_LENGTH,
           },
-          required: "Username is required",
+          required: t("Username is required"),
         })}
         InputProps={{
           startAdornment: (
@@ -165,7 +172,7 @@ const UserForm = <T, U>({
         helperText={formError?.username?.message}
         error={Boolean(formError?.username)}
         placeholder="johndoesmith"
-        label="Username"
+        label={t("Username")}
         required
       />
 
@@ -193,16 +200,18 @@ const UserForm = <T, U>({
         error={Boolean(formError?.password)}
         {...register("password", {
           minLength: {
-            message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters`,
+            message: t("Password must be at least {minLength} characters", {
+              minLength: PASSWORD_MIN_LENGTH,
+            }),
             value: PASSWORD_MIN_LENGTH,
           },
           ...(isPasswordRequired && {
-            required: "Password is required",
+            required: t("Password is required"),
           }),
         })}
         required={isPasswordRequired}
         placeholder="●●●●●●●●"
-        label="Password"
+        label={t("Password")}
       />
 
       <TextField
@@ -225,16 +234,16 @@ const UserForm = <T, U>({
           ),
         }}
         {...register("repeatedPassword", {
-          validate: value => value === password || "Passwords don't match",
+          validate: value => value === password || t("Passwords don't match"),
           ...(isPasswordRequired && {
-            required: "This field is required",
+            required: t("This field is required"),
           }),
         })}
         type={isRepeatedPasswordVisible ? "text" : "password"}
         helperText={formError?.repeatedPassword?.message}
         error={Boolean(formError?.repeatedPassword)}
         required={isPasswordRequired}
-        label="Repeat password"
+        label={t("Repeat password")}
         placeholder="●●●●●●●●"
       />
 
@@ -247,7 +256,7 @@ const UserForm = <T, U>({
           disabled={isLoading}
           variant="contained"
         >
-          {saveButtonLabel}
+          {saveButtonLabel || t("Save")}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>

@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 
@@ -11,17 +12,21 @@ interface Props {
   children: ReactNode;
 }
 
-const NewStockInLayout = ({ children }: Readonly<Props>) => (
-  <div className="flex flex-col gap-5">
-    <div className="flex flex-row gap-5 items-center justify-between">
-      <h1>New purchase</h1>
+const NewStockInLayout = async ({ children }: Readonly<Props>) => {
+  const t = await getTranslations("stock.in");
 
-      <ReturnButton className="w-fit">Cancel</ReturnButton>
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-row gap-5 items-center justify-between">
+        <h1>{t("New purchase")}</h1>
+
+        <ReturnButton className="w-fit">{t("Cancel")}</ReturnButton>
+      </div>
+
+      {children}
     </div>
-
-    {children}
-  </div>
-);
+  );
+};
 
 export default NewStockInLayout;
 export { metadata };

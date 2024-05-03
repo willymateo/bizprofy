@@ -1,5 +1,6 @@
 import MaterialToolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
@@ -27,6 +28,8 @@ type Props = {
 };
 
 const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
+  const t = useTranslations();
+
   const transactionDateGreaterThanOrEqualToStore = useSelector(
     (state: Store) =>
       state?.stockOut?.filters?.[warehouse?.id ?? ""]?.transactionDateGreaterThanOrEqualTo ||
@@ -90,7 +93,7 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
               rules={{ required: "This field is required" }}
               maxDateTime={transactionDateLessThanOrEqualTo}
               name="transactionDateGreaterThanOrEqualTo"
-              label="Start transaction date"
+              label={t("Start transaction date")}
               control={control}
               className="grow"
               closeOnSelect
@@ -100,7 +103,7 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
               minDateTime={transactionDateGreaterThanOrEqualTo}
               rules={{ required: "This field is required" }}
               name="transactionDateLessThanOrEqualTo"
-              label="End transaction date"
+              label={t("End transaction date")}
               control={control}
               className="grow"
               closeOnSelect
@@ -111,7 +114,7 @@ const ToolBar = ({ numRowsSelected = 0, warehouse }: Props) => {
               onClick={applyFilters}
               variant="contained"
             >
-              Search
+              {t("Search")}
             </Button>
           </>
         )}

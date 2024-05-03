@@ -3,17 +3,17 @@ import { HeaderColumnTypes, HeaderColumns } from "./interfaces";
 const HEADER_COLUMNS: HeaderColumns[] = [
   {
     id: HeaderColumnTypes.idCard,
-    label: "ID Card",
+    label: "ID card",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.firstNames,
-    label: "First Names",
+    label: "First names",
     className: "text-center whitespace-nowrap",
   },
   {
     id: HeaderColumnTypes.lastNames,
-    label: "Last Names",
+    label: "Last names",
     className: "text-center whitespace-nowrap",
   },
   {
@@ -23,7 +23,7 @@ const HEADER_COLUMNS: HeaderColumns[] = [
   },
   {
     id: HeaderColumnTypes.phoneNumber,
-    label: "Phone Number",
+    label: "Phone number",
     className: "text-center whitespace-nowrap",
   },
   {

@@ -4,6 +4,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import { ChangeEvent, Dispatch } from "react";
+import { useTranslations } from "next-intl";
 
 import { StockIn } from "@/services/stock/in/interfaces";
 import { HEADER_COLUMNS } from "./constants";
@@ -28,6 +29,8 @@ const Header = ({
   rows = [],
   orderBy,
 }: Props) => {
+  const t = useTranslations();
+
   const selectAll = ({ target: { checked = false } }: ChangeEvent<HTMLInputElement>) => {
     if (checked) {
       const newSelectedRows: Record<string, StockIn> = {};
@@ -65,7 +68,7 @@ const Header = ({
               active={orderBy === id.toString()}
               hideSortIcon
             >
-              {label}
+              {t(label)}
             </TableSortLabel>
           </TableCell>
         ))}

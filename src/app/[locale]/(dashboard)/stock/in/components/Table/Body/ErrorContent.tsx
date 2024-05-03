@@ -1,26 +1,31 @@
 import Typography from "@mui/material/Typography";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 
 import { HEADER_COLUMNS } from "../constants";
 
-const ErrorContent = () => (
-  <TableRow>
-    <TableCell align="center" colSpan={HEADER_COLUMNS.length + 2} className="h-[436px]">
-      <div className="flex flex-col justify-center items-center gap-5">
-        <Icon icon="solar:cloud-cross-line-duotone" height={150} width={150} />
+const ErrorContent = () => {
+  const t = useTranslations();
 
-        <div className="flex flex-col justify-center items-center">
-          <Typography variant="h6">This is unexpected for us</Typography>
+  return (
+    <TableRow>
+      <TableCell align="center" colSpan={HEADER_COLUMNS.length + 2} className="h-[436px]">
+        <div className="flex flex-col justify-center items-center gap-5">
+          <Icon icon="solar:cloud-cross-line-duotone" height={150} width={150} />
 
-          <Typography variant="body2">
-            We couldn't load the data. Please try again later.
-          </Typography>
+          <div className="flex flex-col justify-center items-center">
+            <Typography variant="h6">{t("This is unexpected for us")}</Typography>
+
+            <Typography variant="body2">
+              {t("We couldn't load the data Please try again later")}.
+            </Typography>
+          </div>
         </div>
-      </div>
-    </TableCell>
-  </TableRow>
-);
+      </TableCell>
+    </TableRow>
+  );
+};
 
 export { ErrorContent };

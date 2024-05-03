@@ -5,6 +5,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import { getProducts } from "@/services/products";
 import TextField from "@mui/material/TextField";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 
 import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
@@ -23,6 +24,7 @@ const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
     field: { value, onChange: hookFormOnChange, onBlur },
     fieldState: { error },
   } = useController(props);
+  const t = useTranslations();
 
   const fetchProducts = async ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
     if (value?.length < MIN_CHARACTERS_TO_SEARCH) {
@@ -71,11 +73,11 @@ const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
               params.InputProps?.endAdornment
             ),
           }}
-          placeholder="Type code, name or description of a product"
+          placeholder={t("Type code, name or description of a product")}
           helperText={error?.message}
           onChange={fetchProducts}
           error={Boolean(error)}
-          label="Product"
+          label={t("Product")}
         />
       )}
       filterOptions={option => option}

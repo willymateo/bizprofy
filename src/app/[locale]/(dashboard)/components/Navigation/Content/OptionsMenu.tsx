@@ -3,6 +3,7 @@
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 
@@ -11,9 +12,10 @@ import { MenuOption } from "../interfaces";
 
 const OptionsMenu = () => {
   const pathname = usePathname();
+  const t = useTranslations();
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2">
       {MENU_OPTIONS.map(({ label = "", path = "", icon = "" }: MenuOption, index) => {
         const isSelected = pathname === path;
 
@@ -29,7 +31,7 @@ const OptionsMenu = () => {
             >
               <Icon icon={icon} width={32} height={32} />
 
-              <Typography>{label}</Typography>
+              <Typography>{t(label)}</Typography>
             </ListItemButton>
           </Link>
         );

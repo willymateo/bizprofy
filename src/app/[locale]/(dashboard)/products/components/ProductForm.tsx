@@ -3,6 +3,7 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
@@ -28,7 +29,7 @@ interface FormInputs extends Omit<CreateProductPayload, "productCategoryId" | "p
   provider: Provider | null;
 }
 
-const ProductForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props<T, U>) => {
+const ProductForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -47,6 +48,7 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props
       name: props.name ?? "",
     },
   });
+  const t = useTranslations();
   const router = useRouter();
 
   const handleCreate = handleSubmit(async ({ provider, productCategory, ...data }) => {
@@ -82,11 +84,11 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props
           ),
         }}
         {...register("name", {
-          required: "Product name is required",
+          required: t("Product name is required"),
         })}
         helperText={formError?.name?.message}
         error={Boolean(formError?.name)}
-        label="Product name"
+        label={t("Product name")}
         required
       />
 
@@ -101,12 +103,12 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props
         }}
         helperText={formError?.unitCost?.message}
         {...register("unitCost", {
-          required: "Unit cost is required",
+          required: t("Unit cost is required"),
           valueAsNumber: true,
           min: 0,
         })}
         error={Boolean(formError?.unitCost)}
-        label="Unit cost"
+        label={t("Unit cost")}
         required
       />
 
@@ -122,11 +124,11 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props
         helperText={formError?.unitPrice?.message}
         error={Boolean(formError?.unitPrice)}
         {...register("unitPrice", {
-          required: "Unit price is required",
+          required: t("Unit price is required"),
           valueAsNumber: true,
           min: 0,
         })}
-        label="Unit price"
+        label={t("Unit price")}
         required
       />
 
@@ -140,8 +142,8 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props
         }}
         helperText={formError?.code?.message}
         error={Boolean(formError?.code)}
+        label={t("Product code")}
         {...register("code")}
-        label="Product code"
       />
 
       <TextField
@@ -154,7 +156,7 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props
         }}
         helperText={formError?.description?.message}
         error={Boolean(formError?.description)}
-        label="Additional description"
+        label={t("Additional description")}
         {...register("description")}
         multiline
         rows={3}
@@ -173,7 +175,7 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props
           disabled={isLoading}
           variant="contained"
         >
-          {saveButtonLabel}
+          {saveButtonLabel || t("Save")}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>

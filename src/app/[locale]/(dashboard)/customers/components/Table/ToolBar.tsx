@@ -2,6 +2,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import MaterialToolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
+import { useTranslations } from "next-intl";
 import Tooltip from "@mui/material/Tooltip";
 import { Icon } from "@iconify-icon/react";
 import { TextField } from "@mui/material";
@@ -14,6 +15,8 @@ interface Props extends GetCustomersPayload {
 }
 
 const ToolBar = ({ numRowsSelected = 0 }: Props) => {
+  const t = useTranslations();
+
   return (
     <MaterialToolbar
       className="flex flex-row flex-wrap items-center justify-center gap-3 py-7"
@@ -39,12 +42,12 @@ const ToolBar = ({ numRowsSelected = 0 }: Props) => {
                 </InputAdornment>
               ),
             }}
-            placeholder="Search..."
+            placeholder={`${t("Search")}...`}
             className="grow"
           />
 
           <Button variant="contained" endIcon={<Icon icon="icon-park-outline:search" />}>
-            Search
+            {t("Search")}
           </Button>
 
           <Tooltip title="Filter list">

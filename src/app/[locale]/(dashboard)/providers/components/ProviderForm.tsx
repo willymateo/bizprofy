@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
@@ -19,7 +20,7 @@ type Props<T, U> = {
   saveButtonLabel?: string;
 } & Partial<Provider>;
 
-const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props<T, U>) => {
+const ProviderForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -37,6 +38,7 @@ const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Prop
       email: props.email ?? "",
     },
   });
+  const t = useTranslations();
   const router = useRouter();
 
   const handleCreate = handleSubmit(async data => {
@@ -69,11 +71,11 @@ const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Prop
         }}
         helperText={formError?.companyName?.message}
         {...register("companyName", {
-          required: "Company name is required",
+          required: t("Company name is required"),
         })}
         error={Boolean(formError?.companyName)}
-        placeholder="Company Inc."
-        label="Company name"
+        placeholder={t("Company Inc")}
+        label={t("Company name")}
         required
       />
 
@@ -87,11 +89,11 @@ const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Prop
         }}
         helperText={formError?.firstNames?.message}
         {...register("firstNames", {
-          required: "First names are required",
+          required: t("First names are required"),
         })}
         error={Boolean(formError?.firstNames)}
         placeholder="John William"
-        label="First names"
+        label={t("First names")}
         required
       />
 
@@ -105,11 +107,11 @@ const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Prop
         }}
         helperText={formError?.lastNames?.message}
         {...register("lastNames", {
-          required: "Last names are required",
+          required: t("Last names are required"),
         })}
         error={Boolean(formError?.lastNames)}
         placeholder="Doe Smith"
-        label="Last names"
+        label={t("Last names")}
         required
       />
 
@@ -125,7 +127,7 @@ const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Prop
         error={Boolean(formError?.idCard)}
         {...register("idCard", {})}
         placeholder="1234567890"
-        label="Id card"
+        label={t("ID card")}
       />
 
       <TextField
@@ -139,13 +141,13 @@ const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Prop
         helperText={formError?.email?.message}
         {...register("email", {
           pattern: {
-            message: "Invalid email address",
+            message: t("Invalid email address"),
             value: EMAIL_REGEX,
           },
         })}
         error={Boolean(formError?.email)}
         placeholder="johndoe@mail.com"
-        label="Email address"
+        label={t("Email address")}
       />
 
       <TextField
@@ -160,7 +162,7 @@ const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Prop
         error={Boolean(formError?.phoneNumber)}
         {...register("phoneNumber", {})}
         placeholder="+1 99 999 9999"
-        label="Phone number"
+        label={t("Phone number")}
       />
 
       <TextField
@@ -171,11 +173,11 @@ const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Prop
             </InputAdornment>
           ),
         }}
+        placeholder={t("1234 Main St, City, Country")}
         helperText={formError?.address?.message}
         error={Boolean(formError?.address)}
         {...register("address", {})}
-        placeholder="1234 Main St, City, Country"
-        label="Address"
+        label={t("Address")}
       />
 
       {error && <Alert severity="error">{error}</Alert>}
@@ -187,7 +189,7 @@ const ProviderForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Prop
           disabled={isLoading}
           variant="contained"
         >
-          {saveButtonLabel}
+          {saveButtonLabel || t("Save")}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>

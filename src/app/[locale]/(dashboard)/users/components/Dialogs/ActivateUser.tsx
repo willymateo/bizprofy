@@ -3,6 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -26,6 +27,7 @@ const ActivateUser = ({
 }: Props) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<Error | null>(null);
+  const t = useTranslations();
   const router = useRouter();
 
   const activateUser = async () => {
@@ -54,17 +56,19 @@ const ActivateUser = ({
 
   return (
     <Dialog onClose={onClose} open={isOpen}>
-      <DialogTitle>Activate user</DialogTitle>
+      <DialogTitle>{t("Activate user")}</DialogTitle>
 
       <DialogContent className="flex flex-col gap-5 items-center">
         {error ? (
           <Alert variant="filled" severity="error" className="w-full">
-            An error occurred while activating the user. Please try again later.
+            {t("An error occurred while activating the user Please try again later")}.
           </Alert>
         ) : null}
 
         <DialogContentText>
-          Are you sure you want to activate the user <strong>{username}</strong> with email{" "}
+          {`${t("Are you sure you want to activate the user")} `}
+          <strong>{username}</strong>
+          {` ${t("with email")} `}
           <strong>{email}</strong>?
         </DialogContentText>
 
@@ -73,11 +77,11 @@ const ActivateUser = ({
 
       <DialogActions>
         <Button onClick={onClose} disabled={isLoading}>
-          Cancel
+          {t("Cancel")}
         </Button>
 
         <Button onClick={activateUser} autoFocus disabled={isLoading}>
-          Yes, activate
+          {t("Yes, activate")}
         </Button>
       </DialogActions>
     </Dialog>

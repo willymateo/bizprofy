@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
@@ -21,7 +22,7 @@ type Props<T, U> = {
   saveButtonLabel?: string;
 } & Partial<ProductCategory>;
 
-const ProductCategoryForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props<T, U>) => {
+const ProductCategoryForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -33,6 +34,7 @@ const ProductCategoryForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props 
       name: props.name ?? "",
     },
   });
+  const t = useTranslations();
   const router = useRouter();
 
   const handleCreate = handleSubmit(async data => {
@@ -64,11 +66,11 @@ const ProductCategoryForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props 
           ),
         }}
         {...register("name", {
-          required: "Product category name is required",
+          required: t("Product category name is required"),
         })}
         helperText={formError?.name?.message}
+        label={t("Product category name")}
         error={Boolean(formError?.name)}
-        label="Product category name"
         required
       />
 
@@ -81,7 +83,7 @@ const ProductCategoryForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props 
           disabled={isLoading}
           variant="contained"
         >
-          {saveButtonLabel}
+          {saveButtonLabel ?? t("Save")}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>

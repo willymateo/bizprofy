@@ -1,3 +1,5 @@
+import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -35,9 +37,14 @@ const UsersPage = async ({ searchParams: { limit = PAGE_SIZE_OPTIONS[0], offset 
     limit,
   });
 
+  const messages = await getMessages();
+  const usersMessages = messages?.users as AbstractIntlMessages;
+
   return (
     <Layout>
-      <Table {...data} offset={offset} limit={limit} />
+      <NextIntlClientProvider messages={usersMessages}>
+        <Table {...data} offset={offset} limit={limit} />
+      </NextIntlClientProvider>
     </Layout>
   );
 };

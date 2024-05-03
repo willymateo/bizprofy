@@ -3,6 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -22,6 +23,7 @@ type Props = {
 const ActivateProduct = ({ product: { id = "", name = "" }, isOpen = false, onClose }: Props) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<Error | null>(null);
+  const t = useTranslations();
   const router = useRouter();
 
   const activateProduct = async () => {
@@ -50,17 +52,17 @@ const ActivateProduct = ({ product: { id = "", name = "" }, isOpen = false, onCl
 
   return (
     <Dialog onClose={onClose} open={isOpen}>
-      <DialogTitle>Activate product</DialogTitle>
+      <DialogTitle>{t("Activate product")}</DialogTitle>
 
       <DialogContent className="flex flex-col gap-5 items-center">
         {error ? (
           <Alert variant="filled" severity="error" className="w-full">
-            An error occurred while activating the product. Please try again later.
+            {t("An error occurred while activating the product Please try again later")}.
           </Alert>
         ) : null}
 
         <DialogContentText>
-          Are you sure you want to activate the product <strong>{name}</strong>?
+          {`${t("Are you sure you want to activate the product")}`} <strong>{name}</strong>?
         </DialogContentText>
 
         {isLoading ? <CircularProgress /> : null}
@@ -68,11 +70,11 @@ const ActivateProduct = ({ product: { id = "", name = "" }, isOpen = false, onCl
 
       <DialogActions>
         <Button onClick={onClose} disabled={isLoading}>
-          Cancel
+          {t("Cancel")}
         </Button>
 
         <Button onClick={activateProduct} autoFocus disabled={isLoading}>
-          Yes, activate
+          {t("Yes, activate")}
         </Button>
       </DialogActions>
     </Dialog>

@@ -2,6 +2,7 @@ import TableFooter from "@mui/material/TableFooter";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Skeleton from "@mui/material/Skeleton";
+import { useTranslations } from "next-intl";
 
 import { SummarizedCurrentStockData } from "@/services/stock/current/interfaces";
 import { NUM_DECIMALS } from "@/shared/constants";
@@ -21,6 +22,8 @@ const Footer = ({
   totalCostSum = 0,
   profit = 0,
 }: Props) => {
+  const t = useTranslations();
+
   if (isLoading) {
     return (
       <TableFooter className="sticky bottom-0 bg-white">
@@ -38,8 +41,8 @@ const Footer = ({
   return (
     <TableFooter className="sticky bottom-0 bg-white">
       <TableRow>
-        <TableCell className="font-bold text-right whitespace-nowrap sticky left-0 text-lg bg-white">
-          Total
+        <TableCell className="font-bold whitespace-nowrap sticky left-0 text-lg bg-white">
+          {t("Total")}
         </TableCell>
 
         <TableCell />
@@ -72,8 +75,8 @@ const Footer = ({
       </TableRow>
 
       <TableRow>
-        <TableCell className="font-bold text-right whitespace-nowrap sticky left-0 text-lg bg-white">
-          Profit
+        <TableCell className="font-bold whitespace-nowrap sticky left-0 text-lg bg-white">
+          {t("Profit")}
         </TableCell>
 
         <TableCell />

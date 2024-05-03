@@ -3,6 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -22,6 +23,7 @@ type Props = {
 const DeactivateProduct = ({ product: { id = "", name = "" }, isOpen = false, onClose }: Props) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<Error | null>(null);
+  const t = useTranslations();
   const router = useRouter();
 
   const deactivateProduct = async () => {
@@ -50,17 +52,18 @@ const DeactivateProduct = ({ product: { id = "", name = "" }, isOpen = false, on
 
   return (
     <Dialog onClose={onClose} open={isOpen}>
-      <DialogTitle>Deactivate product</DialogTitle>
+      <DialogTitle>{t("Deactivate product")}</DialogTitle>
 
       <DialogContent className="flex flex-col gap-5 items-center">
         {error ? (
           <Alert variant="filled" severity="error" className="w-full">
-            An error occurred while deactivating the product. Please try again later.
+            {t("An error occurred while deactivating the product Please try again later")}.
           </Alert>
         ) : null}
 
         <DialogContentText>
-          Are you sure you want to deactivate the product<strong>{name}</strong>?
+          {`${t("Are you sure you want to deactivate the product")} `}
+          <strong>{name}</strong>?
         </DialogContentText>
 
         {isLoading ? <CircularProgress /> : null}
@@ -68,11 +71,11 @@ const DeactivateProduct = ({ product: { id = "", name = "" }, isOpen = false, on
 
       <DialogActions>
         <Button onClick={onClose} disabled={isLoading}>
-          Cancel
+          {t("Cancel")}
         </Button>
 
         <Button onClick={deactivateProduct} autoFocus disabled={isLoading}>
-          Yes, deactivate
+          {t("Yes, deactivate")}
         </Button>
       </DialogActions>
     </Dialog>

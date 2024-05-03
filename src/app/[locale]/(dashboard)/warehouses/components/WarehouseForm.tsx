@@ -3,6 +3,7 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
@@ -18,7 +19,7 @@ type Props<T, U> = {
   saveButtonLabel?: string;
 } & Partial<Warehouse>;
 
-const WarehouseForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Props<T, U>) => {
+const WarehouseForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -31,6 +32,7 @@ const WarehouseForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Pro
       name: props.name ?? "",
     },
   });
+  const t = useTranslations();
   const router = useRouter();
 
   const handleCreate = handleSubmit(async data => {
@@ -63,9 +65,9 @@ const WarehouseForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Pro
         }}
         helperText={formError?.code?.message}
         error={Boolean(formError?.code)}
-        placeholder="warehouse-001"
+        placeholder={t("warehouse-001")}
+        label={t("Warehouse code")}
         {...register("code", {})}
-        label="Warehouse code"
       />
 
       <TextField
@@ -76,13 +78,13 @@ const WarehouseForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Pro
             </InputAdornment>
           ),
         }}
-        helperText={formError?.name?.message}
         {...register("name", {
-          required: "Warehouse name is required",
+          required: t("Warehouse name is required"),
         })}
+        placeholder={t("Downtown warehouse")}
+        helperText={formError?.name?.message}
         error={Boolean(formError?.name)}
-        placeholder="Downtown warehouse"
-        label="Warehouse name"
+        label={t("Warehouse name")}
         required
       />
 
@@ -95,7 +97,7 @@ const WarehouseForm = <T, U>({ onSave, saveButtonLabel = "Save", ...props }: Pro
           disabled={isLoading}
           variant="contained"
         >
-          {saveButtonLabel}
+          {saveButtonLabel || t("Save")}
           {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
         </Button>
       </div>

@@ -1,18 +1,15 @@
 "use client";
 
-import { ElementType, ReactNode, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import { useTranslations } from "next-intl";
 import Button from "@mui/material/Button";
+import { useEffect } from "react";
+import { Props } from "./types";
 
-type Props = {
-  error: Error & { digest?: string };
-  Layout: ElementType;
-  Icon: ReactNode;
-  reset: () => void;
-};
+const Content = ({ error, reset, Layout, Icon }: Props) => {
+  const t = useTranslations();
 
-const ErrorBoundary = ({ error, reset, Layout, Icon }: Props) => {
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -27,10 +24,10 @@ const ErrorBoundary = ({ error, reset, Layout, Icon }: Props) => {
         {Icon}
 
         <div className="flex flex-col justify-center items-center">
-          <Typography variant="h6">This is unexpected for us</Typography>
+          <Typography variant="h6">{t("This is unexpected for us")}</Typography>
 
           <p>
-            Error hash:{" "}
+            {`${t("Error hash:")} `}
             <Tooltip title="Click to copy" arrow followCursor placement="top">
               <strong className="cursor-pointer" onClick={copyErrorDigest}>
                 {error.digest}
@@ -40,11 +37,11 @@ const ErrorBoundary = ({ error, reset, Layout, Icon }: Props) => {
         </div>
 
         <Button className="rounded-lg normal-case" variant="contained" onClick={reset}>
-          Try again
+          {t("Try again")}
         </Button>
       </div>
     </Layout>
   );
 };
 
-export { ErrorBoundary };
+export { Content };

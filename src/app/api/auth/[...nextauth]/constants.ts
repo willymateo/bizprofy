@@ -61,7 +61,12 @@ const authConfig: AuthOptions = {
     },
   },
   secret: process.env.NEXTAUTH_SECRET as string,
-  pages: { signIn: "/auth/login" },
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error", // Error code passed in query string as ?error=
+    verifyRequest: "/auth/verify", // Used for check email message
+    newUser: "/auth/signUp", // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
   session: { strategy: "jwt" },
 };
 

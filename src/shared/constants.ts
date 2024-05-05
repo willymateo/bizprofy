@@ -17,14 +17,14 @@ const LANGUAGE_CODES = {
 
 const LANGUAGES_DATA = {
   [LANGUAGE_CODES.ENGLISH]: {
+    value: LANGUAGE_CODES.ENGLISH,
     imgUrl: "/images/gb.svg",
     label: "English",
-    value: "en",
   },
   [LANGUAGE_CODES.SPANISH]: {
+    value: LANGUAGE_CODES.SPANISH,
     imgUrl: "/images/es.svg",
     label: "Spanish",
-    value: "es",
   },
 };
 

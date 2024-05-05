@@ -1,0 +1,184 @@
+"use client";
+
+import CircularProgress from "@mui/material/CircularProgress";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
+import { useRouter } from "next/navigation";
+import { Icon } from "@iconify-icon/react";
+import Button from "@mui/material/Button";
+import { useForm } from "react-hook-form";
+import Alert from "@mui/material/Alert";
+import { useState } from "react";
+
+import { CreateCustomerPayload, Customer } from "@/services/customers/interfaces";
+import { EMAIL_REGEX } from "@/shared/constants";
+import { useActive } from "@/hooks/useActive";
+import { useTranslations } from "next-intl";
+
+type Props<T, U> = {
+  onSave: (data: T) => Promise<U>;
+  saveButtonLabel?: string;
+} & Partial<Customer>;
+
+const CustomerForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) => {
+  const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
+  const [error, setError] = useState<string>("");
+  const {
+    formState: { errors: formError },
+    handleSubmit,
+    register,
+  } = useForm<CreateCustomerPayload>({
+    values: {
+      phoneNumber: props.phoneNumber ?? "",
+      firstNames: props.firstNames ?? "",
+      lastNames: props.lastNames ?? "",
+      address: props.address ?? "",
+      idCard: props.idCard ?? "",
+      email: props.email ?? "",
+    },
+  });
+  const t = useTranslations();
+  const router = useRouter();
+
+  const handleCreate = handleSubmit(async data => {
+    startLoading();
+    setError("");
+
+    try {
+      await onSave(data as T);
+
+      stopLoading();
+      router.push("/customers");
+      router.refresh();
+    } catch (err) {
+      console.error("Error creating customer", err);
+
+      setError((err as Error).message);
+      stopLoading();
+    }
+  });
+
+  return (
+    <form className="flex flex-col gap-5 justify-center">
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:card-2-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.idCard?.message}
+        error={Boolean(formError?.idCard)}
+        {...register("idCard", {
+          required: t("ID card is required"),
+        })}
+        placeholder="1234567890"
+        label={t("ID card")}
+        required
+      />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:user-hands-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.firstNames?.message}
+        {...register("firstNames", {
+          required: t("First names are required"),
+        })}
+        error={Boolean(formError?.firstNames)}
+        placeholder="John William"
+        label={t("First names")}
+        required
+      />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:user-hands-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.lastNames?.message}
+        {...register("lastNames", {
+          required: t("Last names are required"),
+        })}
+        error={Boolean(formError?.lastNames)}
+        placeholder="Doe Smith"
+        label={t("Last names")}
+        required
+      />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:chat-line-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.email?.message}
+        {...register("email", {
+          pattern: {
+            message: t("Invalid email address"),
+            value: EMAIL_REGEX,
+          },
+        })}
+        error={Boolean(formError?.email)}
+        placeholder="johndoe@mail.com"
+        label={t("Email address")}
+      />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:phone-calling-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.phoneNumber?.message}
+        error={Boolean(formError?.phoneNumber)}
+        {...register("phoneNumber", {})}
+        placeholder="+1 99 999 9999"
+        label={t("Phone number")}
+      />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:point-on-map-bold-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        placeholder={t("1234 Main St, City, Country")}
+        helperText={formError?.address?.message}
+        error={Boolean(formError?.address)}
+        {...register("address", {})}
+        label={t("Address")}
+      />
+
+      {error && <Alert severity="error">{error}</Alert>}
+
+      <div className="flex flex-row items-center justify-center">
+        <Button
+          className="flex flex-row gap-3 rounded-lg normal-case"
+          onClick={handleCreate}
+          disabled={isLoading}
+          variant="contained"
+        >
+          {saveButtonLabel || t("Save")}
+          {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+        </Button>
+      </div>
+    </form>
+  );
+};
+
+export { CustomerForm };

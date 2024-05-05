@@ -120,7 +120,7 @@ const createWarehouse = async (payload: CreateWarehousePayload): Promise<Warehou
   return resBody;
 };
 
-const editWarehouse = async ({
+const editWarehouseById = async ({
   id = "",
   payload,
 }: {
@@ -186,8 +186,8 @@ const manageWarehouseActivationById = async ({
 
 export {
   manageWarehouseActivationById,
+  editWarehouseById,
   getWarehouseById,
   createWarehouse,
   getWarehouses,
-  editWarehouse,
 };

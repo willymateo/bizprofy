@@ -120,7 +120,7 @@ const createCustomer = async (payload: CreateCustomerPayload): Promise<Customer>
   return resBody;
 };
 
-const editCustomer = async ({
+const editCustomerById = async ({
   id = "",
   payload,
 }: {
@@ -186,8 +186,8 @@ const manageCustomerActivationById = async ({
 
 export {
   manageCustomerActivationById,
+  editCustomerById,
   getCustomerById,
   createCustomer,
   getCustomers,
-  editCustomer,
 };

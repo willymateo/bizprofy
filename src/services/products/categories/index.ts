@@ -122,7 +122,7 @@ const createProductCategory = async (
   return resBody;
 };
 
-const editProductCategory = async ({
+const editProductCategoryById = async ({
   id = "",
   payload,
 }: {
@@ -188,8 +188,8 @@ const manageProductCategoryActivationById = async ({
 
 export {
   manageProductCategoryActivationById,
+  editProductCategoryById,
   getProductCategoryById,
   createProductCategory,
   getProductCategories,
-  editProductCategory,
 };

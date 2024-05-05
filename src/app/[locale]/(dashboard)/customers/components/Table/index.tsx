@@ -1,0 +1,113 @@
+"use client";
+
+import TablePagination from "@mui/material/TablePagination";
+import { ChangeEvent, MouseEvent, useState } from "react";
+import TableContainer from "@mui/material/TableContainer";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import MuiTable from "@mui/material/Table";
+import Card from "@mui/material/Card";
+
+import { PAGE_SIZE_OPTIONS } from "./constants";
+import {
+  Customer,
+  GetCustomersPayload,
+  GetCustomersResponse,
+} from "@/services/customers/interfaces";
+import { Order } from "./interfaces";
+import { ToolBar } from "./ToolBar";
+import { Header } from "./Header";
+import { Body } from "./Body";
+
+interface Props extends GetCustomersPayload, GetCustomersResponse {
+  className?: string;
+}
+
+const Table = ({
+  limit = PAGE_SIZE_OPTIONS[0],
+  className = "",
+  offset = 0,
+  count = 0,
+  rows = [],
+}: Props) => {
+  const [selectedRows, setSelectedRows] = useState<Record<string, Customer>>({});
+  const [orderDirection, setOrderDirection] = useState<Order>(Order.asc);
+  const [orderBy, setOrderBy] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
+  const t = useTranslations();
+  const router = useRouter();
+
+  const handleSort = (id: string = "") => {
+    const isAsc = orderBy === id && orderDirection === Order.asc;
+
+    if (id) {
+      setOrderDirection(isAsc ? Order.desc : Order.asc);
+      setOrderBy(id);
+    }
+  };
+
+  const handleChangePage = (event: MouseEvent<HTMLButtonElement> | null, newPage: number) =>
+    router.replace(
+      `/customers?${new URLSearchParams({
+        offset: (newPage * limit).toString(),
+        limit: limit.toString(),
+      })}`,
+    );
+
+  const handleChangePageSize = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    router.replace(
+      `/customers?${new URLSearchParams({
+        limit: value,
+        offset: "0",
+      })}`,
+    );
+
+  const handleChangeQuery = ({ target: { value = "" } }: ChangeEvent<HTMLInputElement>) => {
+    // setCurrentPageNumber(0);
+    setQuery(value);
+  };
+
+  return (
+    <Card className={`flex flex-col ${className}`}>
+      <ToolBar numRowsSelected={Object.keys(selectedRows).length} offset={offset} limit={limit} />
+
+      <TableContainer className="max-h-[35rem]">
+        <MuiTable stickyHeader>
+          <Header
+            numRowsSelected={Object.keys(selectedRows).length}
+            setSelectedRows={setSelectedRows}
+            orderDirection={orderDirection}
+            handleSort={handleSort}
+            numTotalRows={count}
+            orderBy={orderBy}
+            rows={rows}
+          />
+
+          <Body
+            setSelectedRows={setSelectedRows}
+            currentPageNumber={offset / limit}
+            selectedRows={selectedRows}
+            pageSize={limit}
+            count={count}
+            rows={rows}
+          />
+        </MuiTable>
+      </TableContainer>
+
+      <TablePagination
+        onRowsPerPageChange={handleChangePageSize}
+        rowsPerPageOptions={PAGE_SIZE_OPTIONS}
+        labelRowsPerPage={t("Rows per page")}
+        onPageChange={handleChangePage}
+        page={offset / limit}
+        rowsPerPage={limit}
+        component="div"
+        count={count}
+      />
+    </Card>
+  );
+};
+
+export { Table };

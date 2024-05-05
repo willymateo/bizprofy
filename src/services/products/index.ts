@@ -5,13 +5,13 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
 import { Order, SessionPayload } from "../interfaces";
 import {
+  ProductActivationPayload,
   CreateProductPayload,
   GetProductsResponse,
   GetProductsPayload,
   EditProductPayload,
   SimpleProduct,
   Product,
-  ProductActivationPayload,
 } from "./types";
 
 interface GetProductsProps extends GetProductsPayload {
@@ -56,7 +56,6 @@ const getProducts = async ({
   const user = session?.user as SessionPayload;
 
   const url = new URL("products", process.env.BIZPROFY_API_URL);
-
   const searchParams = new URLSearchParams();
 
   if (unitPriceGreaterThanOrEqualTo) {
@@ -133,7 +132,7 @@ const createProduct = async (payload: CreateProductPayload): Promise<SimpleProdu
   return resBody;
 };
 
-const editProduct = async ({
+const editProductById = async ({
   id = "",
   payload,
 }: {
@@ -197,4 +196,4 @@ const manageProductActivationById = async ({
   return resBody;
 };
 
-export { getProductById, createProduct, getProducts, editProduct, manageProductActivationById };
+export { getProductById, createProduct, getProducts, editProductById, manageProductActivationById };

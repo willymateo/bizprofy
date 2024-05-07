@@ -1,4 +1,4 @@
-# namegenius
+# bizprofy
 
 Business management system
 

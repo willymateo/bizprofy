@@ -9,7 +9,7 @@ import Menu from "@mui/material/Menu";
 import Image from "next/image";
 import Link from "next/link";
 
-import { LANGUAGES_DATA, LANGUAGE_CODES } from "@/shared/constants";
+import { LANGUAGES_DATA, LANGUAGE_CODES } from "@/constants";
 
 const LanguagePopover = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);

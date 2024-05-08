@@ -1,9 +1,11 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import Switch from "@mui/material/Switch";
 
 import { DeactivateProduct } from "../Dialogs/DeactivateProduct";
 import { ActivateProduct } from "../Dialogs/ActivateProduct";
+import { SessionPayload } from "@/services/interfaces";
 import { Product } from "@/services/products/types";
 import { useActive } from "@/hooks/useActive";
 
@@ -12,6 +14,9 @@ type Props = {
 };
 
 const ActivationSwitch = ({ product }: Props) => {
+  const { data: session } = useSession({ required: true });
+  const userSession = session?.user as SessionPayload;
+
   const {
     isActive: isDeactivateDialogOpen = false,
     disable: closeDeactivateDialog,
@@ -32,9 +37,22 @@ const ActivationSwitch = ({ product }: Props) => {
     openDeactivateDialog();
   };
 
+  const isEnabled = () => {
+    if (product?.deletedAt) {
+      return userSession?.entityPermissions?.products?.permissions?.activateProduct;
+    }
+
+    return userSession?.entityPermissions?.products?.permissions?.deactivateProduct;
+  };
+
   return (
     <>
-      <Switch checked={!product?.deletedAt} onClick={handleClickActivationSwitch} />
+      <Switch
+        onClick={handleClickActivationSwitch}
+        checked={!product?.deletedAt}
+        disabled={!isEnabled()}
+      />
+
       <ActivateProduct
         isOpen={isActivateDialogOpen}
         onClose={closeActivateDialog}

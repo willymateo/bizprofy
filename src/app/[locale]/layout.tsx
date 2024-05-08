@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
-import { ralewayVariable } from "@/shared/fonts";
-import { APP_ROOT_ID } from "@/shared/constants";
+import { ralewayVariable } from "@/fonts";
+import { APP_ROOT_ID } from "@/constants";
 import { Providers } from "./Providers";
 
 import "./globals.css";

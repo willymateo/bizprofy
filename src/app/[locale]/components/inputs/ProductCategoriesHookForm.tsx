@@ -9,10 +9,13 @@ import { Icon } from "@iconify-icon/react";
 
 import { ProductCategory } from "@/services/products/categories/types";
 import { getProductCategories } from "@/services/products/categories";
-import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
+import { MIN_CHARACTERS_TO_SEARCH } from "@/constants";
 import { useActive } from "@/hooks/useActive";
 
-const ProductCategoriesHookForm = <T extends FieldValues>(props: UseControllerProps<T>) => {
+const ProductCategoriesHookForm = <T extends FieldValues>({
+  disabled = false,
+  ...props
+}: UseControllerProps<T>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const abortControllerRef = useRef<AbortController | null>(null);
   const [options, setOptions] = useState<ProductCategory[]>([]);
@@ -81,6 +84,7 @@ const ProductCategoriesHookForm = <T extends FieldValues>(props: UseControllerPr
       getOptionLabel={({ name = "" }) => name}
       filterOptions={option => option}
       loading={isLoading}
+      disabled={disabled}
       options={options}
       onBlur={onBlur}
       value={value}

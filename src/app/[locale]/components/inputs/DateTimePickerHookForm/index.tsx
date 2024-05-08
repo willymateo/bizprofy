@@ -16,6 +16,7 @@ interface Props<T extends FieldValues> extends UseControllerProps<T> {
 const DateTimePickerHookForm = <T extends FieldValues>({
   closeOnSelect = true,
   format = DATE_FORMAT,
+  disabled = false,
   label = "Date",
   className = "",
   minDateTime,
@@ -42,6 +43,7 @@ const DateTimePickerHookForm = <T extends FieldValues>({
       maxDateTime={maxDateTime}
       className={className}
       onChange={onChange}
+      disabled={disabled}
       onClose={onBlur}
       format={format}
       label={label}

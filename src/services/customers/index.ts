@@ -1,9 +1,7 @@
 "use server";
 
-import { getServerSession } from "next-auth";
-
-import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { Order, SessionPayload } from "../interfaces";
+import { getUserSession } from "@/utils/auth";
+import { Order } from "../interfaces";
 import {
   CustomerActivationPayload,
   CreateCustomerPayload,
@@ -14,8 +12,7 @@ import {
 } from "./interfaces";
 
 const getCustomerById = async ({ id = "" }): Promise<Customer> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers/${id}`, {
     headers: {
@@ -45,8 +42,7 @@ const getCustomers = async ({
   limit = 5,
   q = "",
 }: GetCustomersPayload = {}): Promise<GetCustomersResponse> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const url = new URL("customers", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
@@ -95,8 +91,7 @@ const getCustomers = async ({
 };
 
 const createCustomer = async (payload: CreateCustomerPayload): Promise<Customer> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers`, {
     headers: {
@@ -127,8 +122,7 @@ const editCustomerById = async ({
   payload: EditCustomerPayload;
   id: string;
 }): Promise<Customer> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers/${id}`, {
     headers: {
@@ -159,8 +153,7 @@ const manageCustomerActivationById = async ({
   payload?: CustomerActivationPayload;
   id: string;
 }): Promise<Customer> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/customers/${id}/activation`, {
     headers: {

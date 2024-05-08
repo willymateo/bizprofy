@@ -1,7 +1,7 @@
 "use client";
 
-import { APP_ROOT_ID } from "@/shared/constants";
-import { ralewayVariable } from "@/shared/fonts";
+import { ralewayVariable } from "@/fonts";
+import { APP_ROOT_ID } from "@/constants";
 
 const GlobalError = () => (
   <html lang="en">

@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { NoProductCategoriesFound } from "./components/NoProductCategoriesFound";
 import { ProductCategoryCard } from "./components/ProductCategoryCard";
 import { getProductCategories } from "@/services/products/categories";
+import { UnAuthorized } from "@/app/[locale]/components/UnAuthorized";
+import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
 const metadata: Metadata = {
@@ -11,6 +13,14 @@ const metadata: Metadata = {
 };
 
 const ProductCategories = async () => {
+  const userSession = await getUserSession();
+
+  const hasAccess = userSession?.entityPermissions?.products?.hasAccess;
+
+  if (!hasAccess) {
+    return <UnAuthorized />;
+  }
+
   const { rows } = await getProductCategories();
 
   return (

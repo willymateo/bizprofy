@@ -3,12 +3,14 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import { MouseEvent, useState } from "react";
+import { useSession } from "next-auth/react";
 import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
 import Link from "next/link";
 import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "@/app/[locale]/components/inputs/DateTimePickerHookForm/constants";
+import { SessionPayload } from "@/services/interfaces";
 import { User } from "@/services/users/interfaces";
 import { Menu } from "./Menu";
 
@@ -19,6 +21,8 @@ type Props = User & {
 
 const UserRow = ({ onClick, isSelected = false, ...user }: Props) => {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+  const { data: session } = useSession({ required: true });
+  const userSession = session?.user as SessionPayload;
   const isMenuOpen = Boolean(anchorEl);
 
   const handleOpenMenu = ({ currentTarget }: MouseEvent<HTMLButtonElement>) =>
@@ -49,13 +53,13 @@ const UserRow = ({ onClick, isSelected = false, ...user }: Props) => {
             {user?.email ?? ""}
           </Link>
         </TableCell>
-        <TableCell className="whitespace-nowrap">
+        <TableCell className="whitespace-nowrap text-center">
           {user?.deletedAt ? <Chip label="Inactive" /> : <Chip label="Active" color="success" />}
         </TableCell>
-        <TableCell className="whitespace-nowrap">
+        <TableCell className="whitespace-nowrap text-center">
           {dayjs(user?.createdAt).format(DATE_FORMAT)}
         </TableCell>
-        <TableCell className="whitespace-nowrap">
+        <TableCell className="whitespace-nowrap text-center">
           {dayjs(user?.updatedAt).format(DATE_FORMAT)}
         </TableCell>
 

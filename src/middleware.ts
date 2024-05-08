@@ -3,7 +3,7 @@ import { withAuth } from "next-auth/middleware";
 import { NextRequest } from "next/server";
 
 import { authConfig } from "./app/api/auth/[...nextauth]/constants";
-import { LANGUAGE_CODES } from "./shared/constants";
+import { LANGUAGE_CODES } from "./constants";
 
 const publicPages = Object.values(authConfig?.pages ?? {});
 

@@ -1,10 +1,12 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import Switch from "@mui/material/Switch";
 
 import { DeactivateProductCategory } from "../Dialogs/DeactivateProductCategory";
 import { ActivateProductCategory } from "../Dialogs/ActivateProductCategory";
 import { ProductCategory } from "@/services/products/categories/types";
+import { SessionPayload } from "@/services/interfaces";
 import { useActive } from "@/hooks/useActive";
 
 type Props = {
@@ -12,6 +14,9 @@ type Props = {
 };
 
 const ActivationSwitch = ({ productCategory }: Props) => {
+  const { data: session } = useSession({ required: true });
+  const userSession = session?.user as SessionPayload;
+
   const {
     isActive: isDeactivateDialogOpen = false,
     disable: closeDeactivateDialog,
@@ -32,9 +37,22 @@ const ActivationSwitch = ({ productCategory }: Props) => {
     openDeactivateDialog();
   };
 
+  const isEnabled = () => {
+    if (productCategory?.deletedAt) {
+      return userSession?.entityPermissions?.products?.permissions?.activateProductCategory;
+    }
+
+    return userSession?.entityPermissions?.products?.permissions?.deactivateProductCategory;
+  };
+
   return (
     <>
-      <Switch checked={!productCategory?.deletedAt} onClick={handleClickActivationSwitch} />
+      <Switch
+        checked={!productCategory?.deletedAt}
+        onClick={handleClickActivationSwitch}
+        disabled={!isEnabled()}
+      />
+
       <ActivateProductCategory
         productCategory={productCategory}
         isOpen={isActivateDialogOpen}

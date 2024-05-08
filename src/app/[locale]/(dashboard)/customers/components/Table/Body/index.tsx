@@ -4,7 +4,7 @@ import TableRow from "@mui/material/TableRow";
 import { Dispatch } from "react";
 
 import { Customer, GetCustomersResponse } from "@/services/customers/interfaces";
-import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
+import { getNumRowsToCompleteTablePageSize } from "@/utils/tables";
 import { HEADER_COLUMNS } from "../constants";
 import { CustomerRow } from "./CustomerRow";
 import { NotFound } from "./NotFound";

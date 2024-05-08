@@ -20,13 +20,14 @@ import {
   PASSWORD_MIN_LENGTH,
   USERNAME_REGEX,
   EMAIL_REGEX,
-} from "@/shared/constants";
+} from "@/constants";
 
-type Props<T, U> = {
+type Props<T, U> = Partial<User> & {
   onSave: (data: T) => Promise<U>;
   isPasswordRequired?: boolean;
   saveButtonLabel?: string;
-} & Partial<User>;
+  isEnableToSave?: boolean;
+};
 
 type FormInputs = {
   repeatedPassword: string;
@@ -34,6 +35,7 @@ type FormInputs = {
 
 const UserForm = <T, U>({
   isPasswordRequired = false,
+  isEnableToSave = false,
   saveButtonLabel,
   onSave,
   ...props
@@ -95,6 +97,7 @@ const UserForm = <T, U>({
           required: t("First names are required"),
         })}
         error={Boolean(formError?.firstNames)}
+        disabled={!isEnableToSave}
         placeholder="John William"
         label={t("First names")}
         required
@@ -113,8 +116,9 @@ const UserForm = <T, U>({
           required: t("Last names are required"),
         })}
         error={Boolean(formError?.lastNames)}
-        placeholder="Doe Smith"
+        disabled={!isEnableToSave}
         label={t("Last names")}
+        placeholder="Doe Smith"
         required
       />
 
@@ -137,6 +141,7 @@ const UserForm = <T, U>({
         error={Boolean(formError?.email)}
         placeholder="johndoe@mail.com"
         label={t("Email address")}
+        disabled={!isEnableToSave}
         required
       />
 
@@ -172,94 +177,103 @@ const UserForm = <T, U>({
         helperText={formError?.username?.message}
         error={Boolean(formError?.username)}
         placeholder="johndoesmith"
+        disabled={!isEnableToSave}
         label={t("Username")}
         required
       />
 
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon icon="solar:lock-password-bold-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => togglePasswordVisibility()}>
-                {isPasswordVisible ? (
-                  <Icon icon="solar:eye-closed-line-duotone" />
-                ) : (
-                  <Icon icon="solar:eye-bold-duotone" />
-                )}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        type={isPasswordVisible ? "text" : "password"}
-        helperText={formError?.password?.message}
-        error={Boolean(formError?.password)}
-        {...register("password", {
-          minLength: {
-            message: t("Password must be at least {minLength} characters", {
-              minLength: PASSWORD_MIN_LENGTH,
-            }),
-            value: PASSWORD_MIN_LENGTH,
-          },
-          ...(isPasswordRequired && {
-            required: t("Password is required"),
-          }),
-        })}
-        required={isPasswordRequired}
-        placeholder="●●●●●●●●"
-        label={t("Password")}
-      />
+      {isEnableToSave ? (
+        <>
+          <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon icon="solar:lock-password-bold-duotone" width={24} height={24} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => togglePasswordVisibility()}>
+                    {isPasswordVisible ? (
+                      <Icon icon="solar:eye-closed-line-duotone" />
+                    ) : (
+                      <Icon icon="solar:eye-bold-duotone" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            type={isPasswordVisible ? "text" : "password"}
+            helperText={formError?.password?.message}
+            error={Boolean(formError?.password)}
+            {...register("password", {
+              minLength: {
+                message: t("Password must be at least {minLength} characters", {
+                  minLength: PASSWORD_MIN_LENGTH,
+                }),
+                value: PASSWORD_MIN_LENGTH,
+              },
+              ...(isPasswordRequired && {
+                required: t("Password is required"),
+              }),
+            })}
+            required={isPasswordRequired}
+            disabled={!isEnableToSave}
+            placeholder="●●●●●●●●"
+            label={t("Password")}
+          />
 
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon icon="solar:lock-password-bold-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => toggleRepeatedPasswordVisibility()}>
-                {isRepeatedPasswordVisible ? (
-                  <Icon icon="solar:eye-closed-line-duotone" />
-                ) : (
-                  <Icon icon="solar:eye-bold-duotone" />
-                )}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        {...register("repeatedPassword", {
-          validate: value => value === password || t("Passwords don't match"),
-          ...(isPasswordRequired && {
-            required: t("This field is required"),
-          }),
-        })}
-        type={isRepeatedPasswordVisible ? "text" : "password"}
-        helperText={formError?.repeatedPassword?.message}
-        error={Boolean(formError?.repeatedPassword)}
-        required={isPasswordRequired}
-        label={t("Repeat password")}
-        placeholder="●●●●●●●●"
-      />
+          <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Icon icon="solar:lock-password-bold-duotone" width={24} height={24} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => toggleRepeatedPasswordVisibility()}>
+                    {isRepeatedPasswordVisible ? (
+                      <Icon icon="solar:eye-closed-line-duotone" />
+                    ) : (
+                      <Icon icon="solar:eye-bold-duotone" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            {...register("repeatedPassword", {
+              validate: value => value === password || t("Passwords don't match"),
+              ...(isPasswordRequired && {
+                required: t("This field is required"),
+              }),
+            })}
+            type={isRepeatedPasswordVisible ? "text" : "password"}
+            helperText={formError?.repeatedPassword?.message}
+            error={Boolean(formError?.repeatedPassword)}
+            required={isPasswordRequired}
+            label={t("Repeat password")}
+            disabled={!isEnableToSave}
+            placeholder="●●●●●●●●"
+          />
+        </>
+      ) : null}
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <div className="flex flex-row items-center justify-center">
-        <Button
-          className="flex flex-row gap-3 rounded-lg normal-case"
-          onClick={handleCreate}
-          disabled={isLoading}
-          variant="contained"
-        >
-          {saveButtonLabel || t("Save")}
-          {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
-        </Button>
-      </div>
+      {isEnableToSave ? (
+        <div className="flex flex-row items-center justify-center">
+          <Button
+            className="flex flex-row gap-3 rounded-lg normal-case"
+            onClick={handleCreate}
+            disabled={isLoading}
+            variant="contained"
+          >
+            {saveButtonLabel || t("Save")}
+            {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+          </Button>
+        </div>
+      ) : null}
     </form>
   );
 };

@@ -5,9 +5,9 @@ import Skeleton from "@mui/material/Skeleton";
 import { useTranslations } from "next-intl";
 
 import { SummarizedCurrentStockData } from "@/services/stock/current/interfaces";
-import { NUM_DECIMALS } from "@/shared/constants";
 import { getProfitClassName } from "./utils";
 import { HEADER_COLUMNS } from "./constants";
+import { NUM_DECIMALS } from "@/constants";
 
 type Props = SummarizedCurrentStockData & {
   isLoading?: boolean;

@@ -9,7 +9,7 @@ import Chip from "@mui/material/Chip";
 import Menu from "@mui/material/Menu";
 
 import { CurrentStock } from "@/services/stock/current/interfaces";
-import { NUM_DECIMALS } from "@/shared/constants";
+import { NUM_DECIMALS } from "@/constants";
 
 interface Props extends CurrentStock {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -81,11 +81,13 @@ const CurrentStockRow = ({
           </p>
         </TableCell>
 
+        {/*
         <TableCell className="sticky right-0 bg-white">
           <IconButton onClick={handleOpenMenu}>
             <Icon icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
+        */}
       </TableRow>
 
       <Menu

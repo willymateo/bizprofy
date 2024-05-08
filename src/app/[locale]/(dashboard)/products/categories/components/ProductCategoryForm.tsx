@@ -17,12 +17,18 @@ import {
 } from "@/services/products/categories/types";
 import { useActive } from "@/hooks/useActive";
 
-type Props<T, U> = {
+type Props<T, U> = Partial<ProductCategory> & {
   onSave: (data: T) => Promise<U>;
   saveButtonLabel?: string;
-} & Partial<ProductCategory>;
+  isEnableToSave?: boolean;
+};
 
-const ProductCategoryForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) => {
+const ProductCategoryForm = <T, U>({
+  isEnableToSave = false,
+  saveButtonLabel,
+  onSave,
+  ...props
+}: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -71,22 +77,25 @@ const ProductCategoryForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<
         helperText={formError?.name?.message}
         label={t("Product category name")}
         error={Boolean(formError?.name)}
+        disabled={!isEnableToSave}
         required
       />
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <div className="flex flex-row items-center justify-center">
-        <Button
-          className="flex flex-row gap-3 rounded-lg normal-case"
-          onClick={handleCreate}
-          disabled={isLoading}
-          variant="contained"
-        >
-          {saveButtonLabel ?? t("Save")}
-          {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
-        </Button>
-      </div>
+      {isEnableToSave ? (
+        <div className="flex flex-row items-center justify-center">
+          <Button
+            className="flex flex-row gap-3 rounded-lg normal-case"
+            onClick={handleCreate}
+            disabled={isLoading}
+            variant="contained"
+          >
+            {saveButtonLabel ?? t("Save")}
+            {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+          </Button>
+        </div>
+      ) : null}
     </form>
   );
 };

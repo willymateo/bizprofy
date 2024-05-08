@@ -7,7 +7,9 @@ import Link from "next/link";
 import { DeactivateProvider } from "../../Dialogs/DeactivateProvider";
 import { ActivateProvider } from "../../Dialogs/ActivateProvider";
 import { Provider } from "@/services/providers/interfaces";
+import { SessionPayload } from "@/services/interfaces";
 import { useActive } from "@/hooks/useActive";
+import { useSession } from "next-auth/react";
 
 type Props = {
   anchorEl: Element | null;
@@ -17,6 +19,8 @@ type Props = {
 };
 
 const Menu = ({ isOpen = false, anchorEl, onClose, provider }: Props) => {
+  const { data: session } = useSession({ required: true });
+  const userSession = session?.user as SessionPayload;
   const t = useTranslations();
 
   const {
@@ -50,19 +54,28 @@ const Menu = ({ isOpen = false, anchorEl, onClose, provider }: Props) => {
         onClose={onClose}
         open={isOpen}
       >
-        {provider?.deletedAt ? null : (
+        {!provider?.deletedAt ? (
           <MenuItem>
             <Link
               className="flex flex-row gap-3 w-full items-center no-underline text-black"
               href={`/providers/${provider?.id ?? ""}`}
             >
-              <Icon icon="solar:pen-bold-duotone" />
-              {t("Edit")}
+              <Icon
+                icon={
+                  userSession?.entityPermissions?.providers?.permissions?.updateProvider
+                    ? "solar:pen-bold-duotone"
+                    : "solar:eye-bold-duotone"
+                }
+              />
+              {userSession?.entityPermissions?.providers?.permissions?.updateProvider
+                ? t("Edit")
+                : t("View")}
             </Link>
           </MenuItem>
-        )}
+        ) : null}
 
-        {provider?.deletedAt ? null : (
+        {!provider?.deletedAt &&
+        userSession?.entityPermissions?.providers?.permissions?.deactivateProvider ? (
           <MenuItem
             className="flex flex-row gap-3 text-red-500"
             onClick={handleOpenDeactivateDialog}
@@ -70,9 +83,10 @@ const Menu = ({ isOpen = false, anchorEl, onClose, provider }: Props) => {
             <Icon icon="solar:trash-bin-minimalistic-bold-duotone" />
             {t("Deactivate")}
           </MenuItem>
-        )}
+        ) : null}
 
-        {provider?.deletedAt ? (
+        {provider?.deletedAt &&
+        userSession?.entityPermissions?.providers?.permissions?.activateProvider ? (
           <MenuItem onClick={handleOpenActivateDialog} className="flex flex-row gap-3">
             <Icon icon="solar:restart-bold-duotone" />
             {t("Activate")}

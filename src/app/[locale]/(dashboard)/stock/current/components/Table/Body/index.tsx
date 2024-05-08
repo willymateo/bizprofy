@@ -4,7 +4,7 @@ import TableRow from "@mui/material/TableRow";
 import { Dispatch } from "react";
 
 import { CurrentStock, GetCurrentStockResponse } from "@/services/stock/current/interfaces";
-import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
+import { getNumRowsToCompleteTablePageSize } from "@/utils/tables";
 import { CurrentStockRow } from "./CurrentStockRow";
 import { HEADER_COLUMNS } from "../constants";
 import { ErrorContent } from "./ErrorContent";

@@ -7,12 +7,15 @@ import TextField from "@mui/material/TextField";
 import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 
-import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
 import { Customer } from "@/services/customers/interfaces";
+import { MIN_CHARACTERS_TO_SEARCH } from "@/constants";
 import { getCustomers } from "@/services/customers";
 import { useActive } from "@/hooks/useActive";
 
-const CustomersHookForm = <T extends FieldValues>(props: UseControllerProps<T>) => {
+const CustomersHookForm = <T extends FieldValues>({
+  disabled = false,
+  ...props
+}: UseControllerProps<T>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const abortControllerRef = useRef<AbortController | null>(null);
   const [options, setOptions] = useState<Customer[]>([]);
@@ -81,6 +84,7 @@ const CustomersHookForm = <T extends FieldValues>(props: UseControllerProps<T>) 
       onChange={(_, newValue) => onChange(newValue)}
       filterOptions={option => option}
       loading={isLoading}
+      disabled={disabled}
       options={options}
       onBlur={onBlur}
       value={value}

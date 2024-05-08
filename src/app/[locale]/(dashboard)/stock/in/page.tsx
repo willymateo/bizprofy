@@ -2,7 +2,9 @@ import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import type { Metadata } from "next";
 
+import { UnAuthorized } from "@/app/[locale]/components/UnAuthorized";
 import { getWarehouses } from "@/services/warehouses";
+import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 import { Table } from "./components/Table";
 
@@ -12,6 +14,14 @@ const metadata: Metadata = {
 };
 
 const StockIn = async () => {
+  const userSession = await getUserSession();
+
+  const hasAccess = userSession?.entityPermissions?.stock?.hasAccess;
+
+  if (!hasAccess) {
+    return <UnAuthorized />;
+  }
+
   const messages = await getMessages();
   const { rows: warehouses = [] } =
     (await getWarehouses({

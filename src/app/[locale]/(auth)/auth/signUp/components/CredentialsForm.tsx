@@ -22,7 +22,7 @@ import {
   PASSWORD_MIN_LENGTH,
   USERNAME_REGEX,
   EMAIL_REGEX,
-} from "@/shared/constants";
+} from "@/constants";
 
 interface FormInputs extends SignUpPayload {
   repeatedPassword: string;

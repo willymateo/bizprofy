@@ -1,9 +1,27 @@
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
-import { getWarehouses } from "@/services/warehouses";
 import { getMessages } from "next-intl/server";
+import type { Metadata } from "next";
+
+import { UnAuthorized } from "@/app/[locale]/components/UnAuthorized";
+import { getWarehouses } from "@/services/warehouses";
+import { getUserSession } from "@/utils/auth";
+import { Layout } from "./components/Layout";
 import { Table } from "./components/Table";
 
+const metadata: Metadata = {
+  description: "Business management system",
+  title: "Current stock | Bizprofy",
+};
+
 const CurrentStock = async () => {
+  const userSession = await getUserSession();
+
+  const hasAccess = userSession?.entityPermissions?.stock?.hasAccess;
+
+  if (!hasAccess) {
+    return <UnAuthorized />;
+  }
+
   const messages = await getMessages();
   const { rows: warehouses = [] } =
     (await getWarehouses({
@@ -15,12 +33,15 @@ const CurrentStock = async () => {
     .current as AbstractIntlMessages;
 
   return (
-    <NextIntlClientProvider messages={currentStockMessages}>
-      <div className="flex flex-col gap-20">
-        {warehouses?.map(warehouse => <Table warehouse={warehouse} key={warehouse.id} />)}
-      </div>
-    </NextIntlClientProvider>
+    <Layout>
+      <NextIntlClientProvider messages={currentStockMessages}>
+        <div className="flex flex-col gap-20">
+          {warehouses?.map(warehouse => <Table warehouse={warehouse} key={warehouse.id} />)}
+        </div>
+      </NextIntlClientProvider>
+    </Layout>
   );
 };
 
 export default CurrentStock;
+export { metadata };

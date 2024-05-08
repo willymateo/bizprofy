@@ -17,6 +17,7 @@ export interface AuditFields {
 }
 
 export interface SessionPayload extends AuditFields {
+  entityPermissions: EntityPermissions;
   firstNames: string;
   lastNames: string;
   username: string;
@@ -26,6 +27,19 @@ export interface SessionPayload extends AuditFields {
   token: string;
   id: string;
 }
+
+export type EntityPermissions = {
+  [key: string]: EntityPermission;
+};
+
+export type EntityPermission = {
+  permissions: Permissions;
+  hasAccess: boolean;
+};
+
+export type Permissions = {
+  [key: string]: boolean;
+};
 
 export interface Company extends AuditFields {
   name: string;

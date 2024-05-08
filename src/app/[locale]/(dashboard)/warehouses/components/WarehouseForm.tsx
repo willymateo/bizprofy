@@ -14,12 +14,18 @@ import { useState } from "react";
 import { CreateWarehousePayload, Warehouse } from "@/services/warehouses/interfaces";
 import { useActive } from "@/hooks/useActive";
 
-type Props<T, U> = {
+type Props<T, U> = Partial<Warehouse> & {
   onSave: (data: T) => Promise<U>;
   saveButtonLabel?: string;
-} & Partial<Warehouse>;
+  isEnableToSave?: boolean;
+};
 
-const WarehouseForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) => {
+const WarehouseForm = <T, U>({
+  isEnableToSave = false,
+  saveButtonLabel,
+  onSave,
+  ...props
+}: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -67,6 +73,7 @@ const WarehouseForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>)
         error={Boolean(formError?.code)}
         placeholder={t("warehouse-001")}
         label={t("Warehouse code")}
+        disabled={!isEnableToSave}
         {...register("code", {})}
       />
 
@@ -85,22 +92,25 @@ const WarehouseForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>)
         helperText={formError?.name?.message}
         error={Boolean(formError?.name)}
         label={t("Warehouse name")}
+        disabled={!isEnableToSave}
         required
       />
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <div className="flex flex-row items-center justify-center">
-        <Button
-          className="flex flex-row gap-3 rounded-lg normal-case"
-          onClick={handleCreate}
-          disabled={isLoading}
-          variant="contained"
-        >
-          {saveButtonLabel || t("Save")}
-          {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
-        </Button>
-      </div>
+      {isEnableToSave ? (
+        <div className="flex flex-row items-center justify-center">
+          <Button
+            className="flex flex-row gap-3 rounded-lg normal-case"
+            onClick={handleCreate}
+            disabled={isLoading}
+            variant="contained"
+          >
+            {saveButtonLabel || t("Save")}
+            {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+          </Button>
+        </div>
+      ) : null}
     </form>
   );
 };

@@ -1,9 +1,7 @@
 "use server";
 
-import { getServerSession } from "next-auth";
-
-import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { Order, SessionPayload } from "@/services/interfaces";
+import { Order } from "@/services/interfaces";
+import { getUserSession } from "@/utils/auth";
 import {
   ProductCategoryActivationPayload,
   GetProductCategoriesResponse,
@@ -14,8 +12,7 @@ import {
 } from "./types";
 
 const getProductCategoryById = async ({ id = "" }): Promise<ProductCategory> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories/${id}`, {
     headers: {
@@ -45,8 +42,7 @@ const getProductCategories = async ({
   limit = 5,
   q = "",
 }: GetProductCategoriesPayload = {}): Promise<GetProductCategoriesResponse> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const url = new URL("products/categories", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
@@ -97,8 +93,7 @@ const getProductCategories = async ({
 const createProductCategory = async (
   payload: CreateProductCategoryPayload,
 ): Promise<ProductCategory> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories`, {
     headers: {
@@ -129,8 +124,7 @@ const editProductCategoryById = async ({
   payload: EditProductCategoryPayload;
   id: string;
 }): Promise<ProductCategory> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories/${id}`, {
     headers: {
@@ -161,8 +155,7 @@ const manageProductCategoryActivationById = async ({
   payload?: ProductCategoryActivationPayload;
   id: string;
 }): Promise<ProductCategory> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/products/categories/${id}/activation`, {
     headers: {

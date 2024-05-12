@@ -6,7 +6,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { CssBaseline, createTheme } from "@mui/material";
 import { Provider as ReduxProvider } from "react-redux";
-import { Analytics } from "@vercel/analytics/react";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode, useMemo } from "react";
 import "dayjs/locale/en-gb";
@@ -34,7 +33,6 @@ const Providers = ({ children }: Props) => {
           </LocalizationProvider>
         </ThemeProvider>
       </StyledEngineProvider>
-      <Analytics />
     </AppRouterCacheProvider>
   );
 };

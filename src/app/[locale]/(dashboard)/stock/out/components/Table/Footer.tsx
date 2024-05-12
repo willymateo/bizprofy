@@ -4,8 +4,8 @@ import TableRow from "@mui/material/TableRow";
 import Skeleton from "@mui/material/Skeleton";
 
 import { SummarizedStockOutData } from "@/services/stock/out/interfaces";
-import { NUM_DECIMALS } from "@/shared/constants";
 import { HEADER_COLUMNS } from "./constants";
+import { NUM_DECIMALS } from "@/constants";
 
 type Props = SummarizedStockOutData & {
   isLoading?: boolean;

@@ -5,7 +5,9 @@ import type { Metadata } from "next";
 
 import { GetCustomersPayload } from "@/services/customers/interfaces";
 import { PAGE_SIZE_OPTIONS } from "./components/Table/constants";
+import { UnAuthorized } from "../../components/UnAuthorized";
 import { getCustomers } from "@/services/customers";
+import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 import { Table } from "./components/Table";
 
@@ -22,6 +24,14 @@ type Props = {
 const CustomersPage = async ({
   searchParams: { limit = PAGE_SIZE_OPTIONS[0], offset = 0 },
 }: Props) => {
+  const userSession = await getUserSession();
+
+  const hasAccess = userSession?.entityPermissions?.customers?.hasAccess;
+
+  if (!hasAccess) {
+    return <UnAuthorized />;
+  }
+
   offset = parseInt(offset.toString(), 10);
   limit = parseInt(limit.toString(), 10);
 

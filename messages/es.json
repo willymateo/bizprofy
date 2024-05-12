@@ -1,4 +1,8 @@
 {
+  "Authorization": {
+    "You don't have permission to access to this page": "No tienes permiso para acceder a esta página",
+    "Go back to home page": "Volver a la página de inicio"
+  },
   "Navigation": {
     "Dashboard": "Dashboard",
     "Users": "Usuarios",
@@ -68,6 +72,7 @@
   },
   "users": {
     "Users": "Usuarios",
+    "User": "Usuario",
     "Add user": "Agregar usuario",
     "Username should be in lowercase and can have numbers The only allowed special characters are '_' and ''": "El nombre de usuario debe estar en minúsculas y puede tener números. Los únicos caracteres especiales permitidos son '_' y '.'",
     "Username must be less than {maxLength} characters": "El nombre de usuario debe tener menos de {maxLength} caracteres",
@@ -80,6 +85,7 @@
     "Last names are required": "Los apellidos son obligatorios",
     "Email is required": "El correo electrónico es obligatorio",
     "Email": "Correo electrónico",
+    "Email address": "Correo electrónico",
     "Invalid email address": "Correo electrónico inválido",
     "Active": "Activo",
     "Creation date": "Fecha de creación",
@@ -111,6 +117,7 @@
   },
   "customers": {
     "Customers": "Clientes",
+    "Customer": "Cliente",
     "Add customer": "Agregar cliente",
     "ID card": "Cédula",
     "ID card is required": "La cédula es obligatoria",
@@ -149,6 +156,7 @@
   },
   "providers": {
     "Providers": "Proveedores",
+    "Provider": "Proveedor",
     "Add provider": "Agregar proveedor",
     "ID card": "Cédula",
     "First names": "Nombres",
@@ -189,6 +197,7 @@
   },
   "warehouses": {
     "Warehouses": "Almacenes",
+    "Warehouse": "Almacén",
     "Add warehouse": "Agregar almacén",
     "You haven't created your first warehouse yet": "Aún no has creado tu primer almacén",
     "Created at": "Creado el",
@@ -216,6 +225,7 @@
   },
   "products": {
     "Products": "Productos",
+    "Product": "Producto",
     "Add product": "Agregar producto",
     "You haven't created your first product yet": "Aún no has creado tu primer producto",
     "Code": "Código",
@@ -236,7 +246,6 @@
     "Additional description": "Descripción adicional",
     "Product category": "Categoría del producto",
     "Type a product category name": "Escribe el nombre de una categoría de producto",
-    "Provider": "Proveedor",
     "Type ID card or name of a provider": "Escribe la cédula o el nombre de un proveedor",
     "Activate product": "Activar producto",
     "An error occurred while activating the product Please try again later": "Ocurrió un error al activar el producto. Por favor, inténtalo de nuevo más tarde",
@@ -244,12 +253,11 @@
     "Yes, activate": "Sí, activar",
     "Deactivate product": "Desactivar producto",
     "An error occurred while deactivating the product Please try again later": "Ocurrió un error al desactivar el producto. Por favor, inténtalo de nuevo más tarde",
-    "Deactivate product": "Desactivar producto",
-    "An error occurred while deactivating the product Please try again later": "Ocurrió un error al desactivar el producto. Por favor, inténtalo de nuevo más tarde",
     "Are you sure you want to deactivate the product": "¿Estás seguro de que quieres desactivar el producto",
     "Yes, deactivate": "Sí, desactivar",
     "categories": {
       "Product categories": "Categorías de productos",
+      "Product category": "Categoría de producto",
       "Add product category": "Agregar categoría de producto",
       "You haven't created your first product category yet": "Aún no has creado tu primera categoría de producto",
       "Created at": "Creado el",
@@ -301,7 +309,6 @@
       "Warehouse is required": "El almacén es obligatorio",
       "Product is required": "El producto es obligatorio",
       "Unit cost is required": "El costo unitario es obligatorio",
-      "Unit cost": "Costo unitario",
       "Product quantity is required": "La cantidad del producto es obligatoria",
       "Product quantity": "Cantidad del producto",
       "Product": "Producto",
@@ -338,13 +345,14 @@
       "Warehouse is required": "El almacén es obligatorio",
       "Product is required": "El producto es obligatorio",
       "Unit price is required": "El precio unitario es obligatorio",
-      "Unit price": "Precio unitario",
       "Product quantity is required": "La cantidad del producto es obligatoria",
       "Product quantity": "Cantidad del producto",
       "Product": "Producto",
       "Type code, name or description of a product": "Escribe el código, nombre o descripción de un producto",
       "Customer": "Cliente",
-      "Type ID card or name of a customer": "Escribe la cédula o el nombre de un cliente"
+      "Type ID card or name of a customer": "Escribe la cédula o el nombre de un cliente",
+      "Total": "Total",
+      "Profit": "Ganancia"
     },
     "current": {
       "Current stock status": "Estado actual del stock",

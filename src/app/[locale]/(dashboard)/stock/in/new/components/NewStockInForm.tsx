@@ -23,14 +23,17 @@ import { useActive } from "@/hooks/useActive";
 
 const NOW_DAYJS = dayjs();
 
-interface FormInputs
-  extends Omit<CreateStockInPayload, "transactionDate" | "warehouseId" | "productId"> {
+type FormInputs = Omit<CreateStockInPayload, "transactionDate" | "warehouseId" | "productId"> & {
   warehouse: Warehouse | null;
   product: Product | null;
   transactionDate: Dayjs;
-}
+};
 
-const NewStockInForm = () => {
+type Props = {
+  isEnableToSave?: boolean;
+};
+
+const NewStockInForm = ({ isEnableToSave = false }: Props) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -87,6 +90,7 @@ const NewStockInForm = () => {
       <DateTimePickerHookForm
         rules={{ required: t("Transaction date is required") }}
         label={t("Transaction date")}
+        disabled={!isEnableToSave}
         name="transactionDate"
         control={control}
         closeOnSelect
@@ -104,6 +108,7 @@ const NewStockInForm = () => {
             return true;
           },
         }}
+        disabled={!isEnableToSave}
         control={control}
         name="warehouse"
       />
@@ -121,6 +126,7 @@ const NewStockInForm = () => {
           },
         }}
         onChange={setDefaultUnitCost}
+        disabled={!isEnableToSave}
         control={control}
         name="product"
       />
@@ -135,12 +141,13 @@ const NewStockInForm = () => {
           startAdornment: <InputAdornment position="start">$</InputAdornment>,
         }}
         helperText={formError?.unitCost?.message}
-        error={Boolean(formError?.unitCost)}
         {...register("unitCost", {
           required: t("Unit cost is required"),
           valueAsNumber: true,
           min: 0,
         })}
+        error={Boolean(formError?.unitCost)}
+        disabled={!isEnableToSave}
         label={t("Unit cost")}
         required
       />
@@ -161,23 +168,26 @@ const NewStockInForm = () => {
         helperText={formError?.quantity?.message}
         error={Boolean(formError?.quantity)}
         label={t("Product quantity")}
+        disabled={!isEnableToSave}
         isInteger
         required
       />
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <div className="flex flex-row items-center justify-center">
-        <Button
-          className="flex flex-row gap-3 rounded-lg normal-case"
-          onClick={handleCreate}
-          disabled={isLoading}
-          variant="contained"
-        >
-          {t("Register purchase")}
-          {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
-        </Button>
-      </div>
+      {isEnableToSave ? (
+        <div className="flex flex-row items-center justify-center">
+          <Button
+            className="flex flex-row gap-3 rounded-lg normal-case"
+            onClick={handleCreate}
+            disabled={isLoading}
+            variant="contained"
+          >
+            {t("Register purchase")}
+            {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+          </Button>
+        </div>
+      ) : null}
     </form>
   );
 };

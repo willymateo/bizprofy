@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 
-import { MIN_CHARACTERS_TO_SEARCH } from "@/shared/constants";
+import { MIN_CHARACTERS_TO_SEARCH } from "@/constants";
 import { Product } from "@/services/products/types";
 import { useActive } from "@/hooks/useActive";
 
@@ -16,7 +16,7 @@ type Props<T extends FieldValues> = UseControllerProps<T> & {
   onChange?: (value: Product | Product[] | null) => void;
 };
 
-const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
+const ProductsHookForm = <T extends FieldValues>({ disabled = false, ...props }: Props<T>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const abortControllerRef = useRef<AbortController | null>(null);
   const [options, setOptions] = useState<Product[]>([]);
@@ -85,6 +85,7 @@ const ProductsHookForm = <T extends FieldValues>(props: Props<T>) => {
         hookFormOnChange(newValue);
         props?.onChange?.(newValue);
       }}
+      disabled={disabled}
       loading={isLoading}
       options={options}
       onBlur={onBlur}

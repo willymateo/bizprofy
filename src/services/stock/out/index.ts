@@ -1,9 +1,7 @@
 "use server";
 
-import { getServerSession } from "next-auth";
-
-import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { Order, SessionPayload } from "../../interfaces";
+import { getUserSession } from "@/utils/auth";
+import { Order } from "../../interfaces";
 import {
   CreateStockOutPayload,
   GetStockOutResponse,
@@ -21,8 +19,7 @@ const getStockOut = async ({
   offset = 0,
   limit = 5,
 }: GetStockOutPayload = {}): Promise<GetStockOutResponse> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const url = new URL("stock/out", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
@@ -83,8 +80,7 @@ const getStockOut = async ({
 };
 
 const createStockOut = async (payload: CreateStockOutPayload): Promise<StockOut> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/stock/out`, {
     headers: {

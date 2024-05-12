@@ -19,17 +19,23 @@ import { ProductCategory } from "@/services/products/categories/types";
 import { Provider } from "@/services/providers/interfaces";
 import { useActive } from "@/hooks/useActive";
 
-type Props<T, U> = {
+type Props<T, U> = Partial<Product> & {
   onSave: (data: T) => Promise<U>;
   saveButtonLabel?: string;
-} & Partial<Product>;
+  isEnableToSave?: boolean;
+};
 
 interface FormInputs extends Omit<CreateProductPayload, "productCategoryId" | "providerId"> {
   productCategory: ProductCategory | null;
   provider: Provider | null;
 }
 
-const ProductForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) => {
+const ProductForm = <T, U>({
+  isEnableToSave = false,
+  saveButtonLabel,
+  onSave,
+  ...props
+}: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -88,6 +94,7 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) =
         })}
         helperText={formError?.name?.message}
         error={Boolean(formError?.name)}
+        disabled={!isEnableToSave}
         label={t("Product name")}
         required
       />
@@ -108,6 +115,7 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) =
           min: 0,
         })}
         error={Boolean(formError?.unitCost)}
+        disabled={!isEnableToSave}
         label={t("Unit cost")}
         required
       />
@@ -128,6 +136,7 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) =
           valueAsNumber: true,
           min: 0,
         })}
+        disabled={!isEnableToSave}
         label={t("Unit price")}
         required
       />
@@ -142,6 +151,7 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) =
         }}
         helperText={formError?.code?.message}
         error={Boolean(formError?.code)}
+        disabled={!isEnableToSave}
         label={t("Product code")}
         {...register("code")}
       />
@@ -158,27 +168,34 @@ const ProductForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) =
         error={Boolean(formError?.description)}
         label={t("Additional description")}
         {...register("description")}
+        disabled={!isEnableToSave}
         multiline
         rows={3}
       />
 
-      <ProductCategoriesHookForm name="productCategory" control={control} />
+      <ProductCategoriesHookForm
+        disabled={!isEnableToSave}
+        name="productCategory"
+        control={control}
+      />
 
-      <ProvidersHookForm control={control} name="provider" />
+      <ProvidersHookForm control={control} name="provider" disabled={!isEnableToSave} />
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <div className="flex flex-row items-center justify-center">
-        <Button
-          className="flex flex-row gap-3 rounded-lg normal-case"
-          onClick={handleCreate}
-          disabled={isLoading}
-          variant="contained"
-        >
-          {saveButtonLabel || t("Save")}
-          {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
-        </Button>
-      </div>
+      {isEnableToSave ? (
+        <div className="flex flex-row items-center justify-center">
+          <Button
+            className="flex flex-row gap-3 rounded-lg normal-case"
+            onClick={handleCreate}
+            disabled={isLoading}
+            variant="contained"
+          >
+            {saveButtonLabel || t("Save")}
+            {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+          </Button>
+        </div>
+      ) : null}
     </form>
   );
 };

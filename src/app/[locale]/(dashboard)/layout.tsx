@@ -9,9 +9,9 @@ const metadata: Metadata = {
   title: "Dashboard | Bizprofy",
 };
 
-interface Props {
+type Props = {
   children: ReactNode;
-}
+};
 
 const DashboardLayout = ({ children }: Readonly<Props>) => (
   <div className="min-h-screen flex flex-row">

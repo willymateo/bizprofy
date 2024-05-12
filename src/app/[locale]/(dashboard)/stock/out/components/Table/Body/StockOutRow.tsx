@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "@/app/[locale]/components/inputs/DateTimePickerHookForm/constants";
 import { StockOut } from "@/services/stock/out/interfaces";
-import { NUM_DECIMALS } from "@/shared/constants";
+import { NUM_DECIMALS } from "@/constants";
 
 interface Props extends StockOut {
   onClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -97,11 +97,13 @@ const StockOutRow = ({
           </p>
         </TableCell>
 
+        {/*
         <TableCell className="sticky right-0 bg-white">
           <IconButton onClick={handleOpenMenu}>
             <Icon icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
+        */}
       </TableRow>
 
       <Menu

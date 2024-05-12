@@ -11,8 +11,8 @@ import { SessionProvider } from "next-auth/react";
 import { ReactNode, useMemo } from "react";
 import "dayjs/locale/en-gb";
 
-import { themeOptions } from "@/shared/theme";
 import { reduxStore } from "@/redux/store";
+import { themeOptions } from "@/theme";
 
 interface Props {
   children: ReactNode;

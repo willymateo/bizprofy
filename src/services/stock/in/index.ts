@@ -1,10 +1,8 @@
 "use server";
 
-import { getServerSession } from "next-auth";
-
 import { CreateStockInPayload, GetStockInPayload, GetStockInResponse, StockIn } from "./interfaces";
-import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
-import { Order, SessionPayload } from "../../interfaces";
+import { getUserSession } from "@/utils/auth";
+import { Order } from "../../interfaces";
 
 const getStockIn = async ({
   transactionDateGreaterThanOrEqualTo,
@@ -16,8 +14,7 @@ const getStockIn = async ({
   offset = 0,
   limit = 5,
 }: GetStockInPayload = {}): Promise<GetStockInResponse> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const url = new URL("stock/in", process.env.BIZPROFY_API_URL);
   const searchParams = new URLSearchParams();
@@ -78,8 +75,7 @@ const getStockIn = async ({
 };
 
 const createStockIn = async (payload: CreateStockInPayload): Promise<StockIn> => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/stock/in`, {
     headers: {

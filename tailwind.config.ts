@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-import { APP_ROOT_ID } from "./src/shared/constants";
+import { APP_ROOT_ID } from "./src/constants";
 
 const config: Config = {
   corePlugins: {

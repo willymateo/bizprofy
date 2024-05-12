@@ -25,18 +25,21 @@ import { useActive } from "@/hooks/useActive";
 
 const NOW_DAYJS = dayjs();
 
-interface FormInputs
-  extends Omit<
-    CreateStockOutPayload,
-    "transactionDate" | "warehouseId" | "productId" | "customerId"
-  > {
+type FormInputs = Omit<
+  CreateStockOutPayload,
+  "transactionDate" | "warehouseId" | "productId" | "customerId"
+> & {
   warehouse: Warehouse | null;
   customer: Customer | null;
   product: Product | null;
   transactionDate: Dayjs;
-}
+};
 
-const NewStockOutForm = () => {
+type Props = {
+  isEnableToSave?: boolean;
+};
+
+const NewStockOutForm = ({ isEnableToSave = false }: Props) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -97,6 +100,7 @@ const NewStockOutForm = () => {
       <DateTimePickerHookForm
         rules={{ required: t("Transaction date is required") }}
         label={t("Transaction date")}
+        disabled={!isEnableToSave}
         name="transactionDate"
         control={control}
         closeOnSelect
@@ -114,6 +118,7 @@ const NewStockOutForm = () => {
             return true;
           },
         }}
+        disabled={!isEnableToSave}
         control={control}
         name="warehouse"
       />
@@ -131,6 +136,7 @@ const NewStockOutForm = () => {
           },
         }}
         onChange={setDefaultUnitPrice}
+        disabled={!isEnableToSave}
         control={control}
         name="product"
       />
@@ -151,6 +157,7 @@ const NewStockOutForm = () => {
           valueAsNumber: true,
           min: 0,
         })}
+        disabled={!isEnableToSave}
         label={t("Unit price")}
         required
       />
@@ -171,25 +178,28 @@ const NewStockOutForm = () => {
         helperText={formError?.quantity?.message}
         error={Boolean(formError?.quantity)}
         label={t("Product quantity")}
+        disabled={!isEnableToSave}
         isInteger
         required
       />
 
-      <CustomersHookForm control={control} name="customer" />
+      <CustomersHookForm control={control} name="customer" disabled={!isEnableToSave} />
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <div className="flex flex-row items-center justify-center">
-        <Button
-          className="flex flex-row gap-3 rounded-lg normal-case"
-          onClick={handleCreate}
-          disabled={isLoading}
-          variant="contained"
-        >
-          {t("Register sale")}
-          {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
-        </Button>
-      </div>
+      {isEnableToSave ? (
+        <div className="flex flex-row items-center justify-center">
+          <Button
+            className="flex flex-row gap-3 rounded-lg normal-case"
+            onClick={handleCreate}
+            disabled={isLoading}
+            variant="contained"
+          >
+            {t("Register sale")}
+            {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+          </Button>
+        </div>
+      ) : null}
     </form>
   );
 };

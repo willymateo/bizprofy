@@ -1,4 +1,5 @@
 import MenuItem from "@mui/material/MenuItem";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 import MuiMenu from "@mui/material/Menu";
@@ -7,6 +8,7 @@ import Link from "next/link";
 import { DeactivateCustomer } from "../../Dialogs/DeactivateCustomer";
 import { ActivateCustomer } from "../../Dialogs/ActivateCustomer";
 import { Customer } from "@/services/customers/interfaces";
+import { SessionPayload } from "@/services/interfaces";
 import { useActive } from "@/hooks/useActive";
 
 type Props = {
@@ -17,6 +19,8 @@ type Props = {
 };
 
 const Menu = ({ isOpen = false, anchorEl, onClose, customer }: Props) => {
+  const { data: session } = useSession({ required: true });
+  const userSession = session?.user as SessionPayload;
   const t = useTranslations();
 
   const {
@@ -50,19 +54,28 @@ const Menu = ({ isOpen = false, anchorEl, onClose, customer }: Props) => {
         onClose={onClose}
         open={isOpen}
       >
-        {customer?.deletedAt ? null : (
+        {!customer?.deletedAt ? (
           <MenuItem>
             <Link
               className="flex flex-row gap-3 w-full items-center no-underline text-black"
               href={`/customers/${customer?.id ?? ""}`}
             >
-              <Icon icon="solar:pen-bold-duotone" />
-              {t("Edit")}
+              <Icon
+                icon={
+                  userSession?.entityPermissions?.providers?.permissions?.updateProvider
+                    ? "solar:pen-bold-duotone"
+                    : "solar:eye-bold-duotone"
+                }
+              />
+              {userSession?.entityPermissions?.customers?.permissions?.updateCustomer
+                ? t("Edit")
+                : t("View")}
             </Link>
           </MenuItem>
-        )}
+        ) : null}
 
-        {customer?.deletedAt ? null : (
+        {!customer?.deletedAt &&
+        userSession?.entityPermissions?.customers?.permissions?.deactivateCustomer ? (
           <MenuItem
             className="flex flex-row gap-3 text-red-500"
             onClick={handleOpenDeactivateDialog}
@@ -70,9 +83,10 @@ const Menu = ({ isOpen = false, anchorEl, onClose, customer }: Props) => {
             <Icon icon="solar:trash-bin-minimalistic-bold-duotone" />
             {t("Deactivate")}
           </MenuItem>
-        )}
+        ) : null}
 
-        {customer?.deletedAt ? (
+        {customer?.deletedAt &&
+        userSession?.entityPermissions?.customers?.permissions?.activateCustomer ? (
           <MenuItem onClick={handleOpenActivateDialog} className="flex flex-row gap-3">
             <Icon icon="solar:restart-bold-duotone" />
             {t("Activate")}

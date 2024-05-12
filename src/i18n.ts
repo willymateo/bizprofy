@@ -1,7 +1,7 @@
 import { getRequestConfig } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { LANGUAGE_CODES } from "./shared/constants";
+import { LANGUAGE_CODES } from "./constants";
 
 const locales = Object.values(LANGUAGE_CODES);
 

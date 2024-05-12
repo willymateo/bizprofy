@@ -11,16 +11,22 @@ import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
 import { CreateCustomerPayload, Customer } from "@/services/customers/interfaces";
-import { EMAIL_REGEX } from "@/shared/constants";
 import { useActive } from "@/hooks/useActive";
 import { useTranslations } from "next-intl";
+import { EMAIL_REGEX } from "@/constants";
 
-type Props<T, U> = {
+type Props<T, U> = Partial<Customer> & {
   onSave: (data: T) => Promise<U>;
   saveButtonLabel?: string;
-} & Partial<Customer>;
+  isEnableToSave?: boolean;
+};
 
-const CustomerForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) => {
+const CustomerForm = <T, U>({
+  isEnableToSave = false,
+  saveButtonLabel,
+  onSave,
+  ...props
+}: Props<T, U>) => {
   const { isActive: isLoading = false, enable: startLoading, disable: stopLoading } = useActive();
   const [error, setError] = useState<string>("");
   const {
@@ -73,6 +79,7 @@ const CustomerForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) 
         {...register("idCard", {
           required: t("ID card is required"),
         })}
+        disabled={!isEnableToSave}
         placeholder="1234567890"
         label={t("ID card")}
         required
@@ -92,6 +99,7 @@ const CustomerForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) 
         })}
         error={Boolean(formError?.firstNames)}
         placeholder="John William"
+        disabled={!isEnableToSave}
         label={t("First names")}
         required
       />
@@ -109,6 +117,7 @@ const CustomerForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) 
           required: t("Last names are required"),
         })}
         error={Boolean(formError?.lastNames)}
+        disabled={!isEnableToSave}
         placeholder="Doe Smith"
         label={t("Last names")}
         required
@@ -132,6 +141,7 @@ const CustomerForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) 
         error={Boolean(formError?.email)}
         placeholder="johndoe@mail.com"
         label={t("Email address")}
+        disabled={!isEnableToSave}
       />
 
       <TextField
@@ -146,6 +156,7 @@ const CustomerForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) 
         error={Boolean(formError?.phoneNumber)}
         {...register("phoneNumber", {})}
         placeholder="+1 99 999 9999"
+        disabled={!isEnableToSave}
         label={t("Phone number")}
       />
 
@@ -161,22 +172,25 @@ const CustomerForm = <T, U>({ onSave, saveButtonLabel, ...props }: Props<T, U>) 
         helperText={formError?.address?.message}
         error={Boolean(formError?.address)}
         {...register("address", {})}
+        disabled={!isEnableToSave}
         label={t("Address")}
       />
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <div className="flex flex-row items-center justify-center">
-        <Button
-          className="flex flex-row gap-3 rounded-lg normal-case"
-          onClick={handleCreate}
-          disabled={isLoading}
-          variant="contained"
-        >
-          {saveButtonLabel || t("Save")}
-          {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
-        </Button>
-      </div>
+      {isEnableToSave ? (
+        <div className="flex flex-row items-center justify-center">
+          <Button
+            className="flex flex-row gap-3 rounded-lg normal-case"
+            onClick={handleCreate}
+            disabled={isLoading}
+            variant="contained"
+          >
+            {saveButtonLabel || t("Save")}
+            {isLoading && <CircularProgress className="!w-6 !h-6" disableShrink color="inherit" />}
+          </Button>
+        </div>
+      ) : null}
     </form>
   );
 };

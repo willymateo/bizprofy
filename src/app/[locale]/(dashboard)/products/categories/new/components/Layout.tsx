@@ -1,25 +1,19 @@
 import { getTranslations } from "next-intl/server";
-import type { Metadata } from "next";
 import { ReactNode } from "react";
 
 import { Return as ReturnButton } from "@/app/[locale]/components/Buttons/Return";
 
-const metadata: Metadata = {
-  description: "Business management system",
-  title: "New customer | Bizprofy",
+type Props = {
+  children: ReactNode;
 };
 
-interface Props {
-  children: ReactNode;
-}
-
-const NewCustomerLayout = async ({ children }: Readonly<Props>) => {
-  const t = await getTranslations("customers");
+const Layout = async ({ children }: Readonly<Props>) => {
+  const t = await getTranslations("products.categories");
 
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-row gap-5 items-center justify-between">
-        <h1>{t("New customer")}</h1>
+        <h1>{t("New product category")}</h1>
 
         <ReturnButton className="w-fit">{t("Cancel")}</ReturnButton>
       </div>
@@ -29,5 +23,4 @@ const NewCustomerLayout = async ({ children }: Readonly<Props>) => {
   );
 };
 
-export default NewCustomerLayout;
-export { metadata };
+export { Layout };

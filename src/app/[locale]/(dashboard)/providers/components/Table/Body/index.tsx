@@ -4,7 +4,7 @@ import TableRow from "@mui/material/TableRow";
 import { Dispatch } from "react";
 
 import { GetProvidersResponse, Provider } from "@/services/providers/interfaces";
-import { getNumRowsToCompleteTablePageSize } from "@/shared/utils";
+import { getNumRowsToCompleteTablePageSize } from "@/utils/tables";
 import { HEADER_COLUMNS } from "../constants";
 import { ProviderRow } from "./ProviderRow";
 import { NotFound } from "./NotFound";

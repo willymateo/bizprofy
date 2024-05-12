@@ -1,16 +1,14 @@
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { RedirectType, redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 import Divider from "@mui/material/Divider";
 import Card from "@mui/material/Card";
 import { Metadata } from "next";
 import Link from "next/link";
 
 import { LanguagePopover } from "@/app/[locale]/components/LanguagePopover";
-import { authConfig } from "@/app/api/auth/[...nextauth]/constants";
 import { CredentialsForm } from "./components/CredentialsForm";
-import { SessionPayload } from "@/services/interfaces";
+import { getUserSession } from "@/utils/auth";
 
 const metadata: Metadata = {
   description: "Sign up for Bizprofy, the best platform for business professionals.",
@@ -18,8 +16,7 @@ const metadata: Metadata = {
 };
 
 const SignUp = async () => {
-  const session = await getServerSession(authConfig);
-  const user = session?.user as SessionPayload;
+  const user = await getUserSession();
 
   if (user?.token) {
     redirect("/", RedirectType.replace);

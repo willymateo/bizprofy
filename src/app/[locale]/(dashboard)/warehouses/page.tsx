@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 
 import { GetWarehousesPayload } from "@/services/warehouses/interfaces";
 import { NoWarehousesFound } from "./components/NoWarehousesFound";
+import { UnAuthorized } from "../../components/UnAuthorized";
 import { WarehouseCard } from "./components/WarehouseCard";
 import { getWarehouses } from "@/services/warehouses";
+import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
 const metadata: Metadata = {
@@ -20,6 +22,14 @@ type Props = {
 };
 
 const WarehousesPage = async ({ searchParams: { limit = PAGE_SIZE, offset = 0 } }: Props) => {
+  const userSession = await getUserSession();
+
+  const hasAccess = userSession?.entityPermissions?.warehouses?.hasAccess;
+
+  if (!hasAccess) {
+    return <UnAuthorized />;
+  }
+
   offset = parseInt(offset.toString(), 10);
   limit = parseInt(limit.toString(), 10);
 

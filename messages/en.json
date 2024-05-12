@@ -1,4 +1,8 @@
 {
+  "Authorization": {
+    "You don't have permission to access to this page": "You don't have permission to access to this page",
+    "Go back to home page": "Go back to home page"
+  },
   "Navigation": {
     "Dashboard": "Dashboard",
     "Users": "Users",
@@ -68,6 +72,7 @@
   },
   "users": {
     "Users": "Users",
+    "User": "User",
     "Add user": "Add user",
     "Username should be in lowercase and can have numbers The only allowed special characters are '_' and ''": "Username should be in lowercase and can have numbers. The only allowed special characters are '_' and '.'",
     "Username must be less than {maxLength} characters": "Username must be less than {maxLength} characters",
@@ -80,6 +85,7 @@
     "Last names are required": "Last names are required",
     "Email is required": "Email is required",
     "Email": "Email",
+    "Email address": "Email address",
     "Invalid email address": "Invalid email address",
     "Active": "Active",
     "Creation date": "Creation date",
@@ -111,6 +117,7 @@
   },
   "customers": {
     "Customers": "Customers",
+    "Customer": "Customer",
     "Add customer": "Add customer",
     "ID card": "ID card",
     "ID card is required": "ID card is required",
@@ -149,6 +156,7 @@
   },
   "providers": {
     "Providers": "Providers",
+    "Provider": "Provider",
     "Add provider": "Add provider",
     "ID card": "ID card",
     "First names": "First names",
@@ -189,6 +197,7 @@
   },
   "warehouses": {
     "Warehouses": "Warehouses",
+    "Warehouse": "Warehouse",
     "Add warehouse": "Add warehouse",
     "You haven't created your first warehouse yet": "You haven't created your first warehouse yet",
     "Created at": "Created at",
@@ -216,6 +225,7 @@
   },
   "products": {
     "Products": "Products",
+    "Product": "Product",
     "Add product": "Add product",
     "You haven't created your first product yet": "You haven't created your first product yet",
     "Code": "Code",
@@ -236,7 +246,6 @@
     "Additional description": "Additional description",
     "Product category": "Product category",
     "Type a product category name": "Type a product category name",
-    "Provider": "Provider",
     "Type ID card or name of a provider": "Type ID card or name of a provider",
     "Activate product": "Activate product",
     "An error occurred while activating the product Please try again later": "An error occurred while activating the product. Please try again later",
@@ -244,12 +253,11 @@
     "Yes, activate": "Yes, activate",
     "Deactivate product": "Deactivate product",
     "An error occurred while deactivating the product Please try again later": "An error occurred while deactivating the product. Please try again later",
-    "Deactivate product": "Deactivate product",
-    "An error occurred while deactivating the product Please try again later": "An error occurred while deactivating the product. Please try again later",
     "Are you sure you want to deactivate the product": "Are you sure you want to deactivate the product",
     "Yes, deactivate": "Yes, deactivate",
     "categories": {
       "Product categories": "Product categories",
+      "Product category": "Product category",
       "Add product category": "Add product category",
       "You haven't created your first product category yet": "You haven't created your first product category yet",
       "Created at": "Created at",
@@ -292,7 +300,6 @@
       "This is unexpected for us": "This is unexpected for us",
       "We couldn't load the data Please try again later": "We couldn't load the data. Please try again later",
       "New purchase": "New purchase",
-      "Edit purchase": "Edit purchase",
       "Cancel": "Cancel",
       "Register purchase": "Register purchase",
       "Transaction date is required": "Transaction date is required",
@@ -302,7 +309,6 @@
       "Warehouse is required": "Warehouse is required",
       "Product is required": "Product is required",
       "Unit cost is required": "Unit cost is required",
-      "Unit cost": "Unit cost",
       "Product quantity is required": "Product quantity is required",
       "Product quantity": "Product quantity",
       "Product": "Product",
@@ -339,7 +345,6 @@
       "Warehouse is required": "Warehouse is required",
       "Product is required": "Product is required",
       "Unit price is required": "Unit price is required",
-      "Unit price": "Unit price",
       "Product quantity is required": "Product quantity is required",
       "Product quantity": "Product quantity",
       "Product": "Product",
@@ -347,8 +352,25 @@
       "Customer": "Customer",
       "Type ID card or name of a customer": "Type ID card or name of a customer",
       "Total": "Total",
-      "Profit": "Ganancia"
+      "Profit": "Profit"
     },
-    "current": {}
+    "current": {
+      "Current stock status": "Current stock status",
+      "Start transaction date": "Start transaction date",
+      "End transaction date": "End transaction date",
+      "Search": "Search",
+      "Product code": "Product code",
+      "Product name": "Product name",
+      "Current stock": "Current stock",
+      "Unit cost": "Unit cost",
+      "Number of purchases": "Number of purchases",
+      "Total cost": "Total cost",
+      "Unit price": "Unit price",
+      "Number of sales": "Number of sales",
+      "Total price": "Total price",
+      "Rows per page": "Rows per page",
+      "Total": "Total",
+      "Profit": "Profit"
+    }
   }
 }

@@ -9,6 +9,8 @@ import { createUser } from "@/services/users";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
+const runtime = "edge";
+
 const metadata: Metadata = {
   description: "Business management system",
   title: "New user | Bizprofy",
@@ -46,5 +48,5 @@ const NewUser = async () => {
   );
 };
 
+export { metadata, runtime };
 export default NewUser;
-export { metadata };

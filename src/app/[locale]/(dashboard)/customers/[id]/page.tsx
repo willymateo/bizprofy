@@ -14,6 +14,8 @@ const metadata: Metadata = {
   title: "Edit customer | Bizprofy",
 };
 
+const runtime = "edge";
+
 type Props = {
   params: Params;
 };
@@ -47,5 +49,5 @@ const EditCustomer = async ({ params: { id = "" } }: Props) => {
   );
 };
 
+export { metadata, runtime };
 export default EditCustomer;
-export { metadata };

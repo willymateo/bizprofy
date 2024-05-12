@@ -8,6 +8,8 @@ import { NewStockInForm } from "./components/NewStockInForm";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
+const runtime = "edge";
+
 const metadata: Metadata = {
   description: "Business management system",
   title: "New stock in | Bizprofy",
@@ -38,5 +40,5 @@ const NewStockIn = async () => {
   );
 };
 
+export { metadata, runtime };
 export default NewStockIn;
-export { metadata };

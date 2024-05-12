@@ -9,6 +9,8 @@ import { getProductById } from "@/services/products";
 import { getUserSession } from "@/utils/auth";
 import Layout from "./components/Layout";
 
+const runtime = "edge";
+
 const metadata: Metadata = {
   description: "Business management system",
   title: "Edit product | Bizprofy",
@@ -47,5 +49,5 @@ const EditProduct = async ({ params: { id = "" } }: Props) => {
   );
 };
 
+export { metadata, runtime };
 export default EditProduct;
-export { metadata };

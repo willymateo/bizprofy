@@ -11,6 +11,8 @@ import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 import { Table } from "./components/Table";
 
+const runtime = "edge";
+
 const metadata: Metadata = {
   description: "Business management system",
   title: "Customers | Bizprofy",
@@ -62,4 +64,4 @@ const CustomersPage = async ({
 };
 
 export default CustomersPage;
-export { metadata };
+export { metadata, runtime };

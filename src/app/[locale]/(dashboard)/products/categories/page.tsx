@@ -7,6 +7,8 @@ import { UnAuthorized } from "@/app/[locale]/components/UnAuthorized";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
+const runtime = "edge";
+
 const metadata: Metadata = {
   description: "Business management system",
   title: "Product types | Bizprofy",
@@ -37,4 +39,4 @@ const ProductCategories = async () => {
 };
 
 export default ProductCategories;
-export { metadata };
+export { metadata, runtime };

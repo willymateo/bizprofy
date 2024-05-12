@@ -9,6 +9,8 @@ import { createProvider } from "@/services/providers";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
+const runtime = "edge";
+
 const metadata: Metadata = {
   description: "Business management system",
   title: "New provider | Bizprofy",
@@ -45,5 +47,5 @@ const NewProvider = async () => {
   );
 };
 
+export { metadata, runtime };
 export default NewProvider;
-export { metadata };

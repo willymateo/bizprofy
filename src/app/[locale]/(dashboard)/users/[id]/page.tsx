@@ -9,6 +9,8 @@ import { getUserById } from "@/services/users";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
+const runtime = "edge";
+
 const metadata: Metadata = {
   description: "Business management system",
   title: "Edit user | Bizprofy",
@@ -47,5 +49,5 @@ const EditUser = async ({ params: { id = "" } }: Props) => {
   );
 };
 
+export { metadata, runtime };
 export default EditUser;
-export { metadata };

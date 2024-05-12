@@ -9,6 +9,8 @@ import { getWarehouses } from "@/services/warehouses";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
+const runtime = "edge";
+
 const metadata: Metadata = {
   description: "Business management system",
   title: "Warehouses | Bizprofy",
@@ -61,4 +63,4 @@ const WarehousesPage = async ({ searchParams: { limit = PAGE_SIZE, offset = 0 } 
 };
 
 export default WarehousesPage;
-export { metadata };
+export { metadata, runtime };

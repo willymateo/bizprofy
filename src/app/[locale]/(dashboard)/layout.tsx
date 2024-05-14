@@ -9,6 +9,8 @@ const metadata: Metadata = {
   title: "Dashboard | Bizprofy",
 };
 
+const runtime = "edge";
+
 type Props = {
   children: ReactNode;
 };
@@ -26,4 +28,4 @@ const DashboardLayout = ({ children }: Readonly<Props>) => (
 );
 
 export default DashboardLayout;
-export { metadata };
+export { metadata, runtime };

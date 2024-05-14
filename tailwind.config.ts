@@ -9,7 +9,6 @@ const config: Config = {
   },
   important: `#${APP_ROOT_ID}`, // Override the default Tailwind CSS important selector.
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
-  theme: { extend: {} },
   plugins: [],
 };
 

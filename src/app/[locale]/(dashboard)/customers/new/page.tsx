@@ -9,9 +9,7 @@ import { createCustomer } from "@/services/customers";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
-const runtime = "edge";
-
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Business management system",
   title: "New customer | Bizprofy",
 };
@@ -47,5 +45,4 @@ const NewCustomer = async () => {
   );
 };
 
-export { metadata, runtime };
 export default NewCustomer;

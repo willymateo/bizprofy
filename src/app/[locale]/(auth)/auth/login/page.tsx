@@ -11,7 +11,7 @@ import { CredentialsForm } from "./components/CredentialsForm";
 import { getUserSession } from "@/utils/auth";
 import { OAuth } from "./components/OAuth";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Login to Bizprofy, the best platform for business professionals.",
   title: "Login | Bizprofy",
 };
@@ -63,4 +63,3 @@ const Login = async () => {
 };
 
 export default Login;
-export { metadata };

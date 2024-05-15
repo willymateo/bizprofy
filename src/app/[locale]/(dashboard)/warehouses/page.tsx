@@ -8,15 +8,12 @@ import { WarehouseCard } from "./components/WarehouseCard";
 import { getWarehouses } from "@/services/warehouses";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
+import { PAGE_SIZE } from "./constants";
 
-const runtime = "edge";
-
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Business management system",
   title: "Warehouses | Bizprofy",
 };
-
-const PAGE_SIZE = 10;
 
 type Props = {
   searchParams: GetWarehousesPayload;
@@ -63,4 +60,3 @@ const WarehousesPage = async ({ searchParams: { limit = PAGE_SIZE, offset = 0 } 
 };
 
 export default WarehousesPage;
-export { metadata, runtime };

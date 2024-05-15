@@ -11,9 +11,7 @@ import { Layout } from "./components/Layout";
 import { getUsers } from "@/services/users";
 import { Table } from "./components/Table";
 
-const runtime = "edge";
-
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Business management system",
   title: "Users | Bizprofy",
 };
@@ -61,5 +59,4 @@ const UsersPage = async ({ searchParams: { limit = PAGE_SIZE_OPTIONS[0], offset 
   );
 };
 
-export { metadata, runtime };
 export default UsersPage;

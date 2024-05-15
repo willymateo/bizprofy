@@ -28,7 +28,6 @@
     "react-redux": "^9.1.2"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.11.3",
     "@iconify-icon/react": "^2.1.0",
     "@types/node": "^20",
     "@types/react": "^18",

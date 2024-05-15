@@ -8,9 +8,7 @@ import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 import { Table } from "./components/Table";
 
-const runtime = "edge";
-
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Business management system",
   title: "Current stock | Bizprofy",
 };
@@ -45,5 +43,4 @@ const CurrentStock = async () => {
   );
 };
 
-export { metadata, runtime };
 export default CurrentStock;

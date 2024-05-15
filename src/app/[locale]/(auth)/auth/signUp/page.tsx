@@ -10,7 +10,7 @@ import { LanguagePopover } from "@/app/[locale]/components/LanguagePopover";
 import { CredentialsForm } from "./components/CredentialsForm";
 import { getUserSession } from "@/utils/auth";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Sign up for Bizprofy, the best platform for business professionals.",
   title: "Sign Up | Bizprofy",
 };
@@ -55,4 +55,3 @@ const SignUp = async () => {
 };
 
 export default SignUp;
-export { metadata };

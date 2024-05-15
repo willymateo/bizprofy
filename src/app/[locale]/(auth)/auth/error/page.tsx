@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Auth error page for Bizprofy",
   title: "Auth error | Bizprofy",
 };
@@ -15,4 +15,3 @@ const AuthError = () => {
 };
 
 export default AuthError;
-export { metadata };

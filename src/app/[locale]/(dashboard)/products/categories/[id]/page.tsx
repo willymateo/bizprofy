@@ -1,12 +1,18 @@
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import Card from "@mui/material/Card";
+import type { Metadata } from "next";
 
 import { EditProductCategoryForm } from "./components/EditProductCategoryForm";
 import { getProductCategoryById } from "@/services/products/categories";
 import { UnAuthorized } from "@/app/[locale]/components/UnAuthorized";
 import { getUserSession } from "@/utils/auth";
 import Layout from "./components/Layout";
+
+export const metadata: Metadata = {
+  description: "Business management system",
+  title: "Edit product category | Bizprofy",
+};
 
 type Props = {
   params: Params;

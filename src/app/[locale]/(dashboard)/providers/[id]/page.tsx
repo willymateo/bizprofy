@@ -9,7 +9,7 @@ import { getProviderById } from "@/services/providers";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Business management system",
   title: "Edit provider | Bizprofy",
 };
@@ -48,4 +48,3 @@ const EditProvider = async ({ params: { id = "" } }: Props) => {
 };
 
 export default EditProvider;
-export { metadata };

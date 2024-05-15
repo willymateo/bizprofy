@@ -9,7 +9,7 @@ import { getWarehouseById } from "@/services/warehouses";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Business management system",
   title: "Edit warehouse | Bizprofy",
 };
@@ -48,4 +48,3 @@ const EditWarehouse = async ({ params: { id = "" } }: Props) => {
 };
 
 export default EditWarehouse;
-export { metadata };

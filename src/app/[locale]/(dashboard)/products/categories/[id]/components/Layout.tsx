@@ -1,15 +1,9 @@
 import { getTranslations } from "next-intl/server";
 import Chip from "@mui/material/Chip";
-import type { Metadata } from "next";
 import { ReactNode } from "react";
 
 import { Return as ReturnButton } from "@/app/[locale]/components/Buttons/Return";
 import { getUserSession } from "@/utils/auth";
-
-const metadata: Metadata = {
-  description: "Business management system",
-  title: "Edit product category | Bizprofy",
-};
 
 type Props = {
   productCategoryId?: string;
@@ -39,4 +33,3 @@ const Layout = async ({ productCategoryId, children }: Readonly<Props>) => {
 };
 
 export default Layout;
-export { metadata };

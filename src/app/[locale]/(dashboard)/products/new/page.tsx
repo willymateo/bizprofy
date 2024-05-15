@@ -9,7 +9,7 @@ import { createProduct } from "@/services/products";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Business management system",
   title: "New product | Bizprofy",
 };
@@ -46,4 +46,3 @@ const NewProduct = async () => {
 };
 
 export default NewProduct;
-export { metadata };

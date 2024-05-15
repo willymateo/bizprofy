@@ -9,7 +9,7 @@ import { createProvider } from "@/services/providers";
 import { getUserSession } from "@/utils/auth";
 import { Layout } from "./components/Layout";
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   description: "Business management system",
   title: "New provider | Bizprofy",
 };
@@ -46,4 +46,3 @@ const NewProvider = async () => {
 };
 
 export default NewProvider;
-export { metadata };

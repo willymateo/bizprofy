@@ -1,4 +1,7 @@
 {
+  "Home": {
+    "Hi": "Hi"
+  },
   "Authorization": {
     "You don't have permission to access to this page": "You don't have permission to access to this page",
     "Go back to home page": "Go back to home page"

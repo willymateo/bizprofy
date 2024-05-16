@@ -1,4 +1,7 @@
 {
+  "Home": {
+    "Hi": "Hola"
+  },
   "Authorization": {
     "You don't have permission to access to this page": "No tienes permiso para acceder a esta página",
     "Go back to home page": "Volver a la página de inicio"

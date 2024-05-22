@@ -3,6 +3,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { Financial } from "./components/Metrics/Financial";
+import { Demand } from "./components/Metrics/Demand";
 import { getUserSession } from "@/utils/auth";
 
 const Home = async () => {
@@ -15,6 +16,8 @@ const Home = async () => {
 
       <div className="flex flex-col gap-5">
         <Financial />
+
+        <Demand />
       </div>
     </div>
   );

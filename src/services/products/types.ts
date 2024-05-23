@@ -18,6 +18,25 @@ export type GetProductsResponse = {
   count: number;
 };
 
+export type GetProductsStockStatusPayload = {
+  orderByField?: "stock_out_total_quantity" | "total_price_sum";
+  transactionDateGreaterThanOrEqualTo?: string;
+  transactionDateLessThanOrEqualTo?: string;
+  offset?: number;
+  limit?: number;
+  order?: Order;
+};
+
+export type GetProductsStockStatusResponse = {
+  data: ProductsStockStatusData[];
+};
+
+export type ProductsStockStatusData = {
+  totalQuantity: number;
+  totalPriceSum: number;
+  product: Product;
+};
+
 export type CreateProductPayload = {
   productCategoryId: string | null;
   providerId: string | null;

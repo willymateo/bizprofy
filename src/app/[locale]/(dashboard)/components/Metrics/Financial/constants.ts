@@ -1,6 +1,14 @@
 import { ApexOptions } from "apexcharts";
 
 const GENERAL_OPTIONS: ApexOptions = {
+  tooltip: {
+    y: {
+      formatter: (value: number) => `$${value.toFixed(2)}`,
+    },
+    x: {
+      format: "dd MMM yyyy",
+    },
+  },
   chart: {
     group: "financial-charts",
     sparkline: {

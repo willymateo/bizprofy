@@ -77,11 +77,11 @@ const ProfitGeneratedByProduct = () => {
   const series = [
     {
       name: t("Profit"),
-      data: Object.values(data).map(d => d.profit),
+      data: Object.values(data).map(({ profit = 0 }) => profit),
     },
     {
       name: t("Sales"),
-      data: Object.values(data).map(d => d.sales),
+      data: Object.values(data).map(({ sales = 0 }) => sales),
     },
   ];
 

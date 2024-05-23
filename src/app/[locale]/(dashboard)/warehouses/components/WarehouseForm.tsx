@@ -65,22 +65,6 @@ const WarehouseForm = <T, U>({
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Icon icon="solar:code-scan-line-duotone" width={24} height={24} />
-            </InputAdornment>
-          ),
-        }}
-        helperText={formError?.code?.message}
-        error={Boolean(formError?.code)}
-        placeholder={t("warehouse-001")}
-        label={t("Warehouse code")}
-        disabled={!isEnableToSave}
-        {...register("code", {})}
-      />
-
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
               <Icon icon="solar:user-hands-bold-duotone" width={24} height={24} />
             </InputAdornment>
           ),
@@ -94,6 +78,22 @@ const WarehouseForm = <T, U>({
         label={t("Warehouse name")}
         disabled={!isEnableToSave}
         required
+      />
+
+      <TextField
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icon icon="solar:code-scan-line-duotone" width={24} height={24} />
+            </InputAdornment>
+          ),
+        }}
+        helperText={formError?.code?.message}
+        error={Boolean(formError?.code)}
+        placeholder={t("warehouse-001")}
+        label={t("Warehouse code")}
+        disabled={!isEnableToSave}
+        {...register("code", {})}
       />
 
       {error && <Alert severity="error">{error}</Alert>}

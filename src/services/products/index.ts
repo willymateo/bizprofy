@@ -3,6 +3,8 @@
 import { getUserSession } from "@/utils/auth";
 import { Order } from "../interfaces";
 import {
+  GetProductsStockStatusResponse,
+  GetProductsStockStatusPayload,
   ProductActivationPayload,
   CreateProductPayload,
   GetProductsResponse,
@@ -102,6 +104,66 @@ const getProducts = async ({
   return resBody;
 };
 
+const getProductsStockStatus = async ({
+  transactionDateGreaterThanOrEqualTo,
+  orderByField = "stock_out_total_quantity",
+  transactionDateLessThanOrEqualTo,
+  order = Order.desc,
+  offset = 0,
+  limit = 5,
+}: GetProductsStockStatusPayload = {}): Promise<GetProductsStockStatusResponse> => {
+  const user = await getUserSession();
+
+  const url = new URL("products/stock/status", process.env.BIZPROFY_API_URL);
+  const searchParams = new URLSearchParams();
+
+  if (transactionDateGreaterThanOrEqualTo) {
+    searchParams.append("transactionDateGreaterThanOrEqualTo", transactionDateGreaterThanOrEqualTo);
+  }
+
+  if (transactionDateLessThanOrEqualTo) {
+    searchParams.append("transactionDateLessThanOrEqualTo", transactionDateLessThanOrEqualTo);
+  }
+
+  if (orderByField) {
+    searchParams.append("orderByField", orderByField);
+  }
+
+  if (offset) {
+    searchParams.append("offset", offset.toString());
+  }
+
+  if (limit) {
+    searchParams.append("limit", limit.toString());
+  }
+
+  if (order) {
+    searchParams.append("order", order);
+  }
+
+  url.search = searchParams.toString();
+
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${user?.token}`,
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+
+  const resBody = await res.json();
+
+  if (res.status === 401) {
+    throw new Error(resBody.error?.message || "Invalid credentials");
+  }
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to fetch products stock status");
+  }
+
+  return resBody;
+};
+
 const createProduct = async (payload: CreateProductPayload): Promise<SimpleProduct> => {
   const user = await getUserSession();
 
@@ -189,4 +251,11 @@ const manageProductActivationById = async ({
   return resBody;
 };
 
-export { getProductById, createProduct, getProducts, editProductById, manageProductActivationById };
+export {
+  manageProductActivationById,
+  getProductsStockStatus,
+  editProductById,
+  getProductById,
+  createProduct,
+  getProducts,
+};

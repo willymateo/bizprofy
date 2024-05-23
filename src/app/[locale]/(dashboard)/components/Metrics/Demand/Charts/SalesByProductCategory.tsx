@@ -6,30 +6,30 @@ import { ApexOptions } from "apexcharts";
 import Card from "@mui/material/Card";
 import dayjs from "dayjs";
 
-import { ProductsStockStatusData } from "@/services/products/types";
+import { ProductCategoriesStockStatusData } from "@/services/products/categories/types";
 import { DATE_FORMAT } from "../constants";
 
 type Props = {
-  data: ProductsStockStatusData[];
+  data: ProductCategoriesStockStatusData[];
   startDate: string;
   endDate: string;
 };
 
-const SalesByProduct = ({ data, startDate, endDate }: Props) => {
+const SalesByProductCategory = ({ data, startDate, endDate }: Props) => {
   const t = useTranslations();
 
   const options: ApexOptions = {
     title: {
-      text: t("Sales by product"),
+      text: t("Sales by product category"),
       style: {
-        fontSize: "24px",
+        fontSize: "18px",
       },
     },
     legend: {
       horizontalAlign: "center",
       position: "bottom",
     },
-    labels: data.map(item => item?.product?.name),
+    labels: data.map(item => item?.productCategory?.name ?? t("No category")),
     subtitle: {
       text: `${t("From")} ${dayjs(startDate).format(DATE_FORMAT)} ${t("to")} ${dayjs(endDate).format(DATE_FORMAT)}`,
       style: {
@@ -50,4 +50,4 @@ const SalesByProduct = ({ data, startDate, endDate }: Props) => {
   );
 };
 
-export { SalesByProduct };
+export { SalesByProductCategory };

@@ -2,7 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import { AuthOptions } from "next-auth";
 
-import { LoginPayload } from "@/services/auth/interfaces";
+import { LoginPayload } from "@/services/auth/types";
 import { login } from "@/services/auth";
 
 const authConfig: AuthOptions = {

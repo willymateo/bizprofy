@@ -29,4 +29,10 @@ const GENERAL_OPTIONS: ApexOptions = {
   },
 };
 
-export { GENERAL_OPTIONS };
+const PROFIT_COLORS = {
+  POSITIVE: "#6bce70",
+  NEGATIVE: "#ff4560",
+  ZERO: "",
+};
+
+export { GENERAL_OPTIONS, PROFIT_COLORS };

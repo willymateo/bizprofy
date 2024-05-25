@@ -11,9 +11,8 @@ import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
-import Link from "next/link";
 
-import { LoginPayload } from "@/services/auth/interfaces";
+import { LoginPayload } from "@/services/auth/types";
 import { useActive } from "@/hooks/useActive";
 import { useTranslations } from "next-intl";
 
@@ -97,11 +96,13 @@ const CredentialsForm = () => {
         required
       />
 
+      {/*
       <div className="flex flex-row items-center justify-end">
         <Link href="/auth/recovery">{t("Forgot password?")}</Link>
       </div>
+      */}
 
-      {error && <Alert severity="error">{error}</Alert>}
+      {error && <Alert severity="error">{t(error ?? "")}</Alert>}
 
       <Button
         className="flex flex-row gap-3 rounded-lg normal-case"

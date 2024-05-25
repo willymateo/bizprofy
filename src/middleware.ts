@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 import { authConfig } from "./app/api/auth/[...nextauth]/constants";
 import { LANGUAGE_CODES } from "./constants";
 
-const publicPages = Object.values(authConfig?.pages ?? {});
+const publicPages = [...Object.values(authConfig?.pages ?? {}), "/auth/emailVerification/.*"];
 
 const intlMiddleware = createIntlMiddleware({
   locales: Object.values(LANGUAGE_CODES),

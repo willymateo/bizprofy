@@ -5,7 +5,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { Icon } from "@iconify-icon/react";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
@@ -28,6 +27,7 @@ import {
 
 type Props<T, U> = Partial<User> & {
   onSave: (data: T) => Promise<U>;
+  onSuccess?: (data: U) => void;
   isPasswordRequired?: boolean;
   saveButtonLabel?: string;
   isEnableToSave?: boolean;
@@ -41,6 +41,7 @@ const UserForm = <T, U>({
   isPasswordRequired = false,
   isEnableToSave = false,
   saveButtonLabel,
+  onSuccess,
   onSave,
   ...props
 }: Props<T, U>) => {
@@ -66,18 +67,16 @@ const UserForm = <T, U>({
   });
   const password = watch("password");
   const t = useTranslations();
-  const router = useRouter();
 
   const handleCreate = handleSubmit(async ({ repeatedPassword: _, ...data }) => {
     startLoading();
     setError("");
 
     try {
-      await onSave(data as T);
+      const resData = await onSave(data as T);
 
       stopLoading();
-      router.push("/users");
-      router.refresh();
+      onSuccess?.(resData);
     } catch (err) {
       console.error("Error creating user", err);
 

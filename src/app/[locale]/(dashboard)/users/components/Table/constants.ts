@@ -27,6 +27,11 @@ const HEADER_COLUMNS: HeaderColumns[] = [
     className: "text-center whitespace-nowrap",
   },
   {
+    id: HeaderColumnTypes.isActive,
+    label: "Email is verified",
+    className: "text-center whitespace-nowrap",
+  },
+  {
     id: HeaderColumnTypes.createdAt,
     label: "Creation date",
     className: "text-center whitespace-nowrap",

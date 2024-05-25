@@ -55,7 +55,9 @@
       "Password is required": "La contraseña es obligatoria",
       "Password": "Contraseña",
       "Forgot password?": "¿Olvidaste tu contraseña?",
-      "Login": "Iniciar sesión"
+      "Login": "Iniciar sesión",
+      "Invalid credentials": "Credenciales inválidas",
+      "Please check your email to verify your account": "Por favor, revisa tu correo electrónico para verificar tu cuenta"
     },
     "signUp": {
       "Sign up for Bizprofy": "Regístrate en Bizprofy",
@@ -86,7 +88,22 @@
       "Password must have at least 1 number": "La contraseña debe tener al menos 1 número",
       "Password must have at least 1 uppercase letter": "La contraseña debe tener al menos 1 letra mayúscula",
       "Password must have at least 1 lowercase letter": "La contraseña debe tener al menos 1 letra minúscula",
-      "Password must have at least 1 special character": "La contraseña debe tener al menos 1 caracter especial"
+      "Password must have at least 1 special character": "La contraseña debe tener al menos 1 caracter especial",
+      "Account created successfully": "Cuenta creada exitosamente",
+      "Congratulations! We have sent a verification link to your email Please check your inbox to verify your account": "¡Enhorabuena! Hemos enviado un enlace de verificación a tu correo electrónico. Por favor, revisa tu bandeja de entrada para verificar tu cuenta",
+      "Important note": "Nota importante",
+      "The link will be available for {minutes} minutes only": "El enlace estará disponible solo por {minutes} minutos",
+      "Don't forget to check your junk or spam folder": "No olvides revisar la carpeta de correo no deseado o spam",
+      "Ok": "Ok"
+    },
+    "emailVerification": {
+      "You are almost there": "Ya casi estás",
+      "To verify your account, please click the button below": "Para verificar tu cuenta, por favor haz clic en el botón de abajo",
+      "Verify your account": "Verificar tu cuenta",
+      "Your account has been verified successfully": "Tu cuenta ha sido verificada exitosamente",
+      "The verification token is invalid": "El token de verificación es inválido",
+      "The account has already been verified": "La cuenta ya ha sido verificada",
+      "The verification token has expired": "El token de verificación ha expirado"
     }
   },
   "users": {
@@ -107,6 +124,7 @@
     "Email address": "Correo electrónico",
     "Invalid email address": "Correo electrónico inválido",
     "Active": "Activo",
+    "Inactive": "Inactivo",
     "Creation date": "Fecha de creación",
     "Last modified date": "Fecha de última modificación",
     "Search": "Buscar",
@@ -136,7 +154,17 @@
     "Password must have at least 1 number": "La contraseña debe tener al menos 1 número",
     "Password must have at least 1 uppercase letter": "La contraseña debe tener al menos 1 letra mayúscula",
     "Password must have at least 1 lowercase letter": "La contraseña debe tener al menos 1 letra minúscula",
-    "Password must have at least 1 special character": "La contraseña debe tener al menos 1 caracter especial"
+    "Password must have at least 1 special character": "La contraseña debe tener al menos 1 caracter especial",
+    "View": "Ver",
+    "Email is verified": "Correo electrónico verificado",
+    "Verified": "Verificado",
+    "No verified": "No verificado",
+    "User created successfully": "Usuario creado exitosamente",
+    "We've sent a verification link to {email} Please contact the new user to check their inbox and verify their account": "Hemos enviado un enlace de verificación a {email}. Por favor, contacta al nuevo usuario para que revise su bandeja de entrada y verifique su cuenta",
+    "Important note": "Nota importante",
+    "The link will be available for {minutes} minutes only": "El enlace estará disponible solo por {minutes} minutos",
+    "Don't forget to check the junk or spam folder": "No olvides revisar la carpeta de correo no deseado o spam",
+    "Ok": "Ok"
   },
   "customers": {
     "Customers": "Clientes",
@@ -153,6 +181,7 @@
     "Phone number": "Número de teléfono",
     "Address": "Dirección",
     "Active": "Activo",
+    "Inactive": "Inactivo",
     "Creation date": "Fecha de creación",
     "Last modified date": "Fecha de última modificación",
     "Search": "Buscar",
@@ -175,7 +204,8 @@
     "Email address": "Correo electrónico",
     "1234 Main St, City, Country": "Calle 1234, Ciudad, País",
     "Save customer": "Guardar cliente",
-    "Rows per page": "Filas por página"
+    "Rows per page": "Filas por página",
+    "View": "Ver"
   },
   "providers": {
     "Providers": "Proveedores",
@@ -194,6 +224,7 @@
     "Phone number": "Número de teléfono",
     "Address": "Dirección",
     "Active": "Activo",
+    "Inactive": "Inactivo",
     "Creation date": "Fecha de creación",
     "Last modified date": "Fecha de última modificación",
     "Search": "Buscar",
@@ -216,7 +247,8 @@
     "Email address": "Correo electrónico",
     "1234 Main St, City, Country": "Calle 1234, Ciudad, País",
     "Save provider": "Guardar proveedor",
-    "Rows per page": "Filas por página"
+    "Rows per page": "Filas por página",
+    "View": "Ver"
   },
   "warehouses": {
     "Warehouses": "Almacenes",

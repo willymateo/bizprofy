@@ -5,8 +5,8 @@ import { ApexOptions } from "apexcharts";
 import ApexChart from "react-apexcharts";
 import Card from "@mui/material/Card";
 
+import { GENERAL_OPTIONS, PROFIT_COLORS } from "../constants";
 import { StockStatusData } from "@/services/stock/types";
-import { GENERAL_OPTIONS } from "../constants";
 
 type Props = {
   data: StockStatusData;
@@ -14,13 +14,18 @@ type Props = {
 
 const Profits = ({ data }: Props) => {
   let totalProfitInThePeriod = 0;
+  let color = PROFIT_COLORS.ZERO;
   const t = useTranslations();
 
   Object.values(data).forEach(({ profit = 0 }) => {
     totalProfitInThePeriod += profit;
   });
 
-  const color = totalProfitInThePeriod > 0 ? "#6bce70" : "#ff4560";
+  if (totalProfitInThePeriod > 0) {
+    color = PROFIT_COLORS.POSITIVE;
+  } else if (totalProfitInThePeriod < 0) {
+    color = PROFIT_COLORS.NEGATIVE;
+  }
 
   const options: ApexOptions = {
     ...GENERAL_OPTIONS,

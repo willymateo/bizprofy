@@ -18,6 +18,7 @@ export interface AuditFields {
 
 export interface SessionPayload extends AuditFields {
   entityPermissions: EntityPermissions;
+  emailIsVerified: boolean;
   firstNames: string;
   lastNames: string;
   username: string;

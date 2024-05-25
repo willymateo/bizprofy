@@ -25,7 +25,7 @@ const Login = async () => {
 
   const t = await getTranslations("auth.login");
   const messages = await getMessages();
-  const clientMessages = (messages?.auth as AbstractIntlMessages).login as AbstractIntlMessages;
+  const loginMessages = (messages?.auth as AbstractIntlMessages).login as AbstractIntlMessages;
   const localeMessages = messages?.locales as AbstractIntlMessages;
 
   return (
@@ -41,7 +41,7 @@ const Login = async () => {
         </p>
       </div>
 
-      <NextIntlClientProvider messages={clientMessages}>
+      <NextIntlClientProvider messages={loginMessages}>
         <OAuth />
 
         <Divider>{t("Or")}</Divider>

@@ -29,6 +29,25 @@ export interface GetCustomersResponse {
   count: number;
 }
 
+export type GetCustomersStockStatusPayload = {
+  orderByField?: "stock_out_total_quantity" | "total_price_sum";
+  transactionDateGreaterThanOrEqualTo?: string;
+  transactionDateLessThanOrEqualTo?: string;
+  offset?: number;
+  limit?: number;
+  order?: Order;
+};
+
+export type GetCustomersStockStatusResponse = {
+  data: CustomersStockStatusData[];
+};
+
+export type CustomersStockStatusData = {
+  totalQuantity: number;
+  totalPriceSum: number;
+  customer: Customer;
+};
+
 export interface Customer extends AuditFields {
   email: string | null;
   phoneNumber: string;

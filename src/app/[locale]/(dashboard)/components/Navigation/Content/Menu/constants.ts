@@ -28,15 +28,15 @@ const MENU_OPTIONS: MenuOption[] = [
     entity: ENTITIES.WAREHOUSES,
   },
   {
-    label: "Products",
-    path: "/products",
-    icon: "solar:bag-heart-bold-duotone",
-    entity: ENTITIES.PRODUCTS,
-  },
-  {
     label: "Product categories",
     path: "/products/categories",
     icon: "solar:bag-smile-bold-duotone",
+    entity: ENTITIES.PRODUCTS,
+  },
+  {
+    label: "Products",
+    path: "/products",
+    icon: "solar:bag-heart-bold-duotone",
     entity: ENTITIES.PRODUCTS,
   },
   {

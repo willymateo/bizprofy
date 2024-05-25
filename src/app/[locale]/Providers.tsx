@@ -8,7 +8,6 @@ import { CssBaseline, createTheme } from "@mui/material";
 import { Provider as ReduxProvider } from "react-redux";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode, useMemo } from "react";
-import "dayjs/locale/en-gb";
 
 import { reduxStore } from "@/redux/store";
 import { themeOptions } from "@/theme";

@@ -17,6 +17,10 @@ import { SignUpPayload } from "@/services/auth/interfaces";
 import { useActive } from "@/hooks/useActive";
 import { signUp } from "@/services/auth";
 import {
+  AT_LEAST_ONE_SPECIAL_CHARACTER_REGEX,
+  AT_LEAST_ONE_LOWERCASE_REGEX,
+  AT_LEAST_ONE_UPPERCASE_REGEX,
+  AT_LEAST_ONE_NUMBER_REGEX,
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,
   PASSWORD_MIN_LENGTH,
@@ -213,13 +217,32 @@ const CredentialsForm = () => {
         helperText={formError?.password?.message}
         error={Boolean(formError?.password)}
         {...register("password", {
-          required: t("Password is required"),
+          validate: value => {
+            if (!AT_LEAST_ONE_NUMBER_REGEX.test(value)) {
+              return t("Password must have at least 1 number");
+            }
+
+            if (!AT_LEAST_ONE_UPPERCASE_REGEX.test(value)) {
+              return t("Password must have at least 1 uppercase letter");
+            }
+
+            if (!AT_LEAST_ONE_LOWERCASE_REGEX.test(value)) {
+              return t("Password must have at least 1 lowercase letter");
+            }
+
+            if (!AT_LEAST_ONE_SPECIAL_CHARACTER_REGEX.test(value)) {
+              return t("Password must have at least 1 special character");
+            }
+
+            return true;
+          },
           minLength: {
             message: t("Password must be at least {minLength} characters", {
               minLength: PASSWORD_MIN_LENGTH,
             }),
             value: PASSWORD_MIN_LENGTH,
           },
+          required: t("Password is required"),
         })}
         placeholder="●●●●●●●●"
         label={t("Password")}

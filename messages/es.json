@@ -82,7 +82,11 @@
       "Passwords don't match": "Las contraseñas no coinciden",
       "This field is required": "Este campo es obligatorio",
       "Repeat password": "Repetir contraseña",
-      "Create account": "Crear cuenta"
+      "Create account": "Crear cuenta",
+      "Password must have at least 1 number": "La contraseña debe tener al menos 1 número",
+      "Password must have at least 1 uppercase letter": "La contraseña debe tener al menos 1 letra mayúscula",
+      "Password must have at least 1 lowercase letter": "La contraseña debe tener al menos 1 letra minúscula",
+      "Password must have at least 1 special character": "La contraseña debe tener al menos 1 caracter especial"
     }
   },
   "users": {
@@ -128,7 +132,11 @@
     "This field is required": "Este campo es obligatorio",
     "Create user": "Crear usuario",
     "Save user": "Guardar usuario",
-    "Rows per page": "Filas por página"
+    "Rows per page": "Filas por página",
+    "Password must have at least 1 number": "La contraseña debe tener al menos 1 número",
+    "Password must have at least 1 uppercase letter": "La contraseña debe tener al menos 1 letra mayúscula",
+    "Password must have at least 1 lowercase letter": "La contraseña debe tener al menos 1 letra minúscula",
+    "Password must have at least 1 special character": "La contraseña debe tener al menos 1 caracter especial"
   },
   "customers": {
     "Customers": "Clientes",

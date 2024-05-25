@@ -82,7 +82,11 @@
       "Passwords don't match": "Passwords don't match",
       "This field is required": "This field is required",
       "Repeat password": "Repeat password",
-      "Create account": "Create account"
+      "Create account": "Create account",
+      "Password must have at least 1 number": "Password must have at least 1 number",
+      "Password must have at least 1 uppercase letter": "Password must have at least 1 uppercase letter",
+      "Password must have at least 1 lowercase letter": "Password must have at least 1 lowercase letter",
+      "Password must have at least 1 special character": "Password must have at least 1 special character"
     }
   },
   "users": {
@@ -128,7 +132,11 @@
     "This field is required": "This field is required",
     "Create user": "Create user",
     "Save user": "Save user",
-    "Rows per page": "Rows per page"
+    "Rows per page": "Rows per page",
+    "Password must have at least 1 number": "Password must have at least 1 number",
+    "Password must have at least 1 uppercase letter": "Password must have at least 1 uppercase letter",
+    "Password must have at least 1 lowercase letter": "Password must have at least 1 lowercase letter",
+    "Password must have at least 1 special character": "Password must have at least 1 special character"
   },
   "customers": {
     "Customers": "Customers",

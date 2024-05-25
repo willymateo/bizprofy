@@ -1,7 +1,12 @@
 const APP_ROOT_ID = "root";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const AT_LEAST_ONE_SPECIAL_CHARACTER_REGEX = /.*[-+!@#$%^&*(),.?":{}\[\]|<>].*/;
 const USERNAME_REGEX = /^[a-z0-9_\.]*[a-z]+[a-z0-9_\.]*$/;
+const AT_LEAST_ONE_LOWERCASE_REGEX = /.*[a-z].*/;
+const AT_LEAST_ONE_UPPERCASE_REGEX = /.*[A-Z].*/;
+const AT_LEAST_ONE_NUMBER_REGEX = /.*[0-9].*/;
+
 const USERNAME_MAX_LENGTH = 30;
 const USERNAME_MIN_LENGTH = 5;
 const PASSWORD_MIN_LENGTH = 8;
@@ -80,6 +85,10 @@ const ENTITY_PERMISSIONS = {
 };
 
 export {
+  AT_LEAST_ONE_SPECIAL_CHARACTER_REGEX,
+  AT_LEAST_ONE_LOWERCASE_REGEX,
+  AT_LEAST_ONE_UPPERCASE_REGEX,
+  AT_LEAST_ONE_NUMBER_REGEX,
   MIN_CHARACTERS_TO_SEARCH,
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,

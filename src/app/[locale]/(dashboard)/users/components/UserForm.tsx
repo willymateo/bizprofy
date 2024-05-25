@@ -15,6 +15,10 @@ import { useState } from "react";
 import { CreateUserPayload, User } from "@/services/users/interfaces";
 import { useActive } from "@/hooks/useActive";
 import {
+  AT_LEAST_ONE_SPECIAL_CHARACTER_REGEX,
+  AT_LEAST_ONE_LOWERCASE_REGEX,
+  AT_LEAST_ONE_UPPERCASE_REGEX,
+  AT_LEAST_ONE_NUMBER_REGEX,
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,
   PASSWORD_MIN_LENGTH,
@@ -207,6 +211,25 @@ const UserForm = <T, U>({
             helperText={formError?.password?.message}
             error={Boolean(formError?.password)}
             {...register("password", {
+              validate: value => {
+                if (!AT_LEAST_ONE_NUMBER_REGEX.test(value)) {
+                  return t("Password must have at least 1 number");
+                }
+
+                if (!AT_LEAST_ONE_UPPERCASE_REGEX.test(value)) {
+                  return t("Password must have at least 1 uppercase letter");
+                }
+
+                if (!AT_LEAST_ONE_LOWERCASE_REGEX.test(value)) {
+                  return t("Password must have at least 1 lowercase letter");
+                }
+
+                if (!AT_LEAST_ONE_SPECIAL_CHARACTER_REGEX.test(value)) {
+                  return t("Password must have at least 1 special character");
+                }
+
+                return true;
+              },
               minLength: {
                 message: t("Password must be at least {minLength} characters", {
                   minLength: PASSWORD_MIN_LENGTH,

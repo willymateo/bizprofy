@@ -29,6 +29,7 @@ export interface GetUsersResponse {
 
 export interface User extends AuditFields {
   permissions: Permissions;
+  emailIsVerified: boolean;
   passwordHash: string;
   firstNames: string;
   lastNames: string;

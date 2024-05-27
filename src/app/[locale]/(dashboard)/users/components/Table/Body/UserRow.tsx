@@ -3,14 +3,13 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import { MouseEvent, useState } from "react";
-import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
 import Link from "next/link";
 import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "@/app/[locale]/components/inputs/DateTimePickerHookForm/constants";
-import { SessionPayload } from "@/services/interfaces";
 import { User } from "@/services/users/interfaces";
 import { Menu } from "./Menu";
 
@@ -21,9 +20,8 @@ type Props = User & {
 
 const UserRow = ({ onClick, isSelected = false, ...user }: Props) => {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-  const { data: session } = useSession({ required: true });
-  const userSession = session?.user as SessionPayload;
   const isMenuOpen = Boolean(anchorEl);
+  const t = useTranslations();
 
   const handleOpenMenu = ({ currentTarget }: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(currentTarget);
@@ -54,7 +52,18 @@ const UserRow = ({ onClick, isSelected = false, ...user }: Props) => {
           </Link>
         </TableCell>
         <TableCell className="whitespace-nowrap text-center">
-          {user?.deletedAt ? <Chip label="Inactive" /> : <Chip label="Active" color="success" />}
+          {user?.deletedAt ? (
+            <Chip label={t("Inactive")} />
+          ) : (
+            <Chip label={t("Active")} color="success" />
+          )}
+        </TableCell>
+        <TableCell className="whitespace-nowrap text-center">
+          {user?.emailIsVerified ? (
+            <Chip label={t("Verified")} color="primary" />
+          ) : (
+            <Chip label={t("No verified")} />
+          )}
         </TableCell>
         <TableCell className="whitespace-nowrap text-center">
           {dayjs(user?.createdAt).format(DATE_FORMAT)}

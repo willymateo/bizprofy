@@ -3,6 +3,7 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import { MouseEvent, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Icon } from "@iconify-icon/react";
 import Chip from "@mui/material/Chip";
 import Link from "next/link";
@@ -20,6 +21,7 @@ type Props = Provider & {
 const ProviderRow = ({ isSelected = false, onClick, ...provider }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const isMenuOpen = Boolean(anchorEl);
+  const t = useTranslations();
 
   const handleOpenMenu = ({ currentTarget }: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(currentTarget);
@@ -46,9 +48,9 @@ const ProviderRow = ({ isSelected = false, onClick, ...provider }: Props) => {
         <TableCell className="whitespace-nowrap">{provider?.address ?? ""}</TableCell>
         <TableCell className="whitespace-nowrap">
           {provider?.deletedAt ? (
-            <Chip label="Inactive" />
+            <Chip label={t("Inactive")} />
           ) : (
-            <Chip label="Active" color="success" />
+            <Chip label={t("Active")} color="success" />
           )}
         </TableCell>
         <TableCell className="whitespace-nowrap">

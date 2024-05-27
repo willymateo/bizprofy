@@ -2,22 +2,30 @@ import { Warehouse } from "../warehouses/interfaces";
 import { User } from "../users/interfaces";
 import { Company } from "../interfaces";
 
-export interface LoginPayload {
+export type LoginPayload = {
   emailOrUsername: string;
   password: string;
-}
+};
 
-export interface SignUpPayload {
+export type SignUpPayload = {
   companyName: string;
   firstNames: string;
   lastNames: string;
   username: string;
   password: string;
   email: string;
-}
+};
 
-export interface SignUpResponse {
+export type SignUpResponse = {
   warehouse: Warehouse;
   company: Company;
   user: User;
-}
+};
+
+export type VerifyEmailPayload = {
+  token: string;
+};
+
+export type VerifyEmailResponse = {
+  message: string;
+};

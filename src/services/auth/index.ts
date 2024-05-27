@@ -1,7 +1,13 @@
 "use server";
 
-import { LoginPayload, SignUpPayload, SignUpResponse } from "./interfaces";
 import { SessionPayload } from "../interfaces";
+import {
+  VerifyEmailResponse,
+  VerifyEmailPayload,
+  SignUpResponse,
+  SignUpPayload,
+  LoginPayload,
+} from "./types";
 
 const login = async ({ emailOrUsername, password }: LoginPayload): Promise<SessionPayload> => {
   const res = await fetch(`${process.env.BIZPROFY_API_URL}/auth/login`, {
@@ -38,4 +44,20 @@ const signUp = async (payload: SignUpPayload): Promise<SignUpResponse> => {
   return resBody;
 };
 
-export { login, signUp };
+const verifyEmail = async (payload: VerifyEmailPayload): Promise<VerifyEmailResponse> => {
+  const res = await fetch(`${process.env.BIZPROFY_API_URL}/auth/email-verification`, {
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    method: "PATCH",
+  });
+
+  const resBody = await res.json();
+
+  if (!res.ok) {
+    throw new Error(resBody.error?.message || "Failed to verify email");
+  }
+
+  return resBody;
+};
+
+export { login, signUp, verifyEmail };

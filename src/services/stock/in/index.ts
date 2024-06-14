@@ -64,11 +64,19 @@ const getStockIn = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch stock in");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to fetch stock in",
+    );
   }
 
   return resBody;
@@ -89,11 +97,19 @@ const createStockIn = async (payload: CreateStockInPayload): Promise<StockIn> =>
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to create stock in");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to create stock in",
+    );
   }
 
   return resBody;

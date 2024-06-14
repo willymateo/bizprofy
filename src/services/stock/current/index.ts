@@ -64,11 +64,19 @@ const getCurrentStock = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch current stock");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to fetch current stock",
+    );
   }
 
   return resBody;

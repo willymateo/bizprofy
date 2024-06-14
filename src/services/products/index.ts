@@ -32,11 +32,19 @@ const getProductById = async ({ id = "" }): Promise<Product> => {
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch product");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to fetch product",
+    );
   }
 
   return resBody;
@@ -94,11 +102,19 @@ const getProducts = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch product");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to fetch products",
+    );
   }
 
   return resBody;
@@ -154,11 +170,19 @@ const getProductsStockStatus = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch products stock status");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to fetch products stock status",
+    );
   }
 
   return resBody;
@@ -179,11 +203,19 @@ const createProduct = async (payload: CreateProductPayload): Promise<SimpleProdu
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to create product");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to create product",
+    );
   }
 
   return resBody;
@@ -210,11 +242,19 @@ const editProductById = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to edit product");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to edit product",
+    );
   }
 
   return resBody;
@@ -241,11 +281,19 @@ const manageProductActivationById = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to manage product activation");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to manage product activation",
+    );
   }
 
   return resBody;

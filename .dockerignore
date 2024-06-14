@@ -1,0 +1,16 @@
+.git
+.husky
+.next
+docker
+node_modules
+.dockerignore
+.env.template
+.eslintignore
+.eslintrc.json
+.gitignore
+.lintstagedrc.json
+.prettierignore
+.prettierrc
+Dockerfile
+README.md
+npm-debug.log

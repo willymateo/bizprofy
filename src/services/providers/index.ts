@@ -25,11 +25,19 @@ const getProviderById = async ({ id = "" }): Promise<Provider> => {
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch provider");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to fetch provider",
+    );
   }
 
   return resBody;
@@ -80,11 +88,19 @@ const getProviders = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to fetch providers");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to fetch providers",
+    );
   }
 
   return resBody;
@@ -105,11 +121,19 @@ const createProvider = async (payload: CreateProviderPayload): Promise<Provider>
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to create provider");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to create provider",
+    );
   }
 
   return resBody;
@@ -136,11 +160,19 @@ const editProviderById = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to edit provider");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to edit provider",
+    );
   }
 
   return resBody;
@@ -167,11 +199,19 @@ const manageProviderActivationById = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(resBody.error?.message || "Invalid credentials");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Invalid credentials",
+    );
   }
 
   if (!res.ok) {
-    throw new Error(resBody.error?.message || "Failed to manage provider activation");
+    throw new Error(
+      resBody?.error?.name || resBody.error?.message
+        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        : "Failed to manage provider activation",
+    );
   }
 
   return resBody;

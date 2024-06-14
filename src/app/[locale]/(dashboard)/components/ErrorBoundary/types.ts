@@ -1,8 +1,7 @@
-import { ElementType, ReactNode } from "react";
+import { ElementType } from "react";
 
 export type Props = {
   error: Error & { digest?: string };
   Layout: ElementType;
   reset: () => void;
-  Icon: ReactNode;
 };

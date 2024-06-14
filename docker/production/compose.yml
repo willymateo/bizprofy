@@ -1,0 +1,21 @@
+services:
+  bizprofy-web-app:
+    container_name: bizprofy-web-app
+    env_file:
+      - ../../.env
+    environment:
+      - NODE_ENV=production
+    build:
+      context: ../../
+      dockerfile: docker/production/Dockerfile
+    image: bizprofy/web-app:production
+    ports:
+      - ${PORT}:${PORT}
+    restart: on-failure:3
+    networks:
+      - bizprofy-network
+
+networks:
+  bizprofy-network:
+    external: true
+    name: bizprofy-network

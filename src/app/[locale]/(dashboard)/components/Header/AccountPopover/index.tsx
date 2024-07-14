@@ -5,7 +5,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, useState } from "react";
 import Divider from "@mui/material/Divider";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useDispatch } from "react-redux";
 import { signOut } from "next-auth/react";
@@ -30,7 +29,6 @@ const AccountPopover = () => {
   } = useActive();
   const dispatch = useDispatch();
   const t = useTranslations();
-  const router = useRouter();
 
   const handleOpen = ({ currentTarget }: MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(currentTarget);
@@ -41,13 +39,11 @@ const AccountPopover = () => {
     startLogingOut();
 
     try {
-      await signOut();
+      await signOut({ callbackUrl: authConfig?.pages?.signIn ?? "/" });
 
       dispatch(resetAllCurrentStockFilters());
       dispatch(resetAllStockOutFilters());
       dispatch(resetAllStockInFilters());
-
-      router.push(authConfig?.pages?.signIn ?? "/");
     } catch (err) {
       console.log("Error signing out", err);
     }

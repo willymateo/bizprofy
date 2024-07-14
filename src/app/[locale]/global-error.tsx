@@ -17,7 +17,7 @@ type Params = {
 const GlobalError = ({ params: { locale } }: Readonly<Props>) => (
   <html lang={locale}>
     <body id={APP_ROOT_ID} className={ralewayVariable.className}>
-      <div>Error</div>;
+      <div>GlobalError</div>;
     </body>
   </html>
 );

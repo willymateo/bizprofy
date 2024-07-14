@@ -1,0 +1,24 @@
+services:
+  bizprofy-web-app:
+    container_name: bizprofy-web-app
+    env_file:
+      - ../../.env
+    environment:
+      - NODE_ENV=development
+      - NEXT_TELEMETRY_DISABLED=1
+    build:
+      context: ../../
+      dockerfile: docker/development/Dockerfile
+    image: bizprofy/web-app:development
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ../../:/app
+    networks:
+      - bizprofy-network
+    command: npm run start:dev
+
+networks:
+  bizprofy-network:
+    external: true
+    name: bizprofy-network

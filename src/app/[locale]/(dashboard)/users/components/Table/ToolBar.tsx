@@ -2,9 +2,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import MaterialToolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import { Icon } from "@iconify-icon/react";
-import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 
 import { GetUsersPayload } from "@/services/users/interfaces";

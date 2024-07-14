@@ -1,6 +1,7 @@
 "use server";
 
 import { getUserSession } from "@/utils/auth";
+import { redirect } from "next/navigation";
 import { Order } from "../interfaces";
 import {
   UserActivationPayload,
@@ -25,17 +26,13 @@ const getUserById = async ({ id = "" }): Promise<User> => {
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to fetch user",
     );
   }
@@ -83,17 +80,13 @@ const getUsers = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to fetch users",
     );
   }
@@ -116,17 +109,13 @@ const createUser = async (payload: CreateUserPayload): Promise<User> => {
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to create user",
     );
   }
@@ -155,17 +144,13 @@ const editUserById = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to edit user",
     );
   }
@@ -194,17 +179,13 @@ const manageUserActivationById = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to manage user activation",
     );
   }

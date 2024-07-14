@@ -20,13 +20,9 @@ import { useActive } from "@/hooks/useActive";
 import { OptionsMenu } from "./OptionsMenu";
 
 const AccountPopover = () => {
+  const { isActive: isLogingOut, enable: startLogingOut, disable: stopLogingOut } = useActive();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const isOpen = Boolean(anchorEl);
-  const {
-    isActive: isLogingOut = false,
-    enable: startLogingOut,
-    disable: stopLogingOut,
-  } = useActive();
   const dispatch = useDispatch();
   const t = useTranslations();
 

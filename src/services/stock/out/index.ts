@@ -1,6 +1,7 @@
 "use server";
 
 import { getUserSession } from "@/utils/auth";
+import { redirect } from "next/navigation";
 import { Order } from "../../interfaces";
 import {
   CreateStockOutPayload,
@@ -69,17 +70,13 @@ const getStockOut = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to fetch stock out",
     );
   }
@@ -102,17 +99,13 @@ const createStockOut = async (payload: CreateStockOutPayload): Promise<StockOut>
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to create stock out",
     );
   }

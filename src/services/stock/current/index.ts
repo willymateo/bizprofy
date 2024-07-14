@@ -2,6 +2,7 @@
 
 import { GetCurrentStockPayload, GetCurrentStockResponse } from "./interfaces";
 import { getUserSession } from "@/utils/auth";
+import { redirect } from "next/navigation";
 import { Order } from "../../interfaces";
 
 const getCurrentStock = async ({
@@ -64,17 +65,13 @@ const getCurrentStock = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to fetch current stock",
     );
   }

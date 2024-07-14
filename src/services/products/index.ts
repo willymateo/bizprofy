@@ -1,6 +1,7 @@
 "use server";
 
 import { getUserSession } from "@/utils/auth";
+import { redirect } from "next/navigation";
 import { Order } from "../interfaces";
 import {
   GetProductsStockStatusResponse,
@@ -32,17 +33,13 @@ const getProductById = async ({ id = "" }): Promise<Product> => {
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to fetch product",
     );
   }
@@ -102,17 +99,13 @@ const getProducts = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to fetch products",
     );
   }
@@ -170,17 +163,13 @@ const getProductsStockStatus = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to fetch products stock status",
     );
   }
@@ -203,17 +192,13 @@ const createProduct = async (payload: CreateProductPayload): Promise<SimpleProdu
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to create product",
     );
   }
@@ -242,17 +227,13 @@ const editProductById = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to edit product",
     );
   }
@@ -281,17 +262,13 @@ const manageProductActivationById = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to manage product activation",
     );
   }

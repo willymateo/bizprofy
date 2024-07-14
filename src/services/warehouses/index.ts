@@ -1,6 +1,7 @@
 "use server";
 
 import { getUserSession } from "@/utils/auth";
+import { redirect } from "next/navigation";
 import { Order } from "../interfaces";
 import {
   WarehouseActivationPayload,
@@ -25,17 +26,13 @@ const getWarehouseById = async ({ id = "" }): Promise<Warehouse> => {
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to fetch warehouse",
     );
   }
@@ -88,17 +85,13 @@ const getWarehouses = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to fetch warehouses",
     );
   }
@@ -121,17 +114,13 @@ const createWarehouse = async (payload: CreateWarehousePayload): Promise<Warehou
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to create warehouse",
     );
   }
@@ -160,17 +149,13 @@ const editWarehouseById = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to edit warehouse",
     );
   }
@@ -199,17 +184,13 @@ const manageWarehouseActivationById = async ({
   const resBody = await res.json();
 
   if (res.status === 401) {
-    throw new Error(
-      resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
-        : "Invalid credentials",
-    );
+    redirect("/auth/logout");
   }
 
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to manage warehouse activation",
     );
   }

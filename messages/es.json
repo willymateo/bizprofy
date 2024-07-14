@@ -59,6 +59,9 @@
       "Invalid credentials": "Credenciales inválidas",
       "Please check your email to verify your account": "Por favor, revisa tu correo electrónico para verificar tu cuenta"
     },
+    "logout": {
+      "Logging out": "Cerrando sesión"
+    },
     "signUp": {
       "Sign up for Bizprofy": "Regístrate en Bizprofy",
       "Already have an account?": "¿Ya tienes una cuenta?",

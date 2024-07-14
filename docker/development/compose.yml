@@ -1,6 +1,6 @@
 services:
   bizprofy-web-app:
-    container_name: bizprofy-web-app
+    container_name: bizprofy-web-app-development
     env_file:
       - ../../.env
     environment:

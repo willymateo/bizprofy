@@ -24,7 +24,7 @@ const login = async ({ emailOrUsername, password }: LoginPayload): Promise<Sessi
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to login",
     );
   }
@@ -44,7 +44,7 @@ const signUp = async (payload: SignUpPayload): Promise<SignUpResponse> => {
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to sign up",
     );
   }
@@ -64,7 +64,7 @@ const verifyEmail = async (payload: VerifyEmailPayload): Promise<VerifyEmailResp
   if (!res.ok) {
     throw new Error(
       resBody?.error?.name || resBody.error?.message
-        ? `${resBody?.error?.name}: ${resBody?.error?.message}`
+        ? `${resBody?.error?.name ?? ""}: ${resBody?.error?.message ?? ""}`
         : "Failed to verify email",
     );
   }

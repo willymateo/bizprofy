@@ -11,6 +11,10 @@ import { useForm } from "react-hook-form";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
+import { CountryStateHookForm } from "@/app/[locale]/components/inputs/CountryStatesHookForm";
+import { CountriesHookForm } from "@/app/[locale]/components/inputs/CountriesHookForm";
+import { CitiesHookForm } from "@/app/[locale]/components/inputs/CitiesHookForm";
+import { City, Country, CountryState } from "@/services/countries/types";
 import { EmailVerificationDialog } from "./EmailVerificationDialog";
 import { SignUpPayload } from "@/services/auth/types";
 import { useActive } from "@/hooks/useActive";
@@ -27,9 +31,19 @@ import {
   EMAIL_REGEX,
 } from "@/constants";
 
-interface FormInputs extends SignUpPayload {
+type FormInputs = Omit<
+  SignUpPayload,
+  | "companyCountryStateCode"
+  | "companyCountryStateName"
+  | "companyCountryCode"
+  | "companyCountryName"
+  | "companyCityName"
+> & {
+  countryState: CountryState | null;
   repeatedPassword: string;
-}
+  country: Country | null;
+  city: City | null;
+};
 
 const CredentialsForm = () => {
   const { isActive: isRepeatedPasswordVisible = false, toggle: toggleRepeatedPasswordVisibility } =
@@ -42,28 +56,58 @@ const CredentialsForm = () => {
   const {
     formState: { errors: formError },
     handleSubmit,
+    setValue,
     register,
+    control,
     watch,
   } = useForm<FormInputs>();
+  const countryState = watch("countryState");
   const password = watch("password");
+  const country = watch("country");
   const t = useTranslations();
 
-  const handleSignUp = handleSubmit(async ({ repeatedPassword: _, ...data }) => {
-    startLoading();
-    setError("");
+  const handleSignUp = handleSubmit(
+    async ({ repeatedPassword: _, country, countryState, city, ...data }) => {
+      startLoading();
+      setError("");
 
-    try {
-      await signUp(data);
+      try {
+        await signUp({
+          ...data,
+          companyCountryStateCode: countryState?.isoCode as string,
+          companyCountryStateName: countryState?.name as string,
+          companyCountryCode: country?.isoCode as string,
+          companyCountryName: country?.name as string,
+          companyCityName: city?.name as string,
+        });
 
-      openEmailVerificationDialog();
-    } catch (err) {
-      console.log("Error creating user: ", err);
+        openEmailVerificationDialog();
+      } catch (err) {
+        console.log("Error creating user: ", err);
 
-      setError((err as Error).message);
+        setError((err as Error).message);
+      }
+
+      stopLoading();
+    },
+  );
+
+  const handleChangeCountry = (newCountryValue: Country | Country[] | null) => {
+    if (newCountryValue) {
+      return;
     }
 
-    stopLoading();
-  });
+    setValue("countryState", null);
+    setValue("city", null);
+  };
+
+  const handleChangeCountryState = (newCountryStateValue: CountryState | CountryState[] | null) => {
+    if (newCountryStateValue) {
+      return;
+    }
+
+    setValue("city", null);
+  };
 
   return (
     <>
@@ -85,6 +129,41 @@ const CredentialsForm = () => {
           label={t("Company name")}
           required
         />
+
+        <CountriesHookForm
+          rules={{
+            validate: value => {
+              const country = value as Country;
+
+              if (!country?.isoCode) {
+                return t("Country is required");
+              }
+
+              return true;
+            },
+          }}
+          onChange={handleChangeCountry}
+          control={control}
+          name="country"
+        />
+
+        {country?.isoCode ? (
+          <CountryStateHookForm
+            onChange={handleChangeCountryState}
+            countryCode={country?.isoCode}
+            name="countryState"
+            control={control}
+          />
+        ) : null}
+
+        {country?.isoCode && countryState?.isoCode ? (
+          <CitiesHookForm
+            countryStateCode={countryState?.isoCode}
+            countryCode={country?.isoCode}
+            control={control}
+            name="city"
+          />
+        ) : null}
 
         <TextField
           InputProps={{

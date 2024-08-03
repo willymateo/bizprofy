@@ -372,11 +372,7 @@
       "Product quantity": "Product quantity",
       "Product": "Product",
       "Type code, name or description of a product": "Type code, name or description of a product",
-      "This field is required": "This field is required",
-      "No results found": "No results found",
-      "We couldn't find any results matching your search criteria": "We couldn't find any results matching your search criteria",
-      "This is unexpected for us": "This is unexpected for us",
-      "We couldn't load the data Please try again later": "We couldn't load the data. Please try again later"
+      "This field is required": "This field is required"
     },
     "out": {
       "Stock out": "Stock out",
@@ -417,11 +413,7 @@
       "Type ID card or name of a customer": "Type ID card or name of a customer",
       "Total": "Total",
       "Profit": "Profit",
-      "This field is required": "This field is required",
-      "No results found": "No results found",
-      "We couldn't find any results matching your search criteria": "We couldn't find any results matching your search criteria",
-      "This is unexpected for us": "This is unexpected for us",
-      "We couldn't load the data Please try again later": "We couldn't load the data. Please try again later"
+      "This field is required": "This field is required"
     },
     "current": {
       "Current stock status": "Current stock status",
@@ -446,5 +438,14 @@
       "This is unexpected for us": "This is unexpected for us",
       "We couldn't load the data Please try again later": "We couldn't load the data. Please try again later"
     }
+  },
+  "localities": {
+    "Country": "Country",
+    "Select a country": "Select a country",
+    "Country is required": "Country is required",
+    "Country state": "Country state",
+    "Select a country state": "Select a country state",
+    "City": "City",
+    "Select a city": "Select a city"
   }
 }

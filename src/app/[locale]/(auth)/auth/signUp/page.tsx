@@ -25,6 +25,7 @@ const SignUp = async () => {
   const t = await getTranslations("auth.signUp");
   const messages = await getMessages();
   const signUpMessages = (messages?.auth as AbstractIntlMessages).signUp as AbstractIntlMessages;
+  const localitiesMessages = messages?.localities as AbstractIntlMessages;
   const localeMessages = messages?.locales as AbstractIntlMessages;
 
   return (
@@ -37,7 +38,12 @@ const SignUp = async () => {
         </p>
       </div>
 
-      <NextIntlClientProvider messages={signUpMessages}>
+      <NextIntlClientProvider
+        messages={{
+          ...signUpMessages,
+          ...localitiesMessages,
+        }}
+      >
         <CredentialsForm />
       </NextIntlClientProvider>
 

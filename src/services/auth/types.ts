@@ -8,6 +8,11 @@ export type LoginPayload = {
 };
 
 export type SignUpPayload = {
+  companyCountryStateCode?: string;
+  companyCountryStateName?: string;
+  companyCountryCode: string;
+  companyCountryName: string;
+  companyCityName?: string;
   companyName: string;
   firstNames: string;
   lastNames: string;

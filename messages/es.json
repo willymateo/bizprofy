@@ -372,11 +372,7 @@
       "Product quantity": "Cantidad del producto",
       "Product": "Producto",
       "Type code, name or description of a product": "Escribe el código, nombre o descripción de un producto",
-      "This field is required": "Este campo es obligatorio",
-      "No results found": "No se encontraron resultados",
-      "We couldn't find any results matching your search criteria": "No pudimos encontrar resultados que coincidan con tus criterios de búsqueda",
-      "This is unexpected for us": "Esto es inesperado para nosotros",
-      "We couldn't load the data Please try again later": "No pudimos cargar los datos. Por favor, inténtalo de nuevo más tarde"
+      "This field is required": "Este campo es obligatorio"
     },
     "out": {
       "Stock out": "Salida de stock",
@@ -417,11 +413,7 @@
       "Type ID card or name of a customer": "Escribe la cédula o el nombre de un cliente",
       "Total": "Total",
       "Profit": "Ganancia",
-      "This field is required": "Este campo es obligatorio",
-      "No results found": "No se encontraron resultados",
-      "We couldn't find any results matching your search criteria": "No pudimos encontrar resultados que coincidan con tus criterios de búsqueda",
-      "This is unexpected for us": "Esto es inesperado para nosotros",
-      "We couldn't load the data Please try again later": "No pudimos cargar los datos. Por favor, inténtalo de nuevo más tarde"
+      "This field is required": "Este campo es obligatorio"
     },
     "current": {
       "Current stock status": "Estado actual del stock",
@@ -446,5 +438,14 @@
       "This is unexpected for us": "Esto es inesperado para nosotros",
       "We couldn't load the data Please try again later": "No pudimos cargar los datos. Por favor, inténtalo de nuevo más tarde"
     }
+  },
+  "localities": {
+    "Country": "País",
+    "Select a country": "Selecciona un país",
+    "Country is required": "El país es obligatorio",
+    "Country state": "Estado",
+    "Select a country state": "Selecciona un estado",
+    "City": "Ciudad",
+    "Select a city": "Selecciona una ciudad"
   }
 }

@@ -34,7 +34,7 @@ const Profits = ({ data }: Props) => {
       id: "profit-chart",
     },
     title: {
-      text: `$${totalProfitInThePeriod}`,
+      text: `$${totalProfitInThePeriod?.toFixed(2)}`,
       offsetX: 30,
       style: {
         color,

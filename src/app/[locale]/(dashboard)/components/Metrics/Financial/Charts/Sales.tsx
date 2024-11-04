@@ -28,7 +28,7 @@ const Sales = ({ data }: Props) => {
     },
     colors: ["#DCE6EC"],
     title: {
-      text: `$${totalPriceSumInThePeriod}`,
+      text: `$${totalPriceSumInThePeriod?.toFixed(2)}`,
       offsetX: 30,
       style: {
         fontSize: "24px",

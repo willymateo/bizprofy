@@ -28,7 +28,7 @@ const Expenses = ({ data }: Props) => {
     },
     colors: ["#DCE6EC"],
     title: {
-      text: `$${totalCostSumInThePeriod}`,
+      text: `$${totalCostSumInThePeriod?.toFixed(2)}`,
       offsetX: 30,
       style: {
         fontSize: "24px",
